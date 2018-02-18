@@ -95,7 +95,9 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
                 <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
                 <td>{{ date('d M, y', strtotime($donation->date)) }}</td>
               </tr><!-- /.TR -->
-              {{ $i++ }}
+              @php
+                $i++;
+              @endphp
               @endforeach
 
               @else

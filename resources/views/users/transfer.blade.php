@@ -1,4 +1,5 @@
 <?php
+$settings = App\Models\AdminSettings::first();
 $donationlog = \App\Models\DepositLog::findOrFail($response);
 $bank = \App\Models\Banks::findOrFail($donationlog->bank_id);
 $amount = $donationlog->amount - $donationlog->amount_key;
@@ -33,19 +34,16 @@ Transfer
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-sm-6">Nominal Donasi</div>
-            <div class="col-sm-2">Rp.</div>
-            <div class="col-sm-4 pull-right">{{ $amount }}</div>
+            <div class="col-sm-8">Nominal Donasi</div>
+            <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($amount) }}</div>
           </div>
           <div class="row">
-            <div class="col-sm-6">Kode Unik (akan didonasikan)</div>
-            <div class="col-sm-2">Rp.</div>
-            <div class="col-sm-4 pull-right">{{ $donationlog->amount_key }}</div>
+            <div class="col-sm-8">Kode Unik (akan didonasikan)</div>
+            <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($donationlog->amount_key) }}</div>
           </div>
           <div class="row">
-            <div class="col-sm-6">Total</div>
-            <div class="col-sm-2">Rp.</div>
-            <div class="col-sm-4 pull-right">{{ $donationlog->amount }}</div>
+            <div class="col-sm-8">Total</div>
+            <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($donationlog->amount) }}</div>
           </div>
           <div class="row">
             <div class="col-sm-8">

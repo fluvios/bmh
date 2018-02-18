@@ -1,4 +1,5 @@
 <?php
+  $settings = App\Models\AdminSettings::first();
   $donations = \App\Models\Donations::findOrFail($response);
   $amount = $donations->donation +  Auth::user()->saldo;
  ?>
@@ -33,19 +34,16 @@
        <div class="panel panel-default">
          <div class="panel-body">
            <div class="row">
-               <div class="col-sm-6">Nominal Donasi</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ $donations->donation }}</div>
+               <div class="col-sm-8">Nominal Donasi</div>
+               <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($donations->donation) }}</div>
            </div>
            <div class="row">
-               <div class="col-sm-6">Saldo Anda</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ $amount }}</div>
+               <div class="col-sm-8">Saldo Anda</div>
+               <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($amount) }}</div>
            </div>
            <div class="row">
-               <div class="col-sm-6">Saldo Akhir</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ Auth::user()->saldo }}</div>
+               <div class="col-sm-8">Saldo Akhir</div>
+               <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format(Auth::user()->saldo) }}</div>
            </div>
            <div class="row">
              <div class="col-sm-8">

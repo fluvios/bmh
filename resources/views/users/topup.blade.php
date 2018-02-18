@@ -40,11 +40,11 @@ $banks = \App\Models\Banks::all();
 				<label>Pilih Nominal Top Up</label>
 				<select name="amount" class="form-control input-lg" >
 					<option value="">Pilih Nominal Top Up</option>
-					<option value="50000">Rp. 50.000,00</option>
-					<option value="100000">Rp. 100.000,00</option>
-					<option value="200000">Rp. 200.000,00</option>
-					<option value="500000">Rp. 500.000,00</option>
-					<option value="1000000">Rp. 1.000.000,00</option>
+					<option value="50000">Rp.50,000</option>
+					<option value="100000">Rp.100,000</option>
+					<option value="200000">Rp.200,000</option>
+					<option value="500000">Rp.500,000</option>
+					<option value="1000000">Rp.1,000,000</option>
 				</select>
 			</div>
 

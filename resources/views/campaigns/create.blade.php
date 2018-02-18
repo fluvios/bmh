@@ -187,6 +187,12 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 
 <script type="text/javascript">
 
+// money
+// var cleave = new Cleave('.input-money', {
+//     numeral: true,
+//     numeralThousandsGroupStyle: 'thousand'
+// });
+
 //Date picker
 $('#datepicker').datepicker({
   autoclose: true,

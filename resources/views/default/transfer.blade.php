@@ -1,4 +1,5 @@
 <?php
+  $settings = App\Models\AdminSettings::first();
   $donations = \App\Models\Donations::findOrFail($response);
   $bank = \App\Models\Banks::findOrFail($donations->bank_id);
   $amount = $donations->donation - $donations->amount_key;
@@ -34,19 +35,16 @@
        <div class="panel panel-default">
          <div class="panel-body">
            <div class="row">
-               <div class="col-sm-6">Nominal Donasi</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ $amount }}</div>
+               <div class="col-sm-8">Nominal Donasi</div>
+               <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($amount) }}</div>
            </div>
            <div class="row">
-               <div class="col-sm-6">Kode Unik (akan didonasikan)</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ $donations->amount_key }}</div>
+               <div class="col-sm-8">Kode Unik (akan didonasikan)</div>
+               <div class="col-sm-4 pull-right">{{  $settings->currency_symbol.number_format($donations->amount_key) }}</div>
            </div>
            <div class="row">
-               <div class="col-sm-6">Total</div>
-               <div class="col-sm-2">Rp.</div>
-               <div class="col-sm-4 pull-right">{{ $donations->donation }}</div>
+               <div class="col-sm-8">Total</div>
+               <div class="col-sm-4 pull-right">{{ $settings->currency_symbol.number_format($donations->donation) }}</div>
            </div>
            <div class="row">
              <div class="col-sm-8">
