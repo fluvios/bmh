@@ -343,41 +343,6 @@ class DonationsController extends Controller
 
     $amountKey = Helper::randomCheckKey();
 
-    //<----------- ****** TRANSFER ************** ----->
-    if ($this->request->payment_gateway == 'Transfer') {
-      if (!isset($this->request->anonymous)) {
-        $this->request->anonymous = '0';
-      }
-
-      // Insert DB
-      $sql = new Donations;
-      $sql->campaigns_id = $this->request->campaign_id;
-      $sql->user_id = $this->request->user_id;
-      $sql->txn_id = 'null';
-      $sql->fullname = $this->request->full_name;
-      $sql->email = $this->request->email;
-      $sql->donation = $this->request->amount + $amountKey;
-      $sql->donation_type = $this->request->donation_type;
-      $sql->payment_gateway = 'Transfer';
-      $sql->comment = $this->request->comment;
-      $sql->anonymous = $this->request->anonymous;
-      $sql->bank_id = $this->request->payment_gateway;
-      $sql->amount_key = $amountKey;
-      $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
-      $sql->save();
-
-      // Get Donation Id
-      $response = $sql->id;
-
-      // Redirect to transfer page
-      return response()->json([
-        'donationId' => $response,
-        'amount' => $sql->amount,
-        'status' => 'success'
-      ]);
-    }
-    //<----------- ****** TRANSFER ************** ----->
-
     //<----------- ****** DELIVERY ************** ----->
     if ($this->request->payment_gateway == 'Delivery') {
       if (!isset($this->request->anonymous)) {
@@ -400,17 +365,19 @@ class DonationsController extends Controller
       $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
       $sql->save();
 
+      // Get Donation Data
+      $response = $sql;
+            
       return response()->json([
+        'donation' => $response,
         'success' => true,
-        'stripeSuccess' => true,
-        'amount' => $sql->amount,
-        'message' => 'Donasi sukses',
+        'message' => 'Donasi berhasil tersimpan'
       ]);
     }
     //<----------- ****** DELIVERY ************** ----->
 
     //<----------- ****** DEPOSIT ************** ----->
-    if ($this->request->payment_gateway == 'Deposit') {
+    elseif ($this->request->payment_gateway == 'Deposit') {
       $user = User::where('id', '=', $this->request->user_id)->firstOrFail();
       if ($user->saldo > 0 && $user->saldo > $this->request->amount) {
         # code...
@@ -437,20 +404,57 @@ class DonationsController extends Controller
         // Update Saldo
         $saldo = $user->saldo - $this->request->amount;
         User::where('id', $this->request->user_id)->update(array( 'saldo' => $saldo ));
+        
+        // Get Donation Data
+        $response = $sql;
+              
         return response()->json([
+          'donation' => $response,
           'success' => true,
-          'stripeSuccess' => true,
-          'message' => 'Donasi sukses',
+          'message' => 'Donasi berhasil tersimpan'
         ]);
       } else {
         return response()->json([
           'success' => false,
-          'stripeSuccess' => true,
           'message' => 'Saldo anda tidak mencukupi',
         ]);
       }
     }
     //<----------- ****** DEPOSIT ************** ----->
+
+    //<----------- ****** TRANSFER ************** ----->
+    else {
+      if (!isset($this->request->anonymous)) {
+        $this->request->anonymous = '0';
+      }
+
+      // Insert DB
+      $sql = new Donations;
+      $sql->campaigns_id = $this->request->campaign_id;
+      $sql->user_id = $this->request->user_id;
+      $sql->txn_id = 'null';
+      $sql->fullname = $this->request->full_name;
+      $sql->email = $this->request->email;
+      $sql->donation = $this->request->amount + $amountKey;
+      $sql->donation_type = $this->request->donation_type;
+      $sql->payment_gateway = 'Transfer';
+      $sql->comment = $this->request->comment;
+      $sql->anonymous = $this->request->anonymous;
+      $sql->bank_id = $this->request->payment_gateway;
+      $sql->amount_key = $amountKey;
+      $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
+      $sql->save();
+
+      // Get Donation Data
+      $response = $sql;
+
+      return response()->json([
+        'donation' => $response,
+        'success' => true,
+        'message' => 'Donasi berhasil tersimpan'
+      ]);
+    }
+    //<----------- ****** TRANSFER ************** ----->
   }// End Method
 
   public function transfer($id)

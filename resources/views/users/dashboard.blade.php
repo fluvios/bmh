@@ -6,7 +6,8 @@ $settings = App\Models\AdminSettings::first();
 $data = App\Models\Donations::leftJoin('campaigns', function($join) {
   $join->on('donations.campaigns_id', '=', 'campaigns.id');
 })
-->where('campaigns.user_id',Auth::user()->id)
+->where('donations.user_id', Auth::user()->id)
+->where('donations.payment_status', '=', 'paid')
 ->select('donations.*')
 ->addSelect('campaigns.title')
 ->orderBy('donations.id','DESC')
