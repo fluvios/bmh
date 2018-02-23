@@ -11,12 +11,15 @@ use App\Models\Donations;
 use App\Models\DonationsLog;
 use App\Models\User;
 use App\Models\Banks;
+use App\Models\DepositLog;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use App\Helper;
 use Mail;
 use Carbon\Carbon;
 use DB;
 use App\Events\NewBankTransfer;
+use App\Includes\Veritrans\Veritrans_VtWeb;
+use App\Includes\Veritrans\Veritrans_Notification;
 
 class DonationsController extends Controller
 {
@@ -271,8 +274,62 @@ class DonationsController extends Controller
     }
     //<----------- ****** DEPOSIT ************** ----->
 
-    //<----------- ****** TRANSFER ************** ----->
-    else {
+    
+    //<----------- ****** MIDTRANS ************** ----->
+    elseif ($this->request->payment_gateway == 'Midtrans') {
+      if (!isset($this->request->anonymous)) {
+        $this->request->anonymous = '0';
+      }
+
+      // Insert DB
+      $sql = new Donations;
+      $sql->campaigns_id = $campaign->id;
+      $sql->user_id = Auth::user()->id;
+      $sql->txn_id = 'null';
+      $sql->fullname = $this->request->full_name;
+      $sql->email = $this->request->email;
+      $sql->donation = $this->request->amount;
+      $sql->donation_type = $this->request->donation_type;
+      $sql->payment_gateway = "Midtrans";
+      $sql->comment = $this->request->comment;
+      $sql->amount_key = 0;
+      $sql->expired_date = \Carbon\Carbon::now()->addDay();
+      $sql->anonymous = $this->request->anonymous;
+      $sql->save();
+
+      // Get Donation Id
+      $response = $sql->id;
+      $url = '';
+      try {
+        $params = [
+          'transaction_details' => [
+            'order_id' => 'campaign-'.$sql->id,
+            'gross_amount' => $sql->donation,
+          ],
+          'item_details' => [
+            'id' => 'campaign-' . $sql->campaigns_id,
+            'price' => $sql->donation,
+            'quantity' => 1,
+            'name' => "Donasi Campaign ". $sql->campaigns_id,
+          ],
+          'vtweb' => []
+        ];
+        $url = Veritrans_VtWeb::getRedirectionUrl($params);
+      } catch (\Exception $e) {
+
+      }
+
+      // Redirect to transfer page
+      return response()->json([
+        'success' => true,
+        'stripeSuccess' => true,
+        'data' => $response,
+        'url' => $url
+      ]);
+    
+    //<----------- ****** MIDTRANS ************** ----->
+    //<----------- ****** TRANSFER ************** ----->   
+    } else {
       if (!isset($this->request->anonymous)) {
         $this->request->anonymous = '0';
       }
@@ -573,6 +630,41 @@ class DonationsController extends Controller
         ]);
       }
     }
+  }
+
+  public function midtransIpn()
+  {
+    $ipn = new Veritrans_Notification();
+
+    $transaction = $ipn->transaction_status;
+    $type = $ipn->payment_type;
+    $order_id = $ipn->order_id;
+    $fraud = $ipn->fraud_status;
+
+
+    if ($transaction == 'capture') {
+      if (preg_match('/(.*)-(\d+)/', $order_id, $matches)) {
+        $orderType = $matches[1];
+        $order_id  = $matches[2];
+        switch ($orderType) {
+          case 'campaign':
+            // 
+            $donation = Donations::find($order_id);
+            $donation->payment_status = 'paid';
+            $donation->payment_date   = \Carbon\Carbon::now();
+            $donation->save(); 
+            break;
+          case 'topup':
+            DepositLog::accept($order_id);
+            break;
+          default:
+            # code...
+            break;
+        }
+      }
+    }
+
+    return response()->json(['status' => 'ok']);
   }
 
   public function paypalIpn()

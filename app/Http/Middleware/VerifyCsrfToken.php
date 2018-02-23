@@ -14,5 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //'donate/*',
         'paypal/*',
+        'midtrans/*',
+        'topup/*'
     ];
 }

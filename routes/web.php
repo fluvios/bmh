@@ -416,21 +416,28 @@ Route::post('transfer_topup/{id}', 'TopUpController@transfer');
 Route::post('paypal/ipn', 'DonationsController@paypalIpn');
 
 
-    Route::get('paypal/donation/success/{id}', function ($id) {
-        session()->put('donation_success', trans('misc.donation_success'));
-        return redirect("campaign/".$id);
-    });
+Route::get('paypal/donation/success/{id}', function ($id) {
+    session()->put('donation_success', trans('misc.donation_success'));
+    return redirect("campaign/".$id);
+});
 
-    Route::get('topup/success', function () {
-        session()->put('donation_success', trans('misc.donation_success'));
-        return redirect("account/topup");
-    });
+Route::get('topup/success', function () {
+    session()->put('donation_success', trans('misc.donation_success'));
+    return redirect("account/topup");
+});
 
 
-    Route::get('paypal/donation/cancel/{id}', function ($id) {
-        session()->put('donation_cancel', trans('misc.donation_cancel'));
-        return redirect("campaign/".$id);
-    });
+Route::get('paypal/donation/cancel/{id}', function ($id) {
+    session()->put('donation_cancel', trans('misc.donation_cancel'));
+    return redirect("campaign/".$id);
+});
+
+
+/**
+ * Midtrans IPN
+ */
+Route::post('midtrans/notification', 'DonationsController@midtransIpn');
+
 
 /*
  |

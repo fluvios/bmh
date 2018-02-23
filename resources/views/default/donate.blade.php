@@ -92,7 +92,10 @@
               <label><input type="radio" name="payment_gateway" value="Deposit">Potong Saldo</label>
            </div>
            <div class="radio">
-              <label><input type="radio" name="payment_gateway" value="Payment">Pembayaran Lain</label>
+              <label><input type="radio" name="payment_gateway" value="Midtrans">Midtrans</label>
+           </div>
+           <div class="radio">
+              <label><input type="radio" name="payment_gateway" value="Payment" disabled>Pembayaran Lain</label>
            </div>
        </div>
 
