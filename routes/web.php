@@ -303,6 +303,83 @@ Route::group(['middleware' => 'role'], function () {
     // Campaigns Reported
     Route::get('panel/admin/campaigns/reported', 'AdminController@reportedCampaigns');
     Route::post('panel/admin/campaigns/reported/delete', 'AdminController@reportedDeleteCampaigns');
+
+    Route::get('panel/admin/settings/cabang', [
+        'as'    => 'admin-cabang-index',
+        'uses'  => 'CabangController@index'
+    ]);
+
+    Route::get('panel/admin/settings/cabang/{id}/edit', [
+        'as'    => 'admin-cabang-edit',
+        'uses'  => 'CabangController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/cabang/{id}/update', [
+        'as'    => 'admin-cabang-update',
+        'uses'  => 'CabangController@update'
+    ]);
+
+    Route::get('panel/admin/settings/cabang/add', [
+        'as'    => 'admin-cabang-create',
+        'uses'  => 'CabangController@add'
+    ]);
+
+    Route::post('panel/admin/settings/cabang/store', [
+        'as'    => 'admin-cabang-store',
+        'uses'  => 'CabangController@store'
+    ]);
+
+    Route::get('panel/admin/settings/kategori', [
+        'as'    => 'admin-kategori-index',
+        'uses'  => 'KategoriController@index'
+    ]);
+
+    Route::get('panel/admin/settings/kategori/{id}/edit', [
+        'as'    => 'admin-kategori-edit',
+        'uses'  => 'KategoriController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/kategori/{id}/update', [
+        'as'    => 'admin-kategori-update',
+        'uses'  => 'KategoriController@update'
+    ]);
+
+    Route::get('panel/admin/settings/kategori/add', [
+        'as'    => 'admin-kategori-create',
+        'uses'  => 'KategoriController@add'
+    ]);
+
+    Route::post('panel/admin/settings/kategori/store', [
+        'as'    => 'admin-kategori-store',
+        'uses'  => 'KategoriController@store'
+    ]);
+
+    // Kode Akun
+    Route::get('panel/admin/settings/akun-transaksi', [
+        'as'    => 'admin-akun-transaksi-index',
+        'uses'  => 'AkunTransaksiController@index'
+    ]);
+
+    Route::get('panel/admin/settings/akun-transaksi/{id}/edit', [
+        'as'    => 'admin-akun-transaksi-edit',
+        'uses'  => 'AkunTransaksiController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/akun-transaksi/{id}/update', [
+        'as'    => 'admin-akun-transaksi-update',
+        'uses'  => 'AkunTransaksiController@update'
+    ]);
+
+    Route::get('panel/admin/settings/akun-transaksi/add', [
+        'as'    => 'admin-akun-transaksi-create',
+        'uses'  => 'AkunTransaksiController@add'
+    ]);
+
+    Route::post('panel/admin/settings/akun-transaksi/store', [
+        'as'    => 'admin-akun-transaksi-store',
+        'uses'  => 'AkunTransaksiController@store'
+    ]);
+
 });
 
 /*

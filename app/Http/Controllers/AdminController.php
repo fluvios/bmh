@@ -13,6 +13,7 @@ use App\Models\Donations;
 use App\Models\DonationsLog;
 use App\Models\Categories;
 use App\Models\Withdrawals;
+use App\Models\KategoriCampaign;
 use App\Helper;
 
 use Carbon\Carbon;
@@ -1034,9 +1035,13 @@ class AdminController extends Controller
 
         $sql->featured = $request->featured;
 
+        $sql->akun_transaksi_id = $request->akun_transaksi_id;
+
+        $sql->cabang_id = $request->cabang_id;
+
         $sql->save();
 
-
+        KategoriCampaign::bulkEdit($sql->id, $request->input('kategori', []));
 
         \Session::flash('success_message', trans('admin.success_update'));
 

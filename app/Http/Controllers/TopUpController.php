@@ -240,12 +240,13 @@ class TopUpController extends Controller
 
   public function showdata()
   {
-    $data = DepositLog::orderBy('id', 'DESC')->paginate(100);
+    $data = DepositLog::orderBy('id', 'DESC')->where('bank_id', '<>', '0')->paginate(100);
     $data->map(function($d){
       $bank = Banks::where('id', '=', $d->bank_id)->first();
       $d['bank'] = $bank;
       return $d;
     });
+
 
     return view('admin.topups', ['data' => $data, 'settings' => $this->settings]);
   }

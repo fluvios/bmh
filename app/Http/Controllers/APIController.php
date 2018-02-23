@@ -12,6 +12,9 @@ use App\Models\Donations;
 use App\Models\Updates;
 use App\Helper;
 use App\Models\Like;
+use App\Models\Cabang;
+use App\Models\Kategori;
+use App\Models\AkunTransaksi;
 
 class APIController extends Controller
 {
@@ -77,4 +80,46 @@ class APIController extends Controller
     {
         return $data = Donations::orderBy('id', 'DESC')->paginate(100);
     }//<--- End Method
+
+    public function cabang()
+    {
+        $term = $this->request->input('term');
+        $page = $this->request->input('page',1);
+        $result =  Cabang::where('nama', 'like', '%'.$term.'%')->orWhere('kode', 'like', '%'.$term.'%')->paginate(10, ['*'],'page', $page);
+        $result->getCollection()->transform(function($data) {
+            return [
+                'id'   => $data->id,
+                'text' => $data->nama
+            ];
+        });
+        return $result;
+    }
+
+    public function kategori()
+    {
+        $term = $this->request->input('term');
+        $page = $this->request->input('page',1);
+        $result =  Kategori::where('is_active', 1)->where('nama', 'like', '%'.$term.'%')->paginate(10, ['*'],'page', $page);
+        $result->getCollection()->transform(function($data) {
+            return [
+                'id'   => $data->id,
+                'text' => $data->nama
+            ];
+        });
+        return $result;
+    }
+
+    public function akunTransaksi()
+    {
+        $term = $this->request->input('term');
+        $page = $this->request->input('page',1);
+        $result =  AkunTransaksi::where('nama', 'like', '%'.$term.'%')->orWhere('nomor', 'like', '%'.$term.'%')->paginate(10, ['*'],'page', $page);
+        $result->getCollection()->transform(function($data) {
+            return [
+                'id'   => $data->id,
+                'text' => $data->nomor.' - '.$data->nama
+            ];
+        });
+        return $result;
+    }
 }

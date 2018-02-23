@@ -346,6 +346,8 @@ desired effect
               <li @if(Request::is('panel/admin/settings/limits')) class="active" @endif><a href="{{ url('panel/admin/settings/limits') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.limits') }}</a></li>
 
               <li @if(Request::is('panel/admin/settings/bank')) class="active" @endif><a href="{{ url('panel/admin/settings/bank') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.bank') }}</a></li>
+
+              <li @if(Request::is('panel/admin/settings/cabang')) class="active" @endif><a href="{{ route('admin-cabang-index') }}"><i class="fa fa-circle-o"></i> {{ trans('misc.cabang') }}</a></li>
             </ul>
 
           </li><!-- ./Links -->
@@ -362,7 +364,15 @@ desired effect
 
           <li @if(Request::is('panel/admin/categories')) class="active" @endif>
 
-            <a href="{{ url('panel/admin/categories') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('admin.categories') }}</span></a>
+            <a href="{{ url('panel/admin/categories') }}"><i class="fa fa-list-ul"></i> <span>Jenis Dana</span></a>
+
+          </li><!-- ./Links -->
+
+          <!-- Links -->
+
+          <li @if(Request::is('panel/admin/settings/kategori')) class="active" @endif>
+
+            <a href="{{ url('panel/admin/settings/kategori') }}"><i class="fa fa-list-ul"></i> <span>Kategori</span></a>
 
           </li><!-- ./Links -->
 

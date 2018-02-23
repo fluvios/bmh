@@ -49,4 +49,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Amils');
     }
+
+    public function donations()
+    {
+        return $this->hasMany('App\Models\Donations', 'user_id', 'id');
+    }
+
+    public function donationMade()
+    {
+        return $this->donations->sum('donation');
+    }
 }

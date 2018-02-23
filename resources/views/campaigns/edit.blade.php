@@ -8,6 +8,7 @@ $cities = App\Models\Kabupaten::all();
 
 @section('css')
 <link href="{{ asset('public/plugins/iCheck/all.css')}}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ asset('public/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
@@ -75,7 +76,9 @@ $cities = App\Models\Kabupaten::all();
 
           <div class="form-group">
             <label>Kategori Campaign</label>
-            <input type="text" value="{{ $data->tags }}" id="tags-input" name="tags" data-role="tagsinput" />
+            <select name="kategori[]" class="form-control" id="kategori-select2">
+              {!! App\Models\KategoriCampaign::getSelectedOption($data->id) !!}
+            </select>
           </div>
 
           <div class="form-group">
@@ -84,6 +87,13 @@ $cities = App\Models\Kabupaten::all();
               <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
               <input type="number" min="1" class="form-control" name="goal" id="onlyNumber" value="{{ $data->goal }}" placeholder="10000">
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for=""> {{ trans('misc.from_cabang') }} </label>
+            <select class="form-control select2" id="cabang-id" name="cabang_id">
+              <option value="{{ $data->cabang_id }}" selected>{{ App\Models\Cabang::find($data->cabang_id)->nama }}</option>
+            </select>
           </div>
 
           <!-- Start Form Group -->
@@ -127,8 +137,9 @@ $cities = App\Models\Kabupaten::all();
 
             <div class="btn-block text-center margin-top-20">
               <a href="{{url('campaign',$data->id)}}" class="text-muted">
-                <i class="fa fa-long-arrow-left"></i>	{{trans('auth.back')}}</a>
-              </div>
+                <i class="fa fa-long-arrow-left"></i>	{{trans('auth.back')}}
+              </a>
+            </div>
 
             </div><!-- /.box-footer -->
 
@@ -144,6 +155,7 @@ $cities = App\Models\Kabupaten::all();
   @section('javascript')
   <script src="{{ asset('public/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('public/plugins/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('public/js/select2.full.min.js') }}" type="text/javascript"></script>
 
   <script>
   	var categories = new Bloodhound({
@@ -174,9 +186,6 @@ $cities = App\Models\Kabupaten::all();
 
   <script type="text/javascript">
 
-
-  <script type="text/javascript">
-
   $(document).ready(function() {
 
     $("#onlyNumber").keydown(function (e) {
@@ -200,6 +209,8 @@ $cities = App\Models\Kabupaten::all();
       radioClass: 'iradio_square-red',
       increaseArea: '20%' // optional
     });
+
+    $kategoris.val({{ App\Models\KategoriCampaign::getSelectedArray($data->id) }}).trigger("change");
 
   });
 
@@ -320,7 +331,52 @@ $cities = App\Models\Kabupaten::all();
   }
 
   initTinymce();
+  $('#cabang-id').select2({
+    ajax: {
+      url: '{{ url('api/cabang') }}',
+      dataType : 'json',
+      delay : 220,
+      data : function(params){
+          return {
+              q : params.term,
+              page : params.page
+          };
+      },
+      processResults : function(data, params){
+          params.page = params.page || 1;
+          return {
+              results : data.data,
+              pagination: {
+                  more : (data.per_page  * 10) < data.total
+              }
+          };
+      }
+    }
+  });
 
+  var $kategoris = $('#kategori-select2').select2({
+    multiple: true,
+    ajax: {
+      url: '{{ url('api/kategori') }}',
+      dataType : 'json',
+      delay : 220,
+      data : function(params){
+          return {
+              q : params.term,
+              page : params.page
+          };
+      },
+      processResults : function(data, params){
+          params.page = params.page || 1;
+          return {
+              results : data.data,
+              pagination: {
+                  more : (data.per_page  * 10) < data.total
+              }
+          };
+      }
+    }
+  });
   </script>
 
 

@@ -10,6 +10,7 @@ use App\Models\AdminSettings;
 use App\Models\Campaigns;
 use App\Models\Updates;
 use App\Models\User;
+use App\Models\KategoriCampaign;
 use App\Models\Kabupaten;
 use App\Helper;
 use Carbon\Carbon;
@@ -192,7 +193,6 @@ class CampaignsController extends Controller
     }
 
     $city = Kabupaten::where('id_kab', '=', $this->request->location)->first();
-
     $sql                        = new Campaigns;
     $sql->title                = trim($this->request->title);
     $sql->small_image   = $image_small;
@@ -207,9 +207,11 @@ class CampaignsController extends Controller
     $sql->province_id = $city->id_prov;
     $sql->city_id = $city->id_kab;
     $sql->categories_id = $this->request->categories_id;
-    $sql->tags = ucfirst($this->request->tags);
+    $sql->cabang_id = $this->request->cabang_id;
     $sql->deadline = CampaignsController::getDeadline($this->request->deadline);
     $sql->save();
+
+    KategoriCampaign::bulkAdd($sql->id, $this->request->input('kategori', []));
 
     $id_campaign = $sql->id;
 
@@ -437,12 +439,13 @@ class CampaignsController extends Controller
     $sql->location          = $city->nama;
     $sql->province_id = $city->id_prov;
     $sql->city_id = $city->id_kab;
+    $sql->cabang_id = $this->request->cabang_id;
     $sql->finalized          = $finish_campaign;
-    $sql->tags = ucfirst($this->request->tags);
     $sql->categories_id  = $this->request->categories_id;
     $sql->save();
 
     $id_campaign = $sql->id;
+    KategoriCampaign::bulkEdit($id_campaign, $this->request->input('kategori', []));
 
     return response()->json([
       'success' => true,

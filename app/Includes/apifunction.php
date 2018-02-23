@@ -6,8 +6,8 @@ class apifunction {
 	public static function sendsms($destination, $message) {
 		@include('apiconfig.php');
 		$urlsoap = 'http://smsapi.rosihanari.net/api.php';
-		require_once(app_path() .'lib\nusoap.php');
-		$client = new nusoap_client($urlsoap);
+		require_once('lib'.DS.'nusoap.php');
+		$client = new \nusoap_client($urlsoap);
 		$result = $client->call('sendsms', array('destination' => $destination, 'message' => $message, 'username' => $apiUsername, 'apikey' => $apiKey));
 		return $result;
 	}

@@ -75,3 +75,7 @@ Route::get('history/{id?}', function($id) {
 
     return $donations;
 });
+
+Route::any('cabang', 'APIController@cabang');
+Route::any('kategori', 'APIController@kategori');
+Route::any('akun-transaksi', 'APIController@akunTransaksi');
