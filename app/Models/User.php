@@ -59,4 +59,15 @@ class User extends Authenticatable
     {
         return $this->donations->sum('donation');
     }
+
+    public function getPhoneNumber()
+    {
+      if ($this->phone_number_1) {
+        return str_replace('+62', '0', $this->phone_number_1);
+      } elseif ($this->phone_number_2) {
+        return str_replace('+62', '0', $this->phone_number_2);
+      } else {
+        return '088213144444';
+      }
+    }
 }

@@ -16,6 +16,7 @@ use App\Helper;
 use Mail;
 use Carbon\Carbon;
 use DB;
+use App\Events\NewBankTransfer;
 
 class DonationsController extends Controller
 {
@@ -311,6 +312,10 @@ class DonationsController extends Controller
       //     ->subject(trans('misc.thanks_donation').' - '.$titleSite);
       //   }
       // );
+      
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, Auth::user(), $bank));
+      }
 
       // Redirect to transfer page
       return response()->json([
