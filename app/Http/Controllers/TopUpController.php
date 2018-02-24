@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\DepositLog;
 use App\Models\Banks;
 use App\Helper;
-
+use App\Includes\Veritrans\Veritrans_VtWeb;
 use DB;
 
 class TopUpController extends Controller
@@ -157,29 +157,53 @@ class TopUpController extends Controller
       ]);
     }
 
-    $amountKey = Helper::randomCheckKey();
 
+    $isMidtrans = $this->request->payment_gateway == 'Midtrans';
+
+    $amountKey = $isMidtrans ? 0 : Helper::randomCheckKey();
+    
     //<----------- ****** TRANSFER ************** ----->
     // Insert DB
     $sql = new DepositLog;
     $sql->user_id = Auth::user()->id;
-    $sql->bank_id = $this->request->payment_gateway;
+    $sql->bank_id = $isMidtrans ? 0 : $this->request->payment_gateway;
     $sql->amount = $this->request->amount + $amountKey;
     $sql->fullname = Auth::user()->name;
     $sql->email = Auth::user()->email;
-    $sql->payment_gateway = 'Transfer';
+    $sql->payment_gateway = $isMidtrans ? 'Midtrans' : 'Transfer';
     $sql->amount_key = $amountKey;
     $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
     $sql->save();
 
     // Get Donation Id
     $response = $sql->id;
+    $url = url('transfer_topup', $response);
+    if ($isMidtrans) {
+      try {
+        $params = [
+          'transaction_details' => [
+            'order_id' => 'topup-'.$sql->id,
+            'gross_amount' => $sql->amount,
+          ],
+          'item_details' => [[
+            'id' => 'topup-' . $sql->id,
+            'price' => $sql->amount,
+            'quantity' => 1,
+            'name' => "Topup",
+          ]],
+          'vtweb' => []
+        ];
+        $url = Veritrans_VtWeb::getRedirectionUrl($params);
+      } catch (\Exception $e) {
+
+      }
+    }
 
     // Redirect to transfer page
     return response()->json([
       'success' => true,
       'stripeSuccess' => true,
-      'url' => url('transfer_topup', $response)
+      'url' => $url,
     ]);
     //<----------- ****** TRANSFER ************** ----->
   }// End Method
@@ -244,12 +268,13 @@ class TopUpController extends Controller
 
   public function showdata()
   {
-    $data = DepositLog::orderBy('id', 'DESC')->paginate(100);
+    $data = DepositLog::orderBy('id', 'DESC')->where('bank_id', '<>', '0')->paginate(100);
     $data->map(function($d){
       $bank = Banks::where('id', '=', $d->bank_id)->first();
       $d['bank'] = $bank;
       return $d;
     });
+
 
     return view('admin.topups', ['data' => $data, 'settings' => $this->settings]);
   }

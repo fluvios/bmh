@@ -29,5 +29,10 @@ class Campaigns extends Model {
 	
 	public function category() {
 	 	 return $this->belongsTo('App\Models\Categories', 'categories_id'); 
-	 }
+	}
+
+	public function getAkunTransaksi()
+	{
+		return AkunTransaksi::find($this->akun_transaksi_id);
+	}
 }

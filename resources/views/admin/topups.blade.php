@@ -66,7 +66,7 @@
 
                   <td>{{ $topup->bank->slug }}</td>
 
-                  <td>{{$topup->payment_status }}</td>
+                  <td>{{ $topup->payment_status }}</td>
 
                   <td>
                     <a href="{{ url('panel/admin/top_up',$topup->id) }}" class="btn btn-default btn-xs padding-btn">

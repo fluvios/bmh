@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SomeEvent' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\NewBankTransfer' => [
+            'App\Listeners\SendSMSBankNotification',
+        ],
+        'App\Events\TopupSuccess' => [
+            'App\Listeners\SendSMSTopupNotification',
+        ],
     ];
 
     /**

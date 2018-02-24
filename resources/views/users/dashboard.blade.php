@@ -1,6 +1,5 @@
 <?php
 // ** Data User logged ** //
-$user = Auth::user();
 $settings = App\Models\AdminSettings::first();
 
 $data = App\Models\Donations::leftJoin('campaigns', function($join) {
@@ -17,6 +16,7 @@ $data = App\Models\Donations::leftJoin('campaigns', function($join) {
 $address = App\Models\Address::where('user_id',Auth::user()->id)->where('jenis','rumah')->first();
 $created = App\Models\Campaigns::where('user_id',Auth::user()->id)->count();
 $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
+
 ?>
 @extends('app')
 
@@ -40,8 +40,8 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h1>{{ $created }}</h1>
-            <h4>Kampanye telah dibuat</h4>
+            <h1>{{ $settings->currency_symbol.number_format($user->donationMade()) }}</h1>
+            <h4>Donasi disalurkan</h4>
           </div>
         </div>
       </div>

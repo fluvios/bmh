@@ -9,6 +9,7 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('public/plugins/datepicker/datepicker3.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('public/css/select2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -74,7 +75,7 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 
           <div class="form-group">
             <label>Kategori Campaign</label>
-            <input type="text" value="" id="tags-input" name="tags" data-role="tagsinput" />
+            <select name="kategori[]" class="form-control" id="kategori-select2"></select>
           </div>
 
           <div class="form-group">
@@ -83,6 +84,11 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
               <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
               <input type="number" min="1" class="form-control" name="goal" id="onlyNumber" value="{{ old('goal') }}" placeholder="10000">
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for=""> {{ trans('misc.from_cabang') }} </label>
+            <select class="form-control select2" id="cabang-id" name="cabang_id"></select>
           </div>
 
           <!-- Start Form Group -->
@@ -157,6 +163,7 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 <script src="{{ asset('public/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('public/plugins/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('public/plugins/datepicker/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+<script src="{{ asset('public/js/select2.full.min.js') }}" type="text/javascript"></script>
 
 <script>
 	var categories = new Bloodhound({
@@ -341,5 +348,51 @@ function initTinymce() {
 
 initTinymce();
 
+$('#cabang-id').select2({
+  ajax: {
+    url: '{{ url('api/cabang') }}',
+    dataType : 'json',
+    delay : 220,
+    data : function(params){
+        return {
+            q : params.term,
+            page : params.page
+        };
+    },
+    processResults : function(data, params){
+        params.page = params.page || 1;
+        return {
+            results : data.data,
+            pagination: {
+                more : (data.per_page  * 10) < data.total
+            }
+        };
+    }
+  }
+});
+
+$('#kategori-select2').select2({
+  multiple: true,
+  ajax: {
+    url: '{{ url('api/kategori') }}',
+    dataType : 'json',
+    delay : 220,
+    data : function(params){
+        return {
+            q : params.term,
+            page : params.page
+        };
+    },
+    processResults : function(data, params){
+        params.page = params.page || 1;
+        return {
+            results : data.data,
+            pagination: {
+                more : (data.per_page  * 10) < data.total
+            }
+        };
+    }
+  }
+});
 </script>
 @endsection

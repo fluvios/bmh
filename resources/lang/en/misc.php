@@ -305,4 +305,10 @@ return array(
 	'no_time_anymore' => 'There is no time anymore',
 	'date_deadline' => 'Deadline',
 			
+	// <!---------- Cabang ---------------------!>
+	'cabang' => 'Branch',
+	'kode_cabang' => 'Branch Code',
+	'nama_cabang' => 'Branch Name',
+	'edit_cabang' => 'Edit Branch',
+	'from_cabang' => 'Campaign from Branch',
 );

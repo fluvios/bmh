@@ -13,7 +13,6 @@ use App\Models\Kabupaten;
 
 class HomeController extends Controller
 {
-
     /**
      *
      * @return \Illuminate\Http\Response
