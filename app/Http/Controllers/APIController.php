@@ -28,8 +28,10 @@ class APIController extends Controller
         ->orderBy('id', 'DESC')->paginate($settings->result_request);
         $campaigns->map(function ($campaign){
           $donations = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->get();
+          $updates = Updates::where('campaigns_id', '=', $campaign->id)->orderBy('id','desc')->get();
           $total = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->sum('donation');
           $campaign['donation'] = $donations;
+          $campaign['update'] = $updates;
           $campaign['total'] = $total;
           return $campaign;
         });

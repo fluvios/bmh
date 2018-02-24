@@ -360,9 +360,8 @@ class DonationsController extends Controller
       $sql->donation_type = $this->request->donation_type;
       $sql->payment_gateway = $this->request->payment_gateway;
       $sql->comment = $this->request->comment;
-      $sql->payment_status = 'paid';
       $sql->anonymous = $this->request->anonymous;
-      $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
+      $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
 
       // Get Donation Data
@@ -398,7 +397,7 @@ class DonationsController extends Controller
         $sql->comment = $this->request->comment;
         $sql->payment_status = 'paid';
         $sql->anonymous = $this->request->anonymous;
-        $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
+        $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
         $sql->save();
 
         // Update Saldo
@@ -442,11 +441,12 @@ class DonationsController extends Controller
       $sql->anonymous = $this->request->anonymous;
       $sql->bank_id = $this->request->payment_gateway;
       $sql->amount_key = $amountKey;
-      $sql->expired_date = 'NOW() + INTERVAL 1 DAY';
+      $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
 
       // Get Donation Data
-      $response = $sql;
+      $response = Donations::find($sql->id);
+      $response['bank'] = Banks::findOrFail($sql->bank_id);
 
       return response()->json([
         'donation' => $response,

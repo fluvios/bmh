@@ -51,9 +51,12 @@ class TopUpController extends Controller
       $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
 
+      // Get Topup
+      $response = DepositLog::find($sql->id);
+
       return response()->json([
         'success' => true,
-        'stripeSuccess' => true,
+        'deposit' => $response,
         'message' => 'Topup sukses',
       ]);
     }
@@ -73,14 +76,15 @@ class TopUpController extends Controller
       $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
 
-      // Get Donation Id
-      $response = $sql->id;
+      // Get Topup
+      $response = DepositLog::find($sql->id);
+      $response['bank'] = Banks::findOrFail($sql->bank_id);
 
       // Redirect to transfer page
       return response()->json([
-        'depositId' => $response,
-        'amount' => $sql->amount,
-        'status' => 'success'
+        'success' => true,
+        'deposit' => $response,
+        'message' => 'Topup sukses',
       ]);
     }
     //<----------- ****** TRANSFER ************** ----->
