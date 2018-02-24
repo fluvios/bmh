@@ -50,11 +50,7 @@
                       <td>{{ $donation->email }}</td>
                       <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
                       <td>{{ date('d M Y', strtotime($donation->payment_date)) }}</td>
-                      @if(!empty($donation->bank))
-                        <td>{{ $donation->bank->slug }}</td>
-                      @else
-                        <td> - </td>
-                      @endif
+                      <td>{{ $donation->getPaymentMethod()}}</td>
                       <td>{{ $donation->payment_status }}</td>
                       <td>
                         <a href="{{ url('panel/admin/donations',$donation->id) }}" class="btn btn-default btn-xs padding-btn">

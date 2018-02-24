@@ -21,4 +21,15 @@ class Donations extends Model
     {
         return \Carbon\Carbon::parse(self::find($this->id)->expired_date)->format('d M H:i');
     }
+
+    public function getPaymentMethod()
+    {
+        if ($bank = Banks::find($this->bank_id)) {
+            return 'Transfer - '.$bank->slug;
+        } elseif ($this->payment_gateway == 'Midtrans') {
+            return 'Midtrans';
+        } else {
+            return 'Pembayaran Lain';
+        }
+    }
 }

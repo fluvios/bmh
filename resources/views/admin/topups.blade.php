@@ -36,7 +36,7 @@
                   <th class="active">{{ trans('auth.email') }}</th>
                   <th class="active">Nominal Top Up</th>
                   <th class="active">{{ trans('admin.date') }}</th>
-                  <th class="active">Bank</th>
+                  <th class="active">Metode Pembayaran</th>
                   <th class="active">Status</th>
                   <th class="active">{{ trans('admin.actions') }}</th>
 
@@ -64,7 +64,7 @@
 
                   <td>{{ date('d M Y', strtotime($topup->transfer_date)) }}</td>
 
-                  <td>{{ $topup->bank->slug }}</td>
+                  <td>{{ $topup->getPaymentMethod() }}</td>
 
                   <td>{{ $topup->payment_status }}</td>
 
