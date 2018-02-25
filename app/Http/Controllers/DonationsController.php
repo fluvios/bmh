@@ -651,7 +651,7 @@ class DonationsController extends Controller
     $fraud = $ipn->fraud_status;
 
 
-    if ($transaction == 'capture') {
+    if ($transaction == 'capture' || $transaction == 'settlement') {
       if (preg_match('/(.*)-(\d+)/', $order_id, $matches)) {
         $orderType = $matches[1];
         $order_id  = $matches[2];
@@ -659,9 +659,11 @@ class DonationsController extends Controller
           case 'campaign':
             // 
             $donation = Donations::find($order_id);
-            $donation->payment_status = 'paid';
-            $donation->payment_date   = \Carbon\Carbon::now();
-            $donation->save(); 
+            if ($donation->payment_status != 'paid') {
+              $donation->payment_status = 'paid';
+              $donation->payment_date   = \Carbon\Carbon::now();
+              $donation->save(); 
+            }
             break;
           case 'topup':
             DepositLog::accept($order_id);

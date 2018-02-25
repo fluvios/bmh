@@ -17,13 +17,15 @@ class DepositLog extends Model
     public static function accept($id)
     {
     	$data = self::findOrFail($id);
-    	$data->payment_status = 'paid';
-    	$data->save();
+        if ($data && $data->payment_status != 'paid') {
+        	$data->payment_status = 'paid';
+        	$data->save();
 
-    	$user = User::findOrFail($data->user_id);
-    	$now_saldo = $user->saldo + $data->amount;
-    	$user->saldo = $now_saldo;
-    	$user->save();
+        	$user = User::findOrFail($data->user_id);
+        	$now_saldo = $user->saldo + $data->amount;
+        	$user->saldo = $now_saldo;
+        	$user->save();
+        }
     }
 
     public static function boot()
