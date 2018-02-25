@@ -191,6 +191,11 @@ class TopUpController extends Controller
             'quantity' => 1,
             'name' => "Topup",
           ]],
+          'customer_details' => [
+            'first_name' => Auth::user()->name,
+            'last_name' => '',
+            'email'      => Auth::user()->email,
+          ],
           'vtweb' => []
         ];
         $url = Veritrans_VtWeb::getRedirectionUrl($params);
