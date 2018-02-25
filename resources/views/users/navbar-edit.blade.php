@@ -4,7 +4,7 @@
 
 		<!-- **** list-group-item **** -->
 
-		<a href="{{ url('dashboard') }}" class="list-group-item @if(Request::is('account'))active @endif">
+		<a href="{{ url('dashboard') }}" class="list-group-item @if(Request::is('dashboard'))active @endif">
 
 			<i class="icon icon-dashboard myicon-right"></i> Dashboard
 
@@ -84,7 +84,7 @@
 
 		<a href="{{ url('account/topup') }}" class="list-group-item @if(Request::is('account/topups'))active @endif">
 
-			<i class="fa fa-cloud-upload"></i> Top Up
+			<i class="fa fa-cloud-upload"></i> Tambah Saldo
 
 		</a> <!-- **** ./ list-group-item **** -->
 
