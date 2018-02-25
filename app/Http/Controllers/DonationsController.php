@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use DB;
 use App\Events\NewBankTransfer;
 use App\Includes\Veritrans\Veritrans_VtWeb;
+use App\Includes\Veritrans\Veritrans_Snap;
 use App\Includes\Veritrans\Veritrans_Notification;
 
 class DonationsController extends Controller
@@ -95,7 +96,7 @@ class DonationsController extends Controller
         'errors' => $validator->getMessageBag()->toArray(),
       ]);
     }
-
+    
     //<----------- ****** PAYPAL ************** ----->
     if ($this->request->payment_gateway == 'Paypal') {
       if ($this->settings->paypal_sandbox == 'true') {
@@ -299,7 +300,8 @@ class DonationsController extends Controller
 
       // Get Donation Id
       $response = $sql->id;
-      $url = '';
+      $url      = '';
+      $token    = ''; 
       try {
         $params = [
           'transaction_details' => [
@@ -319,7 +321,12 @@ class DonationsController extends Controller
           ],
           'vtweb' => []
         ];
-        $url = Veritrans_VtWeb::getRedirectionUrl($params);
+
+        if (isset($this->request->is_mobile) && $this->request->is_mobile == 1) {
+          $token = Veritrans_Snap::getSnapToken($params);
+        } else {
+          $url = Veritrans_VtWeb::getRedirectionUrl($params);
+        }
       } catch (\Exception $e) {
 
       }
@@ -329,7 +336,8 @@ class DonationsController extends Controller
         'success' => true,
         'stripeSuccess' => true,
         'data' => $response,
-        'url' => $url
+        'url' => $url,
+        'token' => $token,
       ]);
     
     //<----------- ****** MIDTRANS ************** ----->
