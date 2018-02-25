@@ -7,6 +7,7 @@ use App\Models\Locations;
 use App\Models\User;
 use App\Models\AdminSettings;
 use App\Models\Campaigns;
+use App\Models\Kabupaten;
 use App\Models\Banks;
 use App\Models\CampaignsReported;
 use App\Models\Donations;
@@ -1018,12 +1019,17 @@ class AdminController extends Controller
         }
 
 
+        $city = Kabupaten::where('id_kab', '=', $request->location)->first();
 
         $sql->title = $request->title;
 
         $sql->goal = $request->goal;
 
-        $sql->location = $request->location;
+        $sql->location          = $city->nama;
+
+        $sql->province_id = $city->id_prov;
+
+        $sql->city_id = $city->id_kab;
 
         $sql->description = Helper::removeBR($description);
 

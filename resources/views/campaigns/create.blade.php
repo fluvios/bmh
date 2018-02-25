@@ -94,7 +94,7 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
           <!-- Start Form Group -->
           <div class="form-group">
             <label>Lokasi Campaign</label>
-            <select name="location" class="form-control input-lg" >
+            <select name="location" class="form-control input-lg select2" id="location">
               @foreach($cities as $city)
                 <option value="{{ $city->id_kab }}">{{ $city->nama }}</option>
               @endforeach
@@ -394,5 +394,7 @@ $('#kategori-select2').select2({
     }
   }
 });
+
+$('#location').select2();
 </script>
 @endsection

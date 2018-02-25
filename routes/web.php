@@ -94,7 +94,10 @@ Route::post('contact/organizer', 'CampaignsController@contactOrganizer');
  | Details Campaign
  |--------- -------------------------
  */
-Route::get('campaign/{id}/{slug?}', 'CampaignsController@view');
+Route::get('campaign/{id}/{slug?}', [
+   'as' => 'campaign-detail-page',
+   'uses' => 'CampaignsController@view',
+]);
 
 /*
  |
@@ -475,3 +478,7 @@ Route::get('c/{id}/widget/show', function ($id) {
     $response = App\Models\Campaigns::where('id', $id)->where('status', 'active')->firstOrFail();
     return view('includes.embed')->withResponse($response);
 });
+
+
+// Test email
+Route::get('/email-test/{id}', 'DonationsController@emailTest');

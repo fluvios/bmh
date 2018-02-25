@@ -38,11 +38,11 @@ class SendSMSTopupNotification
      */
     public function handle(TopupSuccess $event)
     {
-        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->depositLog->amount)));
+        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->depositLog->amount), $this->settings->currency_symbol. ' ' .number_format($event->user->saldo)));
     }
 
-    public function getSMSFormat($amount)
+    public function getSMSFormat($amount, $balance)
     {
-        return env('APP_URL').': Topup sebesar '. $amount .' berhasil.';
+        return env('APP_URL').': Topup sebesar '. $amount .' berhasil. Saldo anda sekarang '.$balance;
     }
 }

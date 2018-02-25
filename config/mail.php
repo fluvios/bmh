@@ -84,7 +84,7 @@ return [
     |
     */
 
-    'username' => env('noraplay@bdv-hostmaster.com'),
+    'username' => env('MAIL_USERNAME','noraplay@bdv-hostmaster.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
     |
     */
 
-    'password' => env('bismillah0k3'),
+    'password' => env('MAIL_PASSWORD','bismillah0k3'),
 
     /*
     |--------------------------------------------------------------------------

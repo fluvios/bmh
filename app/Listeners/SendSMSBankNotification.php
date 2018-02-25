@@ -40,6 +40,6 @@ class SendSMSBankNotification
 
     public function getSMSFormat($amount, $bank, $campaignId, $expiry)
     {
-        return 'KITABISA.COM: Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk donasi #'. $campaignId. ' sebelum '. $expiry .' WIB';
+        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk donasi #'. $campaignId. ' sebelum '. $expiry .' WIB';
     }
 }
