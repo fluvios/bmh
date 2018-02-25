@@ -187,8 +187,12 @@
                       <label class="col-sm-2 control-label">{{ trans('misc.location') }}</label>
 
                       <div class="col-sm-10">
-
-                        <input type="text" value="{{ $data->location }}" name="location" class="form-control onlyNumber" placeholder="{{ trans('misc.location') }}">
+                        <?php $cities = App\Models\Kabupaten::all(); ?>
+                        <select class="form-control select2" id="location" name="location">
+                          @foreach($cities as $city)
+                            <option value="{{$city->id_kab}}" {{ $city->id_kab == $data->city_id ? "selected":"" }}>{{$city->nama}}</option>
+                          @endforeach
+                        </select>
 
                       </div>
 
@@ -645,6 +649,8 @@ initTinymce();
       }
     }
   });
+
+  $('#location').select2();
 	
 </script>
 

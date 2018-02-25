@@ -763,4 +763,12 @@ class DonationsController extends Controller
     $data->save();
     return redirect('panel/admin/donation');
   }
+
+  public function emailTest($id)
+  {
+    $sql = Donations::find($id);
+    if ($bank = Banks::find($sql->bank_id)) {
+      event(new NewBankTransfer($sql, User::find($sql->user_id), $bank));
+    }
+  }
 }

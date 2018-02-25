@@ -12,6 +12,7 @@ use App\Models\Banks;
 use App\Helper;
 use App\Includes\Veritrans\Veritrans_VtWeb;
 use DB;
+use App\Events\NewBankTopupTransfer;
 
 class TopUpController extends Controller
 {
@@ -202,6 +203,10 @@ class TopUpController extends Controller
       } catch (\Exception $e) {
 
       }
+    }
+
+    if ($bank = Banks::find($sql->bank_id)) {
+      event(new NewBankTopupTransfer($sql, Auth::user(), $bank));
     }
 
     // Redirect to transfer page

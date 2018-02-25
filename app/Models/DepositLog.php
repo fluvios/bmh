@@ -53,4 +53,9 @@ class DepositLog extends Model
             return 'Pembayaran Lain';
         }
     }
+
+    public function getExpiry()
+    {
+        return \Carbon\Carbon::parse(self::find($this->id)->expired_date)->format('d M H:i');
+    }
 }
