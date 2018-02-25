@@ -85,28 +85,31 @@
          <label for="payment_gateway">Metode Pembayaran</label>
          @foreach(  $banks as $bank )
           <div class="radio">
-            <label><input type="radio" name="payment_gateway" value="{{$bank->id}}">Transfer {{ $bank->name }}</label>
+            <label><input type="radio" name="payment_gateway" value="{{$bank->id}}">{{ $bank->name }}</label>
           </div>
          @endforeach
            <div class="radio">
-              <label><input type="radio" name="payment_gateway" value="Deposit">Potong Saldo</label>
+              <label><input type="radio" name="payment_gateway" value="Deposit">Saldo</label>
            </div>
            <div class="radio">
-              <label><input type="radio" name="payment_gateway" value="Midtrans">Midtrans</label>
+              <label><input type="radio" name="payment_gateway" value="Midtrans">Payment Gateway</label>
            </div>
            <div class="radio">
               <label><input type="radio" name="payment_gateway" value="Payment" disabled>Pembayaran Lain</label>
            </div>
        </div>
 
-			 <div class="form-group">
-				 <label>Tipe Donasi</label>
-				 <select name="donation_type" class="form-control input-lg" >
-					 <option value="">Pilih Jenis Donasi</option>
-					 <option value="Routine">Donasi Rutin</option>
-					 <option value="Isidentil">Donasi Isidentil</option>
-				 </select>
-			 </div>
+<div class="form-group">
+        <label>Tipe Donasi</label>
+           <div class="radio">
+              <label><input type="radio" name="donation_type" value="Routine">Routine</label>
+           </div>
+           <div class="radio">
+              <label><input type="radio" name="donation_type" value="Isidentil">Isidentil</label>
+           </div>
+  
+       </div>
+			
 
 			 <div class="form-group checkbox icheck">
 				 <label class="margin-zero">
