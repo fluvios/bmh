@@ -306,17 +306,22 @@ class DonationsController extends Controller
             'order_id' => 'campaign-'.$sql->id,
             'gross_amount' => $sql->donation,
           ],
-          'item_details' => [
-            'id' => 'campaign-' . $sql->campaigns_id,
-            'price' => $sql->donation,
-            'quantity' => 1,
-            'name' => "Donasi Campaign ". $sql->campaigns_id,
+          'item_details'  => [[
+            'id'          => 'campaign-' . $sql->campaigns_id,
+            'price'       => $sql->donation,
+            'quantity'    => '1',
+            'name'        => "Donasi Campaign ". $sql->campaigns_id,
+          ]],
+          'customer_details' => [
+            'first_name' => $this->request->full_name,
+            'last_name' => '',
+            'email'      => $this->request->email,
           ],
           'vtweb' => []
         ];
         $url = Veritrans_VtWeb::getRedirectionUrl($params);
       } catch (\Exception $e) {
-
+        dd($e);
       }
 
       // Redirect to transfer page

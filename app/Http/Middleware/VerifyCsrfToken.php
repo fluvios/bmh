@@ -15,6 +15,5 @@ class VerifyCsrfToken extends BaseVerifier
         //'donate/*',
         'paypal/*',
         'midtrans/*',
-        'topup/*'
     ];
 }
