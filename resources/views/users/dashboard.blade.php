@@ -35,7 +35,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
     <div class="row">
       <!-- Col MD -->
       <div class="col-md-12">
-        <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Galangbersama</h3>
+        <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Berbagi Kebaikan</h3>
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
