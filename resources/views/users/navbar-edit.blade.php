@@ -4,7 +4,7 @@
 
 		<!-- **** list-group-item **** -->
 
-		<a href="{{ url('dashboard') }}" class="list-group-item @if(Request::is('account'))active @endif">
+		<a href="{{ url('dashboard') }}" class="list-group-item @if(Request::is('dashboard'))active @endif">
 
 			<i class="icon icon-dashboard myicon-right"></i> Dashboard
 
@@ -66,17 +66,17 @@
 
 
 
-	<li class="margin-bottom-5">
+	<!-- ****<li class="margin-bottom-5">
 
 		<!-- **** list-group-item **** -->
 
-		<a href="{{ url('account/withdrawals') }}" class="list-group-item @if(Request::is('account/withdrawals'))active @endif">
+		<!-- ****<a href="{{ url('account/withdrawals') }}" class="list-group-item @if(Request::is('account/withdrawals'))active @endif">
 
 			<i class="fa fa-money myicon-right"></i> {{ trans('misc.withdrawals') }}
 
-		</a> <!-- **** ./ list-group-item **** -->
+		</a> <!-- **** ./ list-group-item 
 
-	</li>
+	</li>**** -->
 
 	<li class="margin-bottom-5">
 
@@ -84,7 +84,7 @@
 
 		<a href="{{ url('account/topup') }}" class="list-group-item @if(Request::is('account/topups'))active @endif">
 
-			<i class="fa fa-cloud-upload"></i> Top Up
+			<i class="fa fa-cloud-upload"></i> Tambah Saldo
 
 		</a> <!-- **** ./ list-group-item **** -->
 
