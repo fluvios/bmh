@@ -37,7 +37,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
       <div class="col-md-12">
         <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Galangbersama</h3>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-body">
             <h1>{{ $settings->currency_symbol.number_format($user->donationMade()) }}</h1>
@@ -46,16 +46,8 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h1>{{ $followed }}</h1>
-            <h4>Kampanye telah diikuti</h4>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-body">
             <h1>{{ $settings->currency_symbol.number_format(Auth::user()->saldo) }}</h1>
