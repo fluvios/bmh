@@ -11,6 +11,7 @@ use App\Models\DepositLog;
 use App\Models\Banks;
 use App\Helper;
 use App\Includes\Veritrans\Veritrans_VtWeb;
+use App\Includes\Veritrans\Veritrans_Snap;
 use DB;
 use App\Events\NewBankTopupTransfer;
 
@@ -179,6 +180,7 @@ class TopUpController extends Controller
     // Get Donation Id
     $response = $sql->id;
     $url = url('transfer_topup', $response);
+    $token = '';
     if ($isMidtrans) {
       try {
         $params = [
@@ -199,7 +201,11 @@ class TopUpController extends Controller
           ],
           'vtweb' => []
         ];
-        $url = Veritrans_VtWeb::getRedirectionUrl($params);
+        if (isset($this->request->is_mobile) && $this->request->is_mobile == 1) {
+          $token = Veritrans_Snap::getSnapToken($params);
+        } else {
+          $url = Veritrans_VtWeb::getRedirectionUrl($params);
+        }
       } catch (\Exception $e) {
 
       }
@@ -214,6 +220,7 @@ class TopUpController extends Controller
       'success' => true,
       'stripeSuccess' => true,
       'url' => $url,
+      'token' => $token,
     ]);
     //<----------- ****** TRANSFER ************** ----->
   }// End Method
