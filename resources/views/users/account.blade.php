@@ -69,10 +69,23 @@
 						
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
+							<label class="font-default">{{ trans('users.phone1') }}</label>
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->phone_number_1}}" name="phone_number_1" placeholder="{{ trans('users.phone1') }}" title="{{ trans('users.phone1') }}" autocomplete="off">
+					</div><!-- ***** Form Group ***** -->
+					
+					<!-- ***** Form Group ***** -->
+						<div class="form-group has-feedback">
+							<label class="font-default">{{ trans('users.phone2') }}</label>
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->phone_number_2}}" name="phone_number_2" placeholder="{{ trans('users.phone2') }}" title="{{ trans('users.phone2') }}" autocomplete="off">
+					</div><!-- ***** Form Group ***** -->
+					
+
+					<!-- ***** Form Group ***** -->
+						<div class="form-group has-feedback">
 							<label class="font-default">{{ trans('auth.email') }}</label>
 						<input type="email" class="form-control login-field custom-rounded" value="{{$user->email}}" name="email" placeholder="{{ trans('auth.email') }}" title="{{ trans('auth.email') }}" autocomplete="off">
 					</div><!-- ***** Form Group ***** -->
-					
+
 					<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">{{ trans('misc.country') }}</label>
