@@ -496,8 +496,73 @@ class DonationsController extends Controller
     }
     //<----------- ****** DEPOSIT ************** ----->
 
-    //<----------- ****** TRANSFER ************** ----->
-    else {
+        //<----------- ****** MIDTRANS ************** ----->
+    elseif ($this->request->payment_gateway == 'Midtrans') {
+      if (!isset($this->request->anonymous)) {
+        $this->request->anonymous = '0';
+      }
+
+      // Insert DB
+      $sql = new Donations;
+      $sql->campaigns_id = $this->request->campaign_id;
+      $sql->user_id = $this->request->user_id;
+      $sql->txn_id = 'null';
+      $sql->fullname = $this->request->full_name;
+      $sql->email = $this->request->email;
+      $sql->donation = $this->request->amount;
+      $sql->donation_type = $this->request->donation_type;
+      $sql->payment_gateway = "Midtrans";
+      $sql->comment = $this->request->comment;
+      $sql->amount_key = 0;
+      $sql->expired_date = \Carbon\Carbon::now()->addDay();
+      $sql->anonymous = $this->request->anonymous;
+      $sql->save();
+
+      // Get Donation Id
+      $response = $sql->id;
+      $url      = '';
+      $token    = ''; 
+      try {
+        $params = [
+          'transaction_details' => [
+            'order_id' => 'campaign-'.$sql->id,
+            'gross_amount' => $sql->donation,
+          ],
+          'item_details'  => [[
+            'id'          => 'campaign-' . $sql->campaigns_id,
+            'price'       => $sql->donation,
+            'quantity'    => 1,
+            'name'        => "Donasi Campaign ". $sql->campaigns_id,
+          ]],
+          'customer_details' => [
+            'first_name' => $this->request->full_name,
+            'last_name' => '',
+            'email'      => $this->request->email,
+          ],
+          'vtweb' => []
+        ];
+
+        if (isset($this->request->is_mobile) && $this->request->is_mobile == 1) {
+          $token = Veritrans_Snap::getSnapToken($params);
+        } else {
+          $url = Veritrans_VtWeb::getRedirectionUrl($params);
+        }
+      } catch (\Exception $e) {
+
+      }
+
+      // Redirect to transfer page
+      return response()->json([
+        'success' => true,
+        'stripeSuccess' => true,
+        'data' => $response,
+        'url' => $url,
+        'token' => $token,
+      ]);
+    
+    //<----------- ****** MIDTRANS ************** ----->
+    //<----------- ****** TRANSFER ************** ----->   
+    } else {
       if (!isset($this->request->anonymous)) {
         $this->request->anonymous = '0';
       }

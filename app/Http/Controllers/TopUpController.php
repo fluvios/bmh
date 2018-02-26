@@ -65,28 +65,69 @@ class TopUpController extends Controller
     //<----------- ****** DELIVERY ************** ----->
 
     //<----------- ****** TRANSFER ************** ----->
-    else{
+    else {
+      $isMidtrans = $this->request->payment_gateway == 'Midtrans';
+
+      $amountKey = $isMidtrans ? 0 : Helper::randomCheckKey();
+      
+      //<----------- ****** TRANSFER ************** ----->
       // Insert DB
       $sql = new DepositLog;
       $sql->user_id = $this->request->user_id;
-      $sql->bank_id = $this->request->payment_gateway;
+      $sql->bank_id = $isMidtrans ? 0 : $this->request->payment_gateway;
       $sql->amount = $this->request->amount + $amountKey;
       $sql->fullname = $user->name;
       $sql->email = $user->email;
-      $sql->payment_gateway = 'Transfer';
+      $sql->payment_gateway = $isMidtrans ? 'Midtrans' : 'Transfer';
       $sql->amount_key = $amountKey;
       $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
-
-      // Get Topup
-      $response = DepositLog::find($sql->id);
-      $response['bank'] = Banks::findOrFail($sql->bank_id);
+  
+      // Get Donation Id
+      $response = $sql->id;
+      $url = url('transfer_topup', $response);
+      $token = '';
+      if ($isMidtrans) {
+        try {
+          $params = [
+            'transaction_details' => [
+              'order_id' => 'topup-'.$sql->id,
+              'gross_amount' => $sql->amount,
+            ],
+            'item_details' => [[
+              'id' => 'topup-' . $sql->id,
+              'price' => $sql->amount,
+              'quantity' => 1,
+              'name' => "Topup",
+            ]],
+            'customer_details' => [
+              'first_name' => $user->name,
+              'last_name' => '',
+              'email'      => $user->email,
+            ],
+            'vtweb' => []
+          ];
+          if (isset($this->request->is_mobile) && $this->request->is_mobile == 1) {
+            $token = Veritrans_Snap::getSnapToken($params);
+          } else {
+            $url = Veritrans_VtWeb::getRedirectionUrl($params);
+          }
+        } catch (\Exception $e) {
+  
+        }
+      }
+  
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTopupTransfer($sql, $user, $bank));
+      }
 
       // Redirect to transfer page
       return response()->json([
         'success' => true,
         'deposit' => $response,
         'message' => 'Topup sukses',
+        'url' => $url,
+        'token' => $token,
       ]);
     }
     //<----------- ****** TRANSFER ************** ----->
