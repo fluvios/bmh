@@ -73,6 +73,8 @@ class UserController extends Controller
     $user->name        = $input['full_name'];
     $user->email        = trim($input['email']);
     $user->countries_id = $input['countries_id'];
+    $user->phone_number_1 = $input['phone_number_1'];
+    $user->phone_number_2 = $input['phone_number_2'];
     $user->save();
 
     \Session::flash('notification', trans('auth.success_update'));
