@@ -1,12 +1,11 @@
 <?php 
 // ** Data User logged ** //
-     $user = Auth::user();
 	 $settings = App\Models\AdminSettings::first();
 	 
 	 $data = App\Models\Donations::leftJoin('campaigns', function($join) {
       $join->on('donations.campaigns_id', '=', 'campaigns.id');
     })
-    ->where('campaigns.user_id',Auth::user()->id)
+  ->where('donations.user_id', Auth::user()->id)
 	->select('donations.*')
 	->addSelect('campaigns.title')
 	->orderBy('donations.id','DESC')
@@ -38,8 +37,8 @@
    		 <th class="active">ID</th>
           <th class="active">{{ trans('auth.full_name') }}</th>
           <th class="active">{{ trans_choice('misc.campaigns_plural', 1) }}</th>
-          <th class="active">{{ trans('auth.email') }}</th>
           <th class="active">{{ trans('misc.donation') }}</th>
+           <th class="active">{{ trans('Status') }}</th>
           <th class="active">{{ trans('admin.date') }}</th>
           </tr>
    		  </thead> 
@@ -50,9 +49,9 @@
                       <td>{{ $donation->id }}</td>
                       <td>{{ $donation->fullname }}</td>
                       <td><a href="{{url('campaign',$donation->campaigns_id)}}" target="_blank">{{ str_limit($donation->title, 10, '...') }} <i class="fa fa-external-link-square"></i></a></td>
-                      <td>{{ $donation->email }}</td>
                       <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
-                      <td>{{ date('d M, y', strtotime($donation->date)) }}</td>
+                      <td>{{ $donation->payment_status }}</td>
+                      <td>{{ date('d M, y', strtotime($donation->payment_date)) }}</td>
                     </tr><!-- /.TR -->
                     @endforeach
                     
