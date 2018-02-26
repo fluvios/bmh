@@ -52,14 +52,14 @@ $banks = \App\Models\Banks::all();
 				<label for="payment_gateway">Metode Pembayaran</label>
 				@foreach(  $banks as $bank )
 				 <div class="radio">
-					 <label><input type="radio" name="payment_gateway" value="{{$bank->id}}">Transfer {{ $bank->name }}</label>
+					 <label><input type="radio" name="payment_gateway" value="{{$bank->id}}">{{ $bank->name }}</label>
 				 </div>
 				@endforeach
 				<div class="radio">
-					 <label><input type="radio" name="payment_gateway" value="Deposit">Potong Saldo</label>
+					 <label><input type="radio" name="payment_gateway" value="Deposit" disabled>Saldo</label>
 				</div>
 				<div class="radio">
-				   <label><input type="radio" name="payment_gateway" value="Midtrans">Midtrans</label>
+				   <label><input type="radio" name="payment_gateway" value="Midtrans">Payment Gateway</label>
 				</div>
 				<div class="radio">
 					 <label><input type="radio" name="payment_gateway" value="Payment" disabled>Pembayaran Lain</label>
