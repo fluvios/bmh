@@ -15,6 +15,7 @@ use App\Models\Like;
 use App\Models\Cabang;
 use App\Models\Kategori;
 use App\Models\AkunTransaksi;
+use Carbon\Carbon;
 
 class APIController extends Controller
 {
@@ -33,9 +34,23 @@ class APIController extends Controller
           $donations = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->get();
           $updates = Updates::where('campaigns_id', '=', $campaign->id)->orderBy('id','desc')->get();
           $total = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->sum('donation');
+          
+          $timeNow = strtotime(Carbon::now());
+
+          if( $campaign->deadline != '' ) {
+              $deadline = strtotime($campaign->deadline);
+      
+              $date = strtotime($campaign->deadline);
+              $remaining = $date - $timeNow;
+      
+              $days_remaining = floor($remaining / 86400);
+          }
+
           $campaign['donation'] = $donations;
           $campaign['update'] = $updates;
           $campaign['total'] = $total;
+          $campaign['days_remaining'] = $days_remaining;
+          
           return $campaign;
         });
 
