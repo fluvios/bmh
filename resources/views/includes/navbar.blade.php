@@ -9,7 +9,7 @@ $categoriesTotal = App\Models\Categories::count();
 @if( Auth::check() && $userAuth->status == 'pending' )
 <div class="btn-block text-center confirmEmail">{{trans('misc.confirm_email')}} <strong>{{$userAuth->email}}</strong></div>
 @endif
-<div class="navbar navbar-inverse navbar-px padding-top-10 padding-bottom-10">
+<div class="navbar navbar-inverse padding-top-10 padding-bottom-0">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,7 +23,7 @@ $categoriesTotal = App\Models\Categories::count();
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}">
-          	<img src="{{ asset('public/img/logo.png') }}" class="logo" />
+          	<img src="{{ asset('public/img/logo.png') }}" class="logo" width="140" height="40" />
           	</a>
         </div><!-- navbar-header --> 
         
@@ -130,11 +130,11 @@ $categoriesTotal = App\Models\Categories::count();
 	          		 		</li>
 	          		 	</ul><!-- DROPDOWN MENU -->
 	          		</li>
-	          		
+	          		 @if( $userAuth->role == 'admin' )	
 	          		<li><a class="log-in custom-rounded" href="{{url('create/campaign')}}" title="{{trans('misc.create_campaign')}}">
 					<i class="glyphicon glyphicon-edit"></i> <span class="title-dropdown font-default"><strong>{{trans('misc.create_campaign')}}</strong></span></a>
 					</li>
-					
+					@endif
 					@else
 					
 					<li><a class="text-uppercase font-default" href="{{url('login')}}">{{trans('auth.login')}}</a></li>
