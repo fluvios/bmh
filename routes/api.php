@@ -24,7 +24,10 @@ Route::post('account', 'UserController@update_account');
 Route::post('account/address/home', 'UserController@update_adress_home');
 Route::post('account/address/company', 'UserController@update_adress_work');
 Route::get('account/{id?}/refresh', function($id){
-  return App\Models\User::where('id', '=', $id)->firstOrFail();
+  $user = App\Models\User::where('id', '=', $id)->firstOrFail();
+  $user['donasi'] = App\Models\Donations::where('user_id', '=', $user->id)->sum('donation');
+  $user['transaksi'] = App\Models\Donations::where('user_id', '=', $user->id)->count();
+  return $user;
 });
 
 // Password
