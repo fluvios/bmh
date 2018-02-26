@@ -66,17 +66,17 @@
 
 
 
-	<li class="margin-bottom-5">
+	<!-- ****<li class="margin-bottom-5">
 
 		<!-- **** list-group-item **** -->
 
-		<a href="{{ url('account/withdrawals') }}" class="list-group-item @if(Request::is('account/withdrawals'))active @endif">
+		<!-- ****<a href="{{ url('account/withdrawals') }}" class="list-group-item @if(Request::is('account/withdrawals'))active @endif">
 
 			<i class="fa fa-money myicon-right"></i> {{ trans('misc.withdrawals') }}
 
-		</a> <!-- **** ./ list-group-item **** -->
+		</a> <!-- **** ./ list-group-item 
 
-	</li>
+	</li>**** -->
 
 	<li class="margin-bottom-5">
 
