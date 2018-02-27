@@ -35,7 +35,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
     <div class="row">
       <!-- Col MD -->
       <div class="col-md-12">
-        <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Berbagi Kebaikan</h3>
+        <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Galangbersama</h3>
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
@@ -113,7 +113,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
           <div class="panel-body">
             <h4>Informasi Kontak</h4>
             <h5>Nama: {{ Auth::user()->name }}</h5>
-            <h5>Alamat: {{ $address->alamat }}</h5>
+            <h5>Alamat: {{ Auth::user()->phone_number_1 }}</h5>
             <h5>Email: {{ Auth::user()->email }}</h5>
             <a href="{{ url('account') }}" class="btn btn-primary">
               <i class="icon icon-pencil myicon-right"></i> Edit Kontak
