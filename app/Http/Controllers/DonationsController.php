@@ -454,7 +454,6 @@ class DonationsController extends Controller
     elseif ($this->request->payment_gateway == 'Deposit') {
       $user = User::where('id', '=', $this->request->user_id)->firstOrFail();
       if ($user->saldo > 0 && $user->saldo > $this->request->amount) {
-        # code...
         if (!isset($this->request->anonymous)) {
           $this->request->anonymous = '0';
         }
