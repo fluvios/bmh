@@ -55,15 +55,14 @@ class RegisterController extends Controller
       );
 
       return Validator::make($data, [
-        'user_id' => 'required',
-        'type' => 'required',
-        'datebirth' => 'required',
+        'user_id' => '',
+        'datebirth' => '',
         'phone1' => 'required',
-        'phone2' => 'required',
+        'phone2' => '',
         'name' => 'required|max:255',
         'email' => 'required|email|max:255|unique:users',
         'password' => 'required|min:6|confirmed',
-        'countries_id'     => 'required',
+        'countries_id'     => '',
       ], $messages);
     }
 
@@ -109,7 +108,7 @@ class RegisterController extends Controller
         }
 
         // Send sms
-        // $phone1 = apifunction::sendsms($data['phone1'], "Verify your account now");
+         $phone1 = apifunction::sendsms($data['phone1'], "BerbagiKebaikan.org - Silakan Cek Email Anda untuk Verifikasi Akun Anda");
         // $phone2 = apifunction::sendsms($data['phone2'], "Verify your account now");
       } else {
         $confirmation_code = '';
@@ -120,14 +119,13 @@ class RegisterController extends Controller
 
       return User::create([
         'user_id' => $data['user_id'],
-        'type' => $data['type'],
-        'born_date' => date('Y-m-d', strtotime($data['datebirth'])),
+        'born_date' => '',
         'phone_number_1' => $data['phone1'],
-        'phone_number_2' => $data['phone2'],
+        'phone_number_2' => '',
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => bcrypt($data['password']),
-        'countries_id' => $data['countries_id'],
+        'countries_id' => 'Indonesia',
         'avatar' => 'default.jpg',
         'status' => $status,
         'role' => 'normal',
