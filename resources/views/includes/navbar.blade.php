@@ -1,7 +1,9 @@
 <?php 
 $userAuth = Auth::user(); 
-$categoriesMenu = App\Models\Categories::where('mode','on')->where('slug', '!=', 'public')->orderBy('name')->take(6)->get();
-$categoriesTotal = App\Models\Categories::count();
+$categoriesMenu = App\Models\Kategori::orderBy('nama')->take(6)->get();
+$categoriesTotal = App\Models\Kategori::count();
+$cabang = App\Models\Cabang::orderBy('nama')->take(6)->get();
+$cabangTotal = App\Models\Cabang::count();
 ?>
 
 <div class="btn-block text-center showBanner padding-top-10 padding-bottom-10" style="display:none;">{{trans('misc.cookies_text')}} <button class="btn btn-sm btn-success" id="close-banner">{{trans('misc.agree')}}</button></div>
@@ -19,7 +21,7 @@ $categoriesTotal = App\Models\Categories::count();
         	<?php endif; ?>
         	
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}">
@@ -31,24 +33,7 @@ $categoriesTotal = App\Models\Categories::count();
 		     
         	<ul class="nav navbar-nav navbar-right">
           		
-          		<li>
-          			<a href="#search"  class="text-uppercase font-default">
-        				<i class="glyphicon glyphicon-search"></i> <span class="title-dropdown font-default"><strong>{{ trans('misc.search') }}</strong></span>
-        				</a>
-          			
-          			<!--<ul class="dropdown-menu arrow-up list-search">
-	        			<li>
-	        				
-	        				<form action="{{ url('search') }}" method="get" class="formSearh">
-							  <div class="col-thumb">
-							    <input type="text" name="q" id="btnItems" class="focus-off" placeholder="{{trans('misc.search')}}">
-							  </div>
-							  <button type="submit" class="btn btn-success btn-xs btn_search" id="btnSearch">{{trans('misc.search')}}</button>
-							</form>
-	        				
-	        			</li>
-	        		</ul>-->
-          		</li>
+          		
           		
           		<li @if(Request::is('/')) class="active-navbar" @endif>
         				<a class="text-uppercase font-default" href="{{ url('/') }}">{{ trans('misc.campaigns') }}</a>
@@ -56,16 +41,16 @@ $categoriesTotal = App\Models\Categories::count();
         		
         		@if( $categoriesTotal != 0 )	
         		<li class="dropdown">
-        			<a href="javascript:void(0);"  data-toggle="dropdown" class="text-uppercase font-default">{{trans('misc.categories')}}
+        			<a href="javascript:void(0);"  data-toggle="dropdown" class="text-uppercase font-default">KATEGORI
         				<i class="ion-chevron-down margin-lft5"></i>
         				</a>
         				
         				<!-- DROPDOWN MENU -->
         				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
-        				@foreach(  $categoriesMenu as $category )
-        					<li @if(Request::path() == "category/$category->slug") class="active" @endif>
-        						<a href="{{ url('category') }}/{{ $category->slug }}" class="text-overflow">
-        						{{ $category->name }}
+        				@foreach(  $categoriesMenu as $kategori)
+        					<li @if(Request::path() == "category/$kategori->nama") class="active" @endif>
+        						<a href="{{ url('kategori') }}/{{ $kategori->nama }}" class="text-overflow">
+        						{{ $kategori->nama }}
         							</a>
         					</li>
         					@endforeach
@@ -79,7 +64,32 @@ $categoriesTotal = App\Models\Categories::count();
         				
         		</li><!-- Categories -->
         		@endif
-        			
+        		<!-- Cabang-->
+        			@if( $cabangTotal != 0 )	
+        		<li class="dropdown">
+        			<a href="javascript:void(0);"  data-toggle="dropdown" class="text-uppercase font-default">CABANG
+        				<i class="ion-chevron-down margin-lft5"></i>
+        				</a>
+        				
+        				<!-- DROPDOWN MENU -->
+        				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
+        				@foreach(  $cabang as $cabang)
+        					<li @if(Request::path() == "cabang/$kategori->nama") class="active" @endif>
+        						<a href="{{ url('cabang') }}/{{ $cabang->nama }}" class="text-overflow">
+        						{{ $cabang->nama }}
+        							</a>
+        					</li>
+        					@endforeach
+        					
+        					@if( $cabangTotal > 6 )
+			        		<li><a href="{{ url('categories') }}">
+			        			<strong>{{ trans('misc.view_all') }} <i class="fa fa-long-arrow-right"></i></strong>
+			        		</a></li>
+			        		@endif
+        				</ul><!-- DROPDOWN MENU -->
+        				
+        		</li><!-- cabang-->
+        		@endif
         			@foreach( \App\Models\Pages::where('show_navbar', '1')->get() as $_page )
 					 	<li @if(Request::is("page/$_page->slug")) class="active-navbar" @endif>
 					 		<a class="text-uppercase font-default" href="{{ url('page',$_page->slug) }}">{{ $_page->title }}</a>
@@ -146,6 +156,24 @@ $categoriesTotal = App\Models\Categories::count();
 						</li>
 
         	  @endif
+        	  <li>
+          			<a href="#search"  class="text-uppercase font-default">
+        				<i class="glyphicon glyphicon-search"></i> <span class="title-dropdown font-default"><strong>{{ trans('misc.search') }}</strong></span>
+        				</a>
+          			
+          			<!--<ul class="dropdown-menu arrow-up list-search">
+	        			<li>
+	        				
+	        				<form action="{{ url('search') }}" method="get" class="formSearh">
+							  <div class="col-thumb">
+							    <input type="text" name="q" id="btnItems" class="focus-off" placeholder="{{trans('misc.search')}}">
+							  </div>
+							  <button type="submit" class="btn btn-success btn-xs btn_search" id="btnSearch">{{trans('misc.search')}}</button>
+							</form>
+	        				
+	        			</li>
+	        		</ul>-->
+          		</li>
           </ul>
             
          </div><!--/.navbar-collapse -->
