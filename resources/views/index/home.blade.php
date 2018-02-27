@@ -16,22 +16,19 @@ $total_members      = App\Models\User::count();
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <img src="https://www.sec.gov/files/crowdfunding-v5b-2016.jpg" alt="Los Angeles" style="width:100%; height:350px;">
+        <img src="https://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-banner-2-new-01.jpg" alt="Los Angeles" ">
       </div>
 
       <div class="item">
-        <img src="http://d3gtswiihfkcji.cloudfront.net/uploads/2015/08/05104938/Crowdfunding-concept.jpg" alt="Chicago" style="width:100%;height:350px;">
+        <img src="https://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-Banner-dai-tangguh-profile-02.jpg" alt="Chicago" >
       </div>
 
-      <div class="item">
-        <img src="https://hipgive.org/wp-content/uploads/2015/08/what-is-crowdfunding-copy.jpg" alt="Chicago" style="width:100%;height:350px;">
-      </div>
+      
     </div>
 
     <!-- Left and right controls -->
@@ -48,7 +45,7 @@ $total_members      = App\Models\User::count();
 
 @if( $data->total() != 0 )
 <div class="container margin-bottom-40">
-  <div class="col-md-12 btn-block margin-bottom-40">
+  <div class="col-md-5 btn-block margin-bottom-40">
     <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{trans('misc.campaigns')}}</h1>
     <h5 class="btn-block text-center class-montserrat subtitle-color">{{trans('misc.recent_campaigns')}}</h5>
   </div>
