@@ -4,8 +4,8 @@
 
 	$percentage = round($response->donations()->where('payment_status', '=', 'paid')->sum('donation') / $response->goal * 100);
 
-	if( $percentage > 100 ) {
-		$percentage = 100;
+	if( $percentage > 2000 ) {
+		$percentage = 2000;
 	} else {
 		$percentage = $percentage;
 	}
