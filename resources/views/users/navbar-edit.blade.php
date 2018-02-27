@@ -1,3 +1,8 @@
+
+<?php 
+$userAuth = Auth::user(); 
+?>
+
 <ul class="nav nav-pills nav-stacked">
 
 	<li class="margin-bottom-5">
@@ -36,7 +41,7 @@
 
 	</li>
 
-
+@if( $userAuth->role == 'admin' ) 
 
 	<li class="margin-bottom-5">
 
@@ -49,6 +54,7 @@
 		</a> <!-- **** ./ list-group-item **** -->
 
 	</li>
+	@endif
 
 
 
@@ -89,7 +95,17 @@
 		</a> <!-- **** ./ list-group-item **** -->
 
 	</li>
+<li class="margin-bottom-5">
 
+		<!-- **** list-group-item **** -->
+
+		<a href="{{ url('account/mutasi') }}" class="list-group-item @if(Request::is('account/mutasi'))active @endif">
+
+			<i class="ion ion-speakerphone myicon-right"></i> Mutasi Saldo
+
+		</a> <!-- **** ./ list-group-item **** -->
+
+	</li>
 
 
 </ul>
