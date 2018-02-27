@@ -26,7 +26,7 @@
 
       <h2 class="text-center position-relative">{{ trans('auth.sign_up') }}</h2>
 
-      <div class="login-form">
+      <div class="login-form-1">
 
         @if (session('notification'))
         <div class="alert alert-success text-center">
@@ -46,35 +46,14 @@
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
           <!-- FORM GROUP -->
+          <div class="row">
+           <div class="col-md-6">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('user_id') }}" name="user_id" placeholder="{{ trans('users.id') }}" title="{{ trans('users.id') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-          </div><!-- ./FORM GROUP -->
+            <input type="hidden" class="form-control login-field custom-rounded" value="{{ old('user_id') }}" name="user_id" placeholder="KTP" title="{{ trans('users.id') }}" autocomplete="off">
 
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <select name="type" class="form-control" >
-              <option value="personal">Personal</option>
-            </select>
           </div><!-- ./FORM GROUP -->
-
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('datebirth') }}" id="datebirth" name="datebirth" placeholder="{{ trans('users.datebirth') }}" title="{{ trans('users.datebirth') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-          </div><!-- ./FORM GROUP -->
-
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('phone1') }}" name="phone1" placeholder="{{ trans('users.phone1') }}" title="{{ trans('users.phone1') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-          </div><!-- ./FORM GROUP -->
-
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('phone2') }}" name="phone2" placeholder="{{ trans('users.phone2') }}" title="{{ trans('users.phone2') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-          </div><!-- ./FORM GROUP -->
+</div>
+</div>
 
           <!-- FORM GROUP -->
           <div class="form-group has-feedback">
@@ -82,11 +61,23 @@
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div><!-- ./FORM GROUP -->
 
+         <div class="row">
+           <div class="col-md-6">
+          <!-- FORM GROUP -->
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control login-field custom-rounded" value="{{ old('phone1') }}" name="phone1" placeholder="{{ trans('users.phone1') }}" title="{{ trans('users.phone1') }}" autocomplete="off">
+            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+        </div>
+      </div>
+      
+         <div class="col-md-6">
           <!-- FORM GROUP -->
           <div class="form-group has-feedback">
             <input type="text" class="form-control login-field custom-rounded" value="{{ old('email') }}" name="email" placeholder="{{ trans('auth.email') }}" title="{{ trans('auth.email') }}" autocomplete="off">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div><!-- ./FORM GROUP -->
+ </div>
+          </div>
 
           <!-- FORM GROUP -->
           <div class="form-group has-feedback">
@@ -99,16 +90,6 @@
             <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
           </div>
 
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <select name="countries_id" class="form-control" >
-              <option value="">{{trans('misc.select_your_country')}}</option>
-              @foreach(  App\Models\Countries::orderBy('country_name')->get() as $country )
-              <option value="{{$country->id}}">{{ $country->country_name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <!-- ./FORM GROUP -->
 
           @if( $settings->captcha == 'on' )
           <div class="form-group has-feedback">
@@ -120,8 +101,11 @@
             </div>
           </div>
           @endif
-
+<div class="row">
+           <div class="col-md-3">
           <button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('auth.sign_up') }}</button>
+        </div>
+      </div>
         </form>
       </div><!-- Login Form -->
 
