@@ -241,7 +241,9 @@ class DonationsController extends Controller
         $response = $sql->id;
 
         // Update Saldo
-        User::where('id', Auth::user()->id)->update(array( 'saldo' => $saldo ));
+        $user = User::find(Auth::user()->id);
+        $user->saldo = $saldo;
+        $user->save();
 
         return response()->json([
           'success' => true,
@@ -476,7 +478,8 @@ class DonationsController extends Controller
 
         // Update Saldo
         $saldo = $user->saldo - $this->request->amount;
-        User::where('id', $this->request->user_id)->update(array( 'saldo' => $saldo ));
+        $user->saldo = $saldo;
+        $user->save();
         
         // Get Donation Data
         $response = $sql;

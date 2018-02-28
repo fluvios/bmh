@@ -511,8 +511,10 @@ class AdminController extends Controller
     public function donationAccept($id)
     {
         $data = Donations::findOrFail($id);
-        $data->payment_status = 'paid';
-        $data->save();
+        if ($data->payment_status != 'paid') {
+            $data->payment_status = 'paid';
+            $data->save();
+        }
 
         return redirect('panel/admin/donations/'.$id);
     }

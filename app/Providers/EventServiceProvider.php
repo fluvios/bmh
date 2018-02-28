@@ -28,6 +28,14 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendSMSTopupNotification',
             'App\Listeners\SendEmailTopupNotification',
         ],
+        'App\Events\BalanceReduced' => [
+            'App\Listeners\SendSMSBalanceReducedNotification',
+            'App\Listeners\SendEmailBalanceReducedNotification',
+        ],
+        'App\Events\DonationSuccess' => [
+            'App\Listeners\SendSMSDonationSuccessNotification',
+            'App\Listeners\SendEmailDonationSuccessNotification',
+        ],
     ];
 
     /**

@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Events\DonationSuccess;
+
 class Donations extends Model
 {
     protected $guarded = array();
@@ -22,6 +24,11 @@ class Donations extends Model
         return \Carbon\Carbon::parse(self::find($this->id)->expired_date)->format('d M H:i');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
     public function getPaymentMethod()
     {
         if ($bank = Banks::find($this->bank_id)) {
@@ -31,5 +38,16 @@ class Donations extends Model
         } else {
             return 'Pembayaran Lain';
         }
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($donation) {
+            if ($donation->payment_status == 'paid') {
+                event(new DonationSuccess($donation, $donation->user));
+            }
+        });
     }
 }

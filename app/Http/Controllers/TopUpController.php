@@ -346,13 +346,16 @@ class TopUpController extends Controller
   public function topupAccept($id)
   {
     $data = DepositLog::findOrFail($id);
-    $data->payment_status = 'paid';
-    $data->save();
+    if ($data->payment_status == 'unpaid') {
+      $data->payment_status = 'paid';
 
-    $user = User::findOrFail($data->user_id);
-    $now_saldo = $user->saldo + $data->amount;
-    $user->saldo = $now_saldo;
-    $user->save();
+      $user = User::findOrFail($data->user_id);
+      $now_saldo = $user->saldo + $data->amount;
+      $user->saldo = $now_saldo;
+      $user->save();
+      
+      $data->save();
+    }
 
     return redirect('panel/admin/top_up/'.$id);
   }

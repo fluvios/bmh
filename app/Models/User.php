@@ -6,6 +6,8 @@ use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Events\BalanceReduced;
+
 class User extends Authenticatable
 {
     use Notifiable, Billable;
@@ -69,5 +71,16 @@ class User extends Authenticatable
       } else {
         return '088213144444';
       }
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($user) {
+          if ($user->isDirty('saldo') && $user->saldo < $user->getOriginal('saldo')) {
+            event(new BalanceReduced($user, $user->saldo, $user->getOriginal('saldo')));
+          }
+        });
     }
 }
