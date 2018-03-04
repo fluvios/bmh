@@ -50,6 +50,12 @@
 				</div>
 			</div>
                   
+			<!-- Start Form Group -->
+			<div class="form-group">
+				<label>Judul Update</label>
+				<input type="text" value="{{ old('title') }}" name="title" id="title" class="form-control" placeholder="Judul Update">
+			</div><!-- /.form-group-->
+
                   <div class="form-group">
                       <label>{{ trans('misc.update_details') }}</label>
                       	<textarea name="description" rows="4" id="description" class="form-control" placeholder="{{ trans('misc.update_details_desc') }}"></textarea>

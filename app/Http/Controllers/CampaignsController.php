@@ -513,6 +513,7 @@ class CampaignsController extends Controller
     $input      = $this->request->all();
     $validator = Validator::make($input, [
       'photo'           => 'mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
+      'title'  => 'required|min:5',
       'description'  => 'required|min:20',
     ]);
 
@@ -563,6 +564,7 @@ class CampaignsController extends Controller
 
     $sql                        = new Updates;
     $sql->image           = $image;
+    $sql->title           = $this->request->title;
     $sql->description     = trim(Helper::checkTextDb($this->request->description));
     $sql->campaigns_id = $this->request->id;
     $sql->date               = Carbon::now();
@@ -602,6 +604,7 @@ class CampaignsController extends Controller
     $input      = $this->request->all();
     $validator = Validator::make($input, [
       'photo'           => 'mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
+      'title'        => 'required|min:5',
       'description'  => 'required|min:20',
     ]);
 
@@ -654,6 +657,7 @@ class CampaignsController extends Controller
     }//<====== End HasFile
 
     $sql->image        = $image;
+    $sql->title           = $this->request->title;
     $sql->description = trim(Helper::checkTextDb($this->request->description));
     $sql->save();
 
