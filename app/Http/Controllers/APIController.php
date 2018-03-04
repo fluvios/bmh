@@ -9,6 +9,7 @@ use App\Models\AdminSettings;
 use App\Models\Campaigns;
 use App\Models\Categories;
 use App\Models\Donations;
+use App\Models\DepositLog;
 use App\Models\Updates;
 use App\Helper;
 use App\Models\Like;

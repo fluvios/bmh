@@ -79,6 +79,13 @@ Route::get('history/{id?}', function($id) {
     return $donations;
 });
 
+// Route for saldo history
+Route::get('history/saldo/{id?}', function($id) {
+  $deposits = App\Models\DepositLog::where('user_id', '=', $id)->get();
+
+  return $deposits;
+});
+
 Route::any('cabang', 'APIController@cabang');
 Route::any('kategori', 'APIController@kategori');
 Route::any('akun-transaksi', 'APIController@akunTransaksi');
