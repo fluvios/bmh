@@ -48,11 +48,14 @@
      
       <p class="desc-campaigns">
         <span class="stats-campaigns">
+
           <span class="pull-left">
+          {{trans('misc.raised')}}</br>
             <strong>{{$settings->currency_symbol.number_format($key->donations()->where('payment_status','=','paid')->sum('donation'))}}</strong> 
-            {{trans('misc.raised')}}
+           
           </span> 
-          <span class="pull-right"><strong>{{$percentage }}%</strong></span> 
+
+          <span class="pull-right"></br><strong>{{$percentage }}%</strong></span> 
         </span>
 
         <span class="progress">
@@ -62,6 +65,7 @@
 
       <h6 class="margin-bottom-zero">
         <em><strong>{{ trans('misc.goal') }} {{$settings->currency_symbol.number_format($key->goal)}}</strong></em>
+
       </h6>
 
     </div><!-- /caption -->
