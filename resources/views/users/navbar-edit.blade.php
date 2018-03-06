@@ -2,7 +2,20 @@
 <?php 
 $userAuth = Auth::user(); 
 ?>
-
+<div class="panel panel-default ">
+          <div class="panel-body">
+          	<center>
+          	<img src="{{ asset('public/avatar').'/'.Auth::user()->avatar }}" alt="User" s class="img-circle avatarUser margin-bottom-10" width="100" height="100"   />
+            <p class=" subtitle-color-9 text-uppercase"><a >Informasi Kontak</a></p>
+            <h5 class="subtitle-color-10" >Nama  : {{ Auth::user()->name }}</h5>
+            <h5 class="subtitle-color-10">Alamat: {{ Auth::user()->phone_number_1 }}</h5>
+            <h5 class="subtitle-color-10">Email : {{ Auth::user()->email }}</h5>
+            <a href="{{ url('account') }}" class="btn btn-primary">
+              <i class="icon icon-pencil myicon-right"></i> Edit Kontak
+            </a>
+         
+          </div>
+        </div>
 <ul class="nav nav-pills nav-stacked">
 
 	<li class="margin-bottom-5">
