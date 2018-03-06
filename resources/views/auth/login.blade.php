@@ -11,14 +11,9 @@
 
 @section('content')
 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h1 class="title-site">{{ trans('auth.login') }}</h1>
-        <p class="subtitle-site"><strong>{{$settings->title}}</strong></p>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
+
+<div class="container margin-top-100 margin-bottom-40">
 	
 	<div class="row">
 <!-- Col MD -->
@@ -27,7 +22,8 @@
 	<h2 class="text-center line position-relative">{{ trans('misc.welcome_back') }}</h2>
 	
 	<div class="login-form">
-		
+		<h1 class="subtitle-color-5 text-uppercase text-center">{{ trans('auth.login') }}</h1>
+        <p class="subtitle-color-6 text-center"><strong>{{$settings->title}}</strong></p>
 		@include('errors.errors-forms')
 					
 					@if (session('login_required'))
