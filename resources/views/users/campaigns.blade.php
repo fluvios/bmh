@@ -13,7 +13,7 @@
 <div class="container margin-top-90 margin-bottom-40">
 	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.campaigns') }}</h2>
 		<!-- Col MD -->
-		<div class="col-md-8 margin-bottom-20">
+		<div class="login-form-2 col-md-8 margin-bottom-20">
 			
 			@if (session('notification'))
 			<div class="alert alert-warning btn-sm alert-fonts" role="alert">
@@ -24,7 +24,7 @@
 
 
 
-<div class=" login-form-2 table-responsive">
+<div class="  table-responsive">
    <table class="table table-striped"> 
    	
    	@if( $data->total() !=  0 && $data->count() != 0 )
