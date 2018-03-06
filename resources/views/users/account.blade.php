@@ -7,17 +7,13 @@
 @section('title') {{ trans('users.account_settings') }} - @endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ trans('users.account_settings') }}</h2>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
+
+<div class="container margin-top-90 margin-bottom-40">
 	
 			<!-- Col MD -->
-		<div class="col-md-8 margin-bottom-20">
-	
+		<div class="login-form-2 col-md-8 margin-bottom-20">
+	<h2 class="subtitle-color-7 text-uppercase margin-bottom-20">Informasi <a> Kontak</a></h2>
 			@if (session('notification'))
 			<div class="alert alert-success btn-sm alert-fonts" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
