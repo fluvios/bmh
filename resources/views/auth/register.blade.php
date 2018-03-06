@@ -11,14 +11,9 @@
 
 @section('content')
 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-  <div class="container wrap-jumbotron position-relative">
-    <h1 class="title-site">{{ trans('auth.sign_up') }}</h1>
-    <p class="subtitle-site"><strong>{{$settings->title}}</strong></p>
-  </div>
-</div>
 
-<div class="container margin-bottom-40">
+
+<div class="container margin-top-100 margin-bottom-40">
 
   <div class="row">
     <!-- Col MD -->
@@ -26,8 +21,9 @@
 
       <h2 class="text-center position-relative">{{ trans('auth.sign_up') }}</h2>
 
-      <div class="login-form-1">
-
+      <div class="login-form">
+<h1 class="subtitle-color-5 text-uppercase text-center">{{ trans('auth.sign_up') }}</h1>
+    <p class="subtitle-color-6 text-center"><strong>{{$settings->title}}</strong></p>
         @if (session('notification'))
         <div class="alert alert-success text-center">
 
@@ -102,9 +98,9 @@
           </div>
           @endif
 <div class="row">
-           <div class="col-md-3">
+           
           <button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('auth.sign_up') }}</button>
-        </div>
+        
       </div>
         </form>
       </div><!-- Login Form -->
