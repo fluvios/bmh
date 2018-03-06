@@ -8,14 +8,10 @@
 @section('title') {{ trans('misc.campaigns') }} - @endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ trans('misc.campaigns') }}</h2>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
-	
+
+<div class="container margin-top-90 margin-bottom-40">
+	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.campaigns') }}</h2>
 		<!-- Col MD -->
 		<div class="col-md-8 margin-bottom-20">
 			
@@ -26,15 +22,9 @@
             		</div>
             	@endif
 
-@if(  $settings->payment_gateway == 'Paypal' && $data->total() !=  0 && $data->count() != 0 )
-<h6>* {{trans('misc.fund_detail_alert')}} {{$settings->fee_donation}}% + (PayPal {{config('commissions.paypal_fee')}}% + {{config('commissions.paypal_cents')}}) = {{$settings->fee_donation + config('commissions.paypal_fee')}}% + {{config('commissions.paypal_cents')}}</h6>
-@endif
 
-@if(  $settings->payment_gateway == 'Stripe' && $data->total() !=  0 && $data->count() != 0 )
-<h6>* {{trans('misc.fund_detail_alert')}} {{$settings->fee_donation}}% + (Stripe {{config('commissions.stripe_fee')}}% + {{config('commissions.stripe_cents')}}) = {{$settings->fee_donation + config('commissions.stripe_fee') }}% + {{config('commissions.stripe_cents')}}</h6>
-@endif
 
-<div class="table-responsive">
+<div class=" login-form-2 table-responsive">
    <table class="table table-striped"> 
    	
    	@if( $data->total() !=  0 && $data->count() != 0 )
@@ -142,11 +132,11 @@
 			            'class' => 'displayInline'
 				        ]) !!}
 				        				        
-	            	{!! Form::submit(trans('misc.make_withdrawal'), ['class' => 'btn btn-success btn-xs padding-btn']) !!}
+	            	{!! Form::submit(trans('misc.finalized'), ['class' => 'btn btn-success btn-xs padding-btn']) !!}
 	        	{!! Form::close() !!}
 
                       	@else
-                      	{{ trans('misc.finalized') }}
+                      	{!! Form::submit(trans('misc.finalized'), ['class' => 'btn btn-success btn-xs padding-btn']) !!}
                       	@endif
                       		
                       	@endif
