@@ -23,19 +23,15 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
 @section('title') {{ trans('misc.donations') }} - @endsection
 
 @section('content')
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-  <div class="container wrap-jumbotron position-relative">
-    <h2 class="title-site">{{ trans('misc.donations') }}</h2>
-  </div>
-</div>
 
-<div class="container margin-bottom-40">
+
+<div class="container margin-top-90 margin-bottom-40">
 
   <div class="col-md-8">
     <div class="row">
       <!-- Col MD -->
       <div class="col-md-12">
-        <h3>Selamat datang <b>{{ Auth::user()->name }}</b> di panel dashboard Galangbersama</h3>
+        <p class="subtitle-color-8 text-uppercase">Selamat datang <b>{{ Auth::user()->name }}</b> di dasboard <a>{{$settings->title}}</a></p>
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
@@ -58,7 +54,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
     </div>
 
     <div class="row">
-      <div class="col-md-6 margin-bottom-20">
+      <div class="col-md-12 margin-bottom-20">
         <h4>Donasi Terbaru</h4>
         <div class="table-responsive">
           <table class="table table-striped">
@@ -108,23 +104,14 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
 
       </div><!-- /COL MD -->
 
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h4>Informasi Kontak</h4>
-            <h5>Nama: {{ Auth::user()->name }}</h5>
-            <h5>Alamat: {{ Auth::user()->phone_number_1 }}</h5>
-            <h5>Email: {{ Auth::user()->email }}</h5>
-            <a href="{{ url('account') }}" class="btn btn-primary">
-              <i class="icon icon-pencil myicon-right"></i> Edit Kontak
-            </a>
-          </div>
-        </div>
+      <div class="col-md-4">
+        
       </div>
     </div>
   </div>
 
-  <div class="col-md-4">
+  <div  class="col-md-4 margin-top-50">
+     
     @include('users.navbar-edit')
   </div>
 
