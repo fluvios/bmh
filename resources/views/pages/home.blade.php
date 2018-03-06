@@ -3,24 +3,19 @@
 @section('title') {{ $title }} @endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ $response->title }}</h2>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
-	
+
+<div class="container margin-bottom-40 margin-top-100">
+	  <h2 class="subtitle-color-5 text-uppercase ">{{ $response->title }}</h2>
 	<div class="row"></div>
 <!-- Col MD -->
 <div class="col-md-12">	
-		
-	<ol class="breadcrumb bg-none">
+	<ol class="breadcrumb bg-none pull-right">
           	<li><a href="{{ URL::to('/') }}"><i class="glyphicon glyphicon-home myicon-right"></i></a></li>
           	<li class="active">{{ $response->title }}</li>
           </ol>
 	<hr />
-     	
+     	</br>
      <dl>
      	<dd>
      		<?php echo html_entity_decode($response->content) ?>
