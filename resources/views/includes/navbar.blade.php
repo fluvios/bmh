@@ -6,13 +6,15 @@ $cabang = App\Models\Cabang::orderBy('nama')->take(6)->get();
 $cabangTotal = App\Models\Cabang::count();
 ?>
 
-<div class="btn-block text-center showBanner padding-top-10 padding-bottom-10" style="display:none;">{{trans('misc.cookies_text')}} <button class="btn btn-sm btn-success" id="close-banner">{{trans('misc.agree')}}</button></div>
+<div class="navbar navbar-inverse padding-top-20 padding-bottom-10 navbar-fixed-top">
+
+      <div class="container">
+        <div class="btn-block text-center showBanner padding-top-10 padding-bottom-10" style="display:none;">{{trans('misc.cookies_text')}} <button class="btn btn-sm btn-success" id="close-banner">{{trans('misc.agree')}}</button></div>
 
 @if( Auth::check() && $userAuth->status == 'pending' )
 <div class="btn-block text-center confirmEmail">{{trans('misc.confirm_email')}} <strong>{{$userAuth->email}}</strong></div>
 @endif
-<div class="navbar navbar-inverse padding-top-10 padding-bottom-0">
-      <div class="container">
+
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           	
@@ -25,18 +27,18 @@ $cabangTotal = App\Models\Cabang::count();
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}">
-          	<img src="{{ asset('public/img/logo.png') }}" class="logo" width="140" height="40" />
+          	<img src="{{ asset('public/img/logo.png') }}" class="logo" />
           	</a>
         </div><!-- navbar-header --> 
         
         <div class="navbar-collapse collapse">
 		     
-        	<ul class="nav navbar-nav navbar-right">
+        	<ul class="nav navbar-nav navbar-lift ">
           		
           		
           		
-          		<li @if(Request::is('/')) class="active-navbar" @endif>
-        				<a class="text-uppercase font-default" href="{{ url('/') }}">{{ trans('misc.campaigns') }}</a>
+          		<li class="dropdown"  >
+        				<a  class="@if(Request::is('/')) active-navbar @endif> text-uppercase font-default" href="{{ url('/') }}">HOME</a>
         			</li>
         		
         		@if( $categoriesTotal != 0 )	
@@ -91,14 +93,18 @@ $cabangTotal = App\Models\Cabang::count();
         		</li><!-- cabang-->
         		@endif
         			@foreach( \App\Models\Pages::where('show_navbar', '1')->get() as $_page )
-					 	<li @if(Request::is("page/$_page->slug")) class="active-navbar" @endif>
-					 		<a class="text-uppercase font-default" href="{{ url('page',$_page->slug) }}">{{ $_page->title }}</a>
+					 	<li  class="dropdown">
+					 		<a class="@if(Request::is("page/$_page->slug")) active-navbar   @endif> text-uppercase font-default" href="{{ url('page',$_page->slug) }}">{{ $_page->title }}</a>
 					 		</li>
 					 	@endforeach
+           </ul>
+
+
+           <ul class="nav navbar-nav navbar-right">
         		
         		@if( Auth::check() )
         			
-        			<li class="dropdown">
+        			<li class="dropdown" >
 			          <a href="javascript:void(0);" data-toggle="dropdown" class="userAvatar myprofile dropdown-toggle">
 			          		<img src="{{ asset('public/avatar').'/'.$userAuth->avatar }}" alt="User" class="img-circle avatarUser" width="35" height="35" />
 			          		<span class="title-dropdown font-default"><strong>{{ trans('users.my_profile') }}</strong></span> 
@@ -116,15 +122,16 @@ $cabangTotal = App\Models\Cabang::count();
 	          		 			
 	          		 			<li>
 	          		 			<a href="{{ url('dashboard') }}" class="text-overflow">
-	          		 				<i class="glyphicon glyphicon-cog myicon-right"></i> {{ trans('users.account_settings') }}
+	          		 				<i class="glyphicon glyphicon-cog myicon-right"></i>Dasboard
 	          		 				</a>
 	          		 			</li>
+                      @if( $userAuth->role == 'admin' ) 
 	          		 			<li>
 	          		 			<a href="{{ url('account/campaigns') }}" class="text-overflow">
 	          		 				<i class="ion ion-speakerphone myicon-right"></i> {{ trans('misc.campaigns') }}
 	          		 				</a>
 	          		 			</li>
-	          		 			
+	          		 			@endif
 	          		 			<li>
 	          		 			<a href="{{ url('user/likes') }}" class="text-overflow">
 	          		 				<i class="fa fa-heart myicon-right"></i> {{ trans('misc.likes') }}
@@ -147,10 +154,10 @@ $cabangTotal = App\Models\Cabang::count();
 					@endif
 					@else
 					
-					<li><a class="text-uppercase font-default" href="{{url('login')}}">{{trans('auth.login')}}</a></li>
+					<li class="dropdown"><a class=" @if(Request::is("login")) active-navbar   @endif> text-uppercase font-default" href="{{url('login')}}">{{trans('auth.login')}}</a></li>
 						
-					<li>
-						<a class="log-in custom-rounded text-uppercase font-default" href="{{url('register')}}">
+					<li class="dropdown">
+						<a class=" @if(Request::is("register")) active-navbar   @endif> text-uppercase font-default" href="{{url('register')}}">
 						<i class="glyphicon glyphicon-user"></i> {{trans('auth.sign_up')}}
 						</a>
 						</li>
@@ -186,4 +193,5 @@ $cabangTotal = App\Models\Cabang::count();
         <input type="search" value="" name="q" id="btnItems" placeholder="{{trans('misc.search_query')}}" />
         <button type="submit" class="btn btn-lg no-shadow btn-trans custom-rounded btn_search"  id="btnSearch">{{trans('misc.search')}}</button>
     </form>
+
 </div>
