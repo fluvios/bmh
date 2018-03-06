@@ -4,23 +4,15 @@
 @section('title'){{ $category->name.' - ' }}@endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ $category->name }}</h2>
-       
-       
-       @if( $data->total() != 0 )
-        	<p class="subtitle-site"><strong>({{number_format($data->total())}}) {{trans_choice('misc.campaign_available_category',$data->total() )}}</strong></p>
-        @else
-        	<p class="subtitle-site"><strong>{{$settings->title}}</strong></p>
-        @endif
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
-	
+<div class="container margin-top-80 margin-bottom-40">
 <!-- Col MD -->
 <div class="col-md-12 margin-top-20 margin-bottom-20">	
+
+	<h2 class="subtitle-color-7 margin-bottom-20 text-center text-uppercase">Jenis Dana <a>{{ $category->name }}
+       </a> </h2>
+       
+   
 
 	@if( $data->total() != 0 )	
 
