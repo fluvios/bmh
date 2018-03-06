@@ -8,7 +8,7 @@ $total_members      = App\Models\User::count();
 
 @section('content')
 <!-- <div id="myCarousel" data-ride="carousel" class="carousel slidejumbotron index-header jumbotron_set jumbotron-cover @if( Auth::check() ) session-active-cover @endif"> -->
-<div id="myCarousel" data-ride="carousel" class="carousel slidejumbotron index-header jumbotron_set jumbotron-cover">
+<div id="myCarousel" data-ride="carousel" class="carousel">
   <div class="wrap-jumbotron position-relative">
     <!-- <h1 class="title-site txt-left" id="titleSite">{{$settings->welcome_text}}</h1>
     <p class="subtitle-site txt-left"><strong>{{$settings->welcome_subtitle}}</strong></p> -->
@@ -16,19 +16,18 @@ $total_members      = App\Models\User::count();
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
 
     <!-- Wrapper for slides -->
-    <div class="carousel-inner">
+    <div class="carousel-inner padding-top-40">
       <div class="item active">
-        <img src="https://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-banner-2-new-01.jpg" alt="Los Angeles" ">
+        <img src="http://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-banner-2-new-01.jpg" alt="Los Angeles" ">
       </div>
 
       <div class="item">
-        <img src="https://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-Banner-dai-tangguh-profile-02.jpg" alt="Chicago" >
+       <img src="http://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-Banner-dai-tangguh-profile-02.jpg" alt="Chicago" >
       </div>
-
-      
     </div>
 
     <!-- Left and right controls -->
@@ -44,36 +43,17 @@ $total_members      = App\Models\User::count();
 </div>
 
 @if( $data->total() != 0 )
-<div class="container margin-bottom-40">
-  <div class="col-md-5 btn-block margin-bottom-40">
-    <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{trans('misc.campaigns')}}</h1>
-    <h5 class="btn-block text-center class-montserrat subtitle-color">{{trans('misc.recent_campaigns')}}</h5>
+<div class="container margin-bottom-40 margin-top-20">
+  <div class="col-md-12 btn-block margin-bottom-40">
+    <h1 class="text-uppercase btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{trans('misc.campaigns')}}</h1>
+    <h5 class="btn-block text-center class-montserrat subtitle-color">Pilih dan salurkan donasi anda untuk campaigns yang berarti bagi anda dan mereka</h5>
   </div>
 
   <div class="margin-bottom-30">
     @include('includes.campaigns')
   </div>
 
-  <div class="row margin-bottom-40">
 
-    <div class="container">
-      <div class="col-md-4 border-stats">
-        <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow"><span class=".numbers-with-commas counter"><?php echo html_entity_decode( App\Helper::formatNumbersStats($total_members) ) ?></span></h1>
-        <h5 class="btn-block text-center class-montserrat subtitle-color text-uppercase">{{trans('misc.members')}}</h5>
-      </div><!-- col-md-3 -->
-
-      <div class="col-md-4 border-stats">
-        <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow"><span class=".numbers-with-commas counter"><?php echo html_entity_decode( App\Helper::formatNumbersStats($total_campaigns) ) ?></span></h1>
-        <h5 class="btn-block text-center class-montserrat subtitle-color text-uppercase">{{trans('misc.campaigns')}}</h5>
-      </div><!-- col-md-3 -->
-
-      <div class="col-md-4 border-stats">
-        <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{ $settings->currency_symbol }}<?php echo html_entity_decode( App\Helper::formatNumbersStats($total_raised_funds) ) ?></h1>
-        <h5 class="btn-block text-center class-montserrat subtitle-color text-uppercase">{{trans('misc.funds_raised')}}</h5>
-      </div><!-- col-md-3 -->
-
-    </div><!-- row -->
-  </div>
 
 </div><!-- container wrap-ui -->
 
@@ -94,7 +74,7 @@ $total_members      = App\Models\User::count();
 @if( $categories->count() != 0 )
 <div class="container margin-bottom-40">
 
-  <div class="col-md-12 btn-block margin-bottom-40 head-home">
+  <div class="col-md-12 btn-block margin-bottom-40 margin-top-5 head-home">
     <h1 class="btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{trans('misc.categories')}}</h1>
     <h5 class="btn-block text-center class-montserrat subtitle-color">
       <a href="{{ url('categories') }}">
@@ -112,11 +92,36 @@ $total_members      = App\Models\User::count();
 
 </div><!-- container -->
 @endif
+  <div class=" margin-top-40 head-head-2">
 
+    <div class="container">
+      <h5 class="btn-block text-center  subtitle-color-3 text-uppercase">JUMLAH KEBAIKAN TERKUMPUL</h5>
+      <div class="col-md-4 ">
+        <h1 class=" subtitle-color-4 btn-block text-center class-montserrat margin-bottom-zero none-overflow"><span class=".numbers-with-commas counter"><?php echo html_entity_decode( App\Helper::formatNumbersStats($total_members) ) ?></span></h1>
+        <h5 class="btn-block text-center class-montserrat subtitle-color-2 text-uppercase">{{trans('misc.members')}}</h5>
+      </div><!-- col-md-3 -->
+
+      <div class="col-md-4 ">
+        <h1 class=" subtitle-color-4 btn-block text-center class-montserrat margin-bottom-zero none-overflow"><span class=".numbers-with-commas counter"><?php echo html_entity_decode( App\Helper::formatNumbersStats($total_campaigns) ) ?></span></h1>
+        <h5 class="btn-block  text-center class-montserrat subtitle-color-2 text-uppercase">{{trans('misc.campaigns')}}</h5>
+      </div><!-- col-md-3 -->
+
+      <div class="col-md-4 ">
+        <h1 class=" subtitle-color-4 btn-block text-center class-montserrat margin-bottom-zero none-overflow">{{ $settings->currency_symbol }}<?php echo html_entity_decode( App\Helper::formatNumbersStats($total_raised_funds) ) ?></h1>
+        <h5 class="btn-block text-center class-montserrat subtitle-color-2 text-uppercase">{{trans('misc.funds_raised')}}</h5>
+      </div><!-- col-md-3 -->
+
+    </div><!-- row -->
+  </div>
 <div class="jumbotron jumbotron-bottom margin-bottom-zero jumbotron-cover">
   <div class="container wrap-jumbotron position-relative">
-    <h1 class="title-site">{{trans('misc.title_cover_bottom')}}</h1>
-    <p class="subtitle-site txt-center"><strong>{{$settings->welcome_subtitle}}</strong></p>
+    <p class="subtitle-site txt-left"><i class="fa fa-check-circle-o fa-2x"></i><strong>
+KEAMANAN TERJAMIN</strong></p>
+    <p class="subtitle-site txt-left"><i class="fa fa-check-circle-o fa-2x"></i><strong>JANGKAUAN SELURUH INDONESIA</strong></p>
+     <p class="subtitle-site txt-left"><i class="fa fa-check-circle-o fa-2x"></i><strong>MUDAH BERTRANSAKSI</strong></p>
+      <p class="subtitle-site txt-left"><i class="fa fa-check-circle-o fa-2x"></i><strong>CEPAT</strong></p>
+       <p class="subtitle-site txt-left"><i class="fa fa-check-circle-o fa-2x"></i><strong>TERPERCAYA</strong></p>
+  </div>
 
   </div><!-- container wrap-jumbotron -->
 </div><!-- jumbotron -->
