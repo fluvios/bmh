@@ -57,7 +57,7 @@ class CampaignsController extends Controller
         'photo'           => 'required|mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
         'title'             => 'required|min:3|max:45',
         'categories_id'  => 'required',
-        'goal'             => 'required|integer|max:'.$this->settings->max_campaign_amount.'|min:'.$this->settings->min_campaign_amount,
+        'goal'             => 'required|integer|min:'.$this->settings->min_campaign_amount,
         'location'        => 'required|max:50',
         'description'  => 'text_required|required|min:20',
       ], $messages);
@@ -68,7 +68,7 @@ class CampaignsController extends Controller
         'photo'           => 'mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
         'title'             => 'required|min:3|max:45',
         'categories_id'  => 'required',
-        'goal'             => 'required|integer|max:'.$this->settings->max_campaign_amount.'|min:'.$this->settings->min_campaign_amount,
+        'goal'             => 'required|integer|min:'.$this->settings->min_campaign_amount,
         'location'        => 'required|max:50',
         'description'  => 'required|min:20|text_required',
       ], $messages);
@@ -208,6 +208,7 @@ class CampaignsController extends Controller
     $sql->city_id = $city->id_kab;
     $sql->categories_id = $this->request->categories_id;
     $sql->cabang_id = $this->request->cabang_id;
+    $sql->finalized = '0';
     $sql->deadline = CampaignsController::getDeadline($this->request->deadline);
     $sql->save();
 

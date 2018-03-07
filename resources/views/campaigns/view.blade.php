@@ -277,14 +277,14 @@
 	  </div>
 	</div><!-- End Panel -->
 
-@if( isset( $deadline ) && $deadline > $timeNow && $response->finalized == 0 )
+@if( isset( $deadline ) && $deadline > $timeNow && $response->finalized == '0' )
  	<div class="btn-group btn-block margin-bottom-20 @if( Auth::check() && Auth::user()->id == $response->user()->id ) display-none @endif">
 		<a href="{{url('donate/'.$response->id.$slug_url)}}" class="btn btn-main btn-donate btn-lg btn-block custom-rounded">
 			{{trans('misc.donate_now')}}
 			</a>
 		</div>
 
-		@elseif( !isset( $deadline ) && $response->finalized == 0 )
+		@elseif( !isset( $deadline ) && $response->finalized == '0' )
 		<div class="btn-group btn-block margin-bottom-20 @if( Auth::check() && Auth::user()->id == $response->user()->id ) display-none @endif">
 		<a href="{{url('donate/'.$response->id.$slug_url)}}" class="btn btn-main btn-donate btn-lg btn-block custom-rounded">
 			{{trans('misc.donate_now')}}

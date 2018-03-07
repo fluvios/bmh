@@ -7,16 +7,12 @@
 @section('title') {{ trans('auth.password') }} - @endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ trans('auth.password') }}</h2>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
-	
+
+<div class="from-login-2 container margin-top-90  margin-bottom-40">
+	    <h2 class="subtitle-color-7 text-uppercase">{{ trans('auth.password') }}</h2>
 		<!-- Col MD -->
-		<div class="col-md-8 margin-bottom-20">
+		<div class=" login-form-2 col-md-8  margin-bottom-20">
 			@if (Session::has('notification'))
 			<div class="alert alert-success btn-sm alert-fonts" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
