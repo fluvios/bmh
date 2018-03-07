@@ -82,7 +82,8 @@ class DonationsController extends Controller
     $amountKey = Helper::randomCheckKey();
 
     $validator = Validator::make($this->request->all(), [
-      'amount' => 'required|integer|min:'.$this->settings->min_donation_amount.'|max:'.$this->settings->max_donation_amount,
+      // 'amount' => 'required|integer|min:'.$this->settings->min_donation_amount.'|max:'.$this->settings->max_donation_amount,
+      'amount' => 'required|integer|min:'.$this->settings->min_donation_amount.'',
       'full_name' => 'required|max:25',
       'email' => 'required|max:100',
       'comment' => 'max:100',

@@ -277,13 +277,13 @@ class AdminController extends Controller
     {
         $rules = array(
 
-            'min_campaign_amount'             => 'required|integer|min:1',
+            'min_campaign_amount'             => 'required|integer|min:0',
 
-            'max_campaign_amount'             => 'required|integer|min:1',
+            'max_campaign_amount'             => 'required|integer|min:0',
 
-            'min_donation_amount'             => 'required|integer|min:1',
+            'min_donation_amount'             => 'required|integer|min:0',
 
-            'max_donation_amount'             => 'required|integer|min:1',
+            'max_donation_amount'             => 'required|integer|min:0',
 
         );
 
@@ -974,7 +974,7 @@ class AdminController extends Controller
 
             'categories_id'  => 'required',
 
-            'goal'             => 'required|integer|max:'.$this->settings->max_campaign_amount.'|min:'.$this->settings->min_campaign_amount,
+            'goal'             => 'required|integer|min:'.$this->settings->min_campaign_amount,
 
              'location'        => 'required|max:50',
 
