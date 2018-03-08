@@ -36,33 +36,30 @@
 
  @section('content')
 
- <div class="jumbotron md header-donation jumbotron_set">
-	 <div class="container wrap-jumbotron position-relative">
-		 <h2 class="title-site">{{ trans('misc.donate') }}</h2>
-		 <p class="subtitle-site"><strong>{{$response->title}}</strong></p>
-	 </div>
- </div>
+ 
 
- <div class="container margin-bottom-40 padding-top-40">
+ <div class="container margin-top-90 margin-bottom-40 padding-top-40">
 
 	 <!-- Col MD -->
-	 <div class="col-md-8 margin-bottom-20">
+	 <div class="login-form-2 col-md-8 margin-bottom-20">
 
 		 <!-- form start -->
 		 <form method="POST" action="{{ url('donate',$response->id) }}" enctype="multipart/form-data" id="formDonation">
-
 			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 			 <input type="hidden" name="_id" value="{{ $response->id }}">
 
 			 <div class="form-group">
 				 <label>Jumlah Donasi</label>
+				 
 				 <div class="input-group has-success">
 					 <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-					 <input type="number" min="{{$settings->min_donation_amount}}"  autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}" placeholder="{{trans('misc.minimum_amount')}} {{$settings->currency_symbol.$settings->min_donation_amount}}">
+
+					 <input type="text" min="{{$settings->min_donation_amount}}"  autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}">
 				 </div>
+				
 			 </div>
 
-
+<input id="amount" name="amount" type="text" maxlength="15" />
 			 <!-- Start -->
 			 <div class="form-group">
 				 <label>Nama</label>
@@ -105,7 +102,7 @@
               <label><input type="radio" name="donation_type" value="Routine">Routine</label>
            </div>
            <div class="radio">
-              <label><input type="radio" name="donation_type" value="Isidentil">Isidentil</label>
+              <label><input type="radio" name="donation_type" value="Isidentil">insidentil</label>
            </div>
   
        </div>
@@ -137,9 +134,14 @@
 
 		 <div class="col-md-4">
 
-			 <!-- Start Panel -->
+			 <!-- Start Panel --> <div class="panel panel-default">
+				 <div class="panel-body">
+					 <img class="img-responsive img-rounded" style="display: inline-block;" src="{{url('public/campaigns/small',$response->small_image)}}" />
+				 </div>
+			 </div>
 			 <div class="panel panel-default">
 				 <div class="panel-body">
+				 	<a class="subtitle-color-6 text-uppercase ">{{$response->title}}</a>
 					 <h3 class="btn-block margin-zero" style="line-height: inherit;">
 						 <strong class="font-default">{{$settings->currency_symbol.number_format($response->donations()->where('payment_status','=','paid')->sum('donation'))}}</strong>
 						 <small>{{trans('misc.of')}} {{$settings->currency_symbol.number_format($response->goal)}} {{strtolower(trans('misc.goal'))}}</small>
@@ -155,19 +157,8 @@
 				 </div>
 			 </div><!-- End Panel -->
 
-			 <div class="panel panel-default">
-				 <div class="panel-body">
-					 <img class="img-responsive img-rounded" style="display: inline-block;" src="{{url('public/campaigns/small',$response->small_image)}}" />
-				 </div>
-			 </div>
+			
 
-			 @if( $settings->payment_gateway == 'Paypal' )
-			 <div class="panel panel-default">
-				 <div class="panel-body">
-					 <img class="img-responsive img-rounded" style="display: inline-block;" src="{{url('public/img/payment-1.png')}}" />
-				 </div>
-			 </div>
-			 @endif
 
 			 <!-- Start Panel -->
 			 <div class="panel panel-default">
