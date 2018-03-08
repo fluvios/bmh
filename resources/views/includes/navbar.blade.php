@@ -50,15 +50,15 @@ $cabangTotal = App\Models\Cabang::count();
         				<!-- DROPDOWN MENU -->
         				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
         				@foreach(  $categoriesMenu as $kategori)
-        					<li @if(Request::path() == "category/$kategori->nama") class="active" @endif>
-        						<a href="{{ url('kategori') }}/{{ $kategori->nama }}" class="text-overflow">
+        					<li @if(Request::path() == "kategori/$kategori->slug") class="active" @endif>
+        						<a href="{{ url('kategori') }}/{{ $kategori->slug }}" class="text-overflow">
         						{{ $kategori->nama }}
         							</a>
         					</li>
         					@endforeach
         					
         					@if( $categoriesTotal > 6 )
-			        		<li><a href="{{ url('categories') }}">
+			        		<li><a href="{{ url('kategori') }}">
 			        			<strong>{{ trans('misc.view_all') }} <i class="fa fa-long-arrow-right"></i></strong>
 			        		</a></li>
 			        		@endif
@@ -76,15 +76,15 @@ $cabangTotal = App\Models\Cabang::count();
         				<!-- DROPDOWN MENU -->
         				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
         				@foreach(  $cabang as $cabang)
-        					<li @if(Request::path() == "cabang/$kategori->nama") class="active" @endif>
-        						<a href="{{ url('cabang') }}/{{ $cabang->nama }}" class="text-overflow">
+        					<li @if(Request::path() == "cabang/$cabang->kode") class="active" @endif>
+        						<a href="{{ url('cabang') }}/{{ $cabang->kode }}" class="text-overflow">
         						{{ $cabang->nama }}
         							</a>
         					</li>
         					@endforeach
         					
         					@if( $cabangTotal > 6 )
-			        		<li><a href="{{ url('categories') }}">
+			        		<li><a href="{{ url('cabang') }}">
 			        			<strong>{{ trans('misc.view_all') }} <i class="fa fa-long-arrow-right"></i></strong>
 			        		</a></li>
 			        		@endif

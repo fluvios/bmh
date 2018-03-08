@@ -10,6 +10,8 @@ use App\Models\Categories;
 use App\Models\User;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
+use App\Models\Kategori;
+use App\Models\Cabang;
 
 class HomeController extends Controller
 {
@@ -123,5 +125,43 @@ class HomeController extends Controller
         });
         
         return view('default.category', ['data' => $data, 'category' => $category]);
+    }// End Method
+
+    public function kategori($slug)
+    {
+        $settings = AdminSettings::first();
+
+        $kategori = Kategori::where('slug', '=', $slug)->where('is_active', 1)->firstOrFail();
+        $data       = Campaigns::join('kategori_campaign', 'campaigns.id', '=', 'kategori_campaign.campaign_id')
+        ->where('campaigns.status', 'active')
+        ->where('kategori_campaign.kategori_id', $kategori->id)
+        ->orderBy('campaigns.id', 'DESC')
+        ->paginate($settings->result_request);
+        $data->map(function ($d){
+          $d['provinsi'] = Provinsi::where('id_prov', '=', $d->province_id)->first();
+          $d['kabupaten'] = Kabupaten::where('id_kab', '=', $d->city_id)->first();
+          return $d;
+        });
+        
+        return view('default.kategori', ['data' => $data, 'category' => $kategori]);
+    }// End Method
+
+    public function cabang($kode)
+    {
+        $settings = AdminSettings::first();
+
+        $cabang = Cabang::where('kode', '=', $kode)->firstOrFail();
+        $data       = Campaigns::where('status', 'active')
+        ->where('cabang_id', $cabang->id)
+        ->orderBy('id', 'DESC')
+        ->paginate($settings->result_request);
+        $data->map(function ($d){
+          $d['provinsi'] = Provinsi::where('id_prov', '=', $d->province_id)->first();
+          $d['kabupaten'] = Kabupaten::where('id_kab', '=', $d->city_id)->first();
+          return $d;
+        });
+
+        
+        return view('default.cabang', ['data' => $data, 'category' => $cabang]);
     }// End Method
 }

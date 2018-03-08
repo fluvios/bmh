@@ -26,13 +26,20 @@ class Campaigns extends Model {
 	public function updates() {
 		return $this->hasMany('App\Models\Updates');
 	}
+
+	public function cabang() {
+		return $this->hasMany('App\Models\Cabang');
+	}
 	
 	public function category() {
 	 	 return $this->belongsTo('App\Models\Categories', 'categories_id'); 
 	}
 
-	public function getAkunTransaksi()
-	{
+	public function kategoriCampaign() {
+        return $this->hasMany('App\Models\KategoriCampaign', 'id', 'campaign_id');
+    }
+
+	public function getAkunTransaksi() {
 		return AkunTransaksi::find($this->akun_transaksi_id);
 	}
 }

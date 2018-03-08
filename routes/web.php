@@ -44,6 +44,36 @@ Route::get('categories', function () {
     return view('default.categories')->withData($data);
 });
 
+/*
+ |
+ |-----------------------------------
+ | Kategori List
+ |--------- -------------------------
+ */
+Route::get('kategori/{slug}', 'HomeController@kategori');
+
+// Kategori
+Route::get('kategori', function () {
+    $data = App\Models\Kategori::where('is_active', 1)->orderBy('nama')->get();
+
+    return view('default.kategori-list')->withData($data);
+});
+
+/*
+ |
+ |-----------------------------------
+ | Cabang List
+ |--------- -------------------------
+ */
+Route::get('cabang/{kode}', 'HomeController@cabang');
+
+// Kategori
+Route::get('cabang', function () {
+    $data = App\Models\Cabang::orderBy('nama')->get();
+
+    return view('default.cabang-list')->withData($data);
+});
+
 
 /*
  |
