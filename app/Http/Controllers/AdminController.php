@@ -710,15 +710,11 @@ class AdminController extends Controller
             if ($key->deadline != '') {
                 $_deadline = strtotime($key->deadline);
 
-
-
-                if ($_deadline < $timeNow && $key->finalized == '0') {
-                    $sql = Campaigns::find($key->id);
-
-                    $sql->finalized = '1';
-
-                    $sql->save();
-                }
+                // if ($_deadline < $timeNow && $key->finalized == '0') {
+                //     $sql = Campaigns::find($key->id);
+                //     $sql->finalized = '1';
+                //     $sql->save();
+                // }
             }
         }
 

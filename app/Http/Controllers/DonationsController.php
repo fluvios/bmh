@@ -45,9 +45,13 @@ class DonationsController extends Controller
     }
 
     // Redirect if campaign is ended
-    if (!isset($deadline) && $response->finalized == 1) {
-      return redirect('campaign/'.$response->id);
-    } elseif (isset($deadline) && $deadline < $timeNow) {
+    // if (!isset($deadline) && $response->finalized == 1) {
+    //   return redirect('campaign/'.$response->id);
+    // } elseif (isset($deadline) && $deadline < $timeNow) {
+    //   return redirect('campaign/'.$response->id);
+    // }
+
+    if ($response->finalized == 1) {
       return redirect('campaign/'.$response->id);
     }
 
@@ -97,7 +101,7 @@ class DonationsController extends Controller
         'errors' => $validator->getMessageBag()->toArray(),
       ]);
     }
-    
+
     //<----------- ****** PAYPAL ************** ----->
     if ($this->request->payment_gateway == 'Paypal') {
       if ($this->settings->paypal_sandbox == 'true') {
@@ -278,7 +282,7 @@ class DonationsController extends Controller
     }
     //<----------- ****** DEPOSIT ************** ----->
 
-    
+
     //<----------- ****** MIDTRANS ************** ----->
     elseif ($this->request->payment_gateway == 'Midtrans') {
       if (!isset($this->request->anonymous)) {
@@ -304,7 +308,7 @@ class DonationsController extends Controller
       // Get Donation Id
       $response = $sql->id;
       $url      = '';
-      $token    = ''; 
+      $token    = '';
       try {
         $params = [
           'transaction_details' => [
@@ -342,9 +346,9 @@ class DonationsController extends Controller
         'url' => $url,
         'token' => $token,
       ]);
-    
+
     //<----------- ****** MIDTRANS ************** ----->
-    //<----------- ****** TRANSFER ************** ----->   
+    //<----------- ****** TRANSFER ************** ----->
     } else {
       if (!isset($this->request->anonymous)) {
         $this->request->anonymous = '0';
@@ -385,7 +389,7 @@ class DonationsController extends Controller
       //     ->subject(trans('misc.thanks_donation').' - '.$titleSite);
       //   }
       // );
-      
+
       if ($bank = Banks::find($sql->bank_id)) {
         event(new NewBankTransfer($sql, Auth::user(), $bank));
       }
@@ -444,7 +448,7 @@ class DonationsController extends Controller
 
       // Get Donation Data
       $response = $sql;
-            
+
       return response()->json([
         'donation' => $response,
         'success' => true,
@@ -481,10 +485,10 @@ class DonationsController extends Controller
         $saldo = $user->saldo - $this->request->amount;
         $user->saldo = $saldo;
         $user->save();
-        
+
         // Get Donation Data
         $response = $sql;
-              
+
         return response()->json([
           'donation' => $response,
           'success' => true,
@@ -524,7 +528,7 @@ class DonationsController extends Controller
       // Get Donation Id
       $response = $sql->id;
       $url      = '';
-      $token    = ''; 
+      $token    = '';
       try {
         $params = [
           'transaction_details' => [
@@ -562,9 +566,9 @@ class DonationsController extends Controller
         'url' => $url,
         'token' => $token,
       ]);
-    
+
     //<----------- ****** MIDTRANS ************** ----->
-    //<----------- ****** TRANSFER ************** ----->   
+    //<----------- ****** TRANSFER ************** ----->
     } else {
       if (!isset($this->request->anonymous)) {
         $this->request->anonymous = '0';
@@ -733,12 +737,12 @@ class DonationsController extends Controller
         $order_id  = $matches[2];
         switch ($orderType) {
           case 'campaign':
-            // 
+            //
             $donation = Donations::find($order_id);
             if ($donation->payment_status != 'paid') {
               $donation->payment_status = 'paid';
               $donation->payment_date   = \Carbon\Carbon::now();
-              $donation->save(); 
+              $donation->save();
             }
             break;
           case 'topup':

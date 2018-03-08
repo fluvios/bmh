@@ -208,7 +208,6 @@ class CampaignsController extends Controller
     $sql->city_id = $city->id_kab;
     $sql->categories_id = $this->request->categories_id;
     $sql->cabang_id = $this->request->cabang_id;
-    $sql->finalized = '0';
     $sql->deadline = CampaignsController::getDeadline($this->request->deadline);
     $sql->save();
 

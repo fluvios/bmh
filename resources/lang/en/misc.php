@@ -260,7 +260,7 @@ return array(
 	'confirm_email' => 'Confirm Email',
 	'confirm_delete_withdrawal' => 'Are you sure you want to delete this withdrawal?',
 	'configure_withdrawal_method' => 'Please configure your withdrawal method',
-	'max_campaign_amount' => 'The maximum amount for Campaing',
+	'max_campaign_amount' => 'The maximum amount for Campaign',
 	'amount_maximum' => 'The maximum amount is :symbol:max :code', // Not remove :symbol:min and :code
 	'mark_paid' => "Mark as paid",
 	'date_paid' => 'Date Paid',

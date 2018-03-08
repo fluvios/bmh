@@ -85,7 +85,7 @@ $cities = App\Models\Kabupaten::all();
             <label>Kebutuhan Dana</label>
             <div class="input-group">
               <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-              <input type="number" min="1" class="form-control" name="goal" id="onlyNumber" value="{{ $data->goal }}" placeholder="10000">
+              <input type="number" min="0" class="form-control" name="goal" id="onlyNumber" value="{{ $data->goal }}" placeholder="10000">
             </div>
           </div>
 

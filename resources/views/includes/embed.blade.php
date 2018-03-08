@@ -24,13 +24,18 @@
 	}
 	
 	$url = url('campaign',$response->id).$slugUrl;
-	$percentage = round($response->donations()->sum('donation') / $response->goal * 100);
-	
-	if( $percentage > 100 ) {
-		$percentage = 100;
+
+	if ( $response->goal > 0 ) {
+		$percentage = round($response->donations()->sum('donation') / $response->goal * 100);
 	} else {
-		$percentage = $percentage;
-	}	   
+		$percentage = round($response->donations()->sum('donation') / 100);
+	}
+	
+	// if( $percentage > 100 ) {
+	// 	$percentage = 100;
+	// } else {
+	// 	$percentage = $percentage;
+	// }	   
 ?>
 <div class="thumbnail padding-top-zero">
 

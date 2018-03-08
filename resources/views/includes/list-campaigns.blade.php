@@ -1,5 +1,5 @@
 <div class="col-xs-12 col-sm-6 col-md-3 col-thumb">
-  <?php 
+  <?php
 
   $settings = App\Models\AdminSettings::first();
 
@@ -10,19 +10,24 @@
   }
 
   $url = url('campaign',$key->id).$slugUrl;
-  $percentage = round($key->donations()->where('payment_status', '=', 'paid')->sum('donation') / $key->goal * 100);
 
-  if( $percentage > 2000 ) {
-    $percentage = 2000;
+  if ($key->goal > 0) {
+    $percentage = round($key->donations()->where('payment_status', '=', 'paid')->sum('donation') / $key->goal * 100);
   } else {
-    $percentage = $percentage;
-  }	   
+    $percentage = round($key->donations()->where('payment_status', '=', 'paid')->sum('donation') / 100);
+  }
+
+  // if( $percentage > 2000 ) {
+  //   $percentage = 2000;
+  // } else {
+  //   $percentage = $percentage;
+  // }
   ?>
   <div class="thumbnail padding-top-zero">
 
     <a class="position-relative btn-block img-grid" href="{{$url}}">
 
-      @if( $key->featured == 1 )	
+      @if( $key->featured == 1 )
       <span class="box-featured" title="{{trans('misc.featured_campaign')}}"><i class="fa fa-trophy"></i></span>
       @endif
 
@@ -45,17 +50,17 @@
         @if(isset($key->kabupaten))
           <h5 class="btn-block  subtitle-color text-uppercase>:"> WILAYAH: {{ $key->kabupaten->nama }}</h5>
         @endif
-     
+
       <p class="desc-campaigns">
         <span class="stats-campaigns">
 
           <span class="pull-left">
           {{trans('misc.raised')}}</br>
-            <strong>{{$settings->currency_symbol.number_format($key->donations()->where('payment_status','=','paid')->sum('donation'))}}</strong> 
-           
-          </span> 
+            <strong>{{$settings->currency_symbol.number_format($key->donations()->where('payment_status','=','paid')->sum('donation'))}}</strong>
 
-          <span class="pull-right"></br><strong>{{$percentage }}%</strong></span> 
+          </span>
+
+          <span class="pull-right"></br><strong>{{$percentage }}%</strong></span>
         </span>
 
         <span class="progress">

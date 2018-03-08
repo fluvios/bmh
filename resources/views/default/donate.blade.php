@@ -2,13 +2,17 @@
 
     $settings = App\Models\AdminSettings::first();
 
-    $percentage = round($response->donations()->where('payment_status','=','paid')->sum('donation') / $response->goal * 100);
+	if($response->goal > 0) {
+		$percentage = round($response->donations()->where('payment_status','=','paid')->sum('donation') / $response->goal * 100);
+	} else {
+		$percentage = round($response->donations()->where('payment_status','=','paid')->sum('donation') / 100);
+	}
 
-    if ($percentage > 100) {
-        $percentage = 100;
-    } else {
-        $percentage = $percentage;
-    }
+    // if ($percentage > 100) {
+    //     $percentage = 100;
+    // } else {
+    //     $percentage = $percentage;
+    // }
 
     // All Donations
     $donations = $response->donations()->where('payment_status','=','paid')->orderBy('id', 'desc')->paginate(2);
