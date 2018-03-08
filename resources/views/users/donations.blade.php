@@ -17,18 +17,14 @@
 @section('title') {{ trans('misc.donations') }} - @endsection
 
 @section('content') 
-<div class="jumbotron md index-header jumbotron_set jumbotron-cover">
-      <div class="container wrap-jumbotron position-relative">
-        <h2 class="title-site">{{ trans('misc.donations') }}</h2>
-      </div>
-    </div>
 
-<div class="container margin-bottom-40">
-	
+
+<div class=" container margin-top-90 margin-bottom-40">
+	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.donations') }}</h2>
 		<!-- Col MD -->
-		<div class="col-md-8 margin-bottom-20">
+		<div class=" login-form-2 col-md-8 margin-bottom-20">
 
-<div class="table-responsive">
+<div class=" table-responsive">
    <table class="table table-striped"> 
    	
    	@if( $data->total() !=  0 && $data->count() != 0 )
