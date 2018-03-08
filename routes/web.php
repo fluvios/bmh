@@ -171,11 +171,11 @@ Route::group(['middleware' => 'auth'], function () {
             if ($key->deadline != '') {
                 $_deadline = strtotime($key->deadline);
 
-                if ($_deadline < $timeNow && $key->finalized == '0') {
-                    $sql = App\Models\Campaigns::find($key->id);
-                    $sql->finalized = '1';
-                    $sql->save();
-                }
+                // if ($_deadline < $timeNow && $key->finalized == '0') {
+                //     $sql = App\Models\Campaigns::find($key->id);
+                //     $sql->finalized = '1';
+                //     $sql->save();
+                // }
             }
         }
 
@@ -391,7 +391,7 @@ Route::group(['middleware' => 'role'], function () {
  | Donations
  |--------- -------------------------
  */
-Route::get('donate/{id}/{slug?}', 'DonationsController@show')->middleware('auth');;
+Route::get('donate/{id}/{slug?}', 'DonationsController@show')->middleware('auth');
 Route::post('donate/{id}', 'DonationsController@send');
 Route::post('topup/{id}', 'TopUpController@send');
 Route::get('transfer/{id}', function($id){

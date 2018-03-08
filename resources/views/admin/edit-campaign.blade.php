@@ -168,7 +168,7 @@
 
                       <div class="col-sm-10">
 
-                        <input type="number" min="1" autocomplete="off" value="{{ $data->goal }}" name="goal" class="form-control onlyNumber" placeholder="{{ trans('misc.campaign_goal') }}">
+                        <input type="number" min="0" autocomplete="off" value="{{ $data->goal }}" name="goal" class="form-control onlyNumber" placeholder="{{ trans('misc.campaign_goal') }}">
 
                       </div>
 
