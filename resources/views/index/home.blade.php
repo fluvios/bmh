@@ -21,13 +21,21 @@ $total_members      = App\Models\User::count();
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner padding-top-40">
-      <div class="item active">
+      <!-- <div class="item active">
         <img src="http://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-banner-2-new-01.jpg" alt="Los Angeles" ">
-      </div>
+      </div> -->
 
-      <div class="item">
-       <img src="http://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-Banner-dai-tangguh-profile-02.jpg" alt="Chicago" >
-      </div>
+      @foreach($sliders as $slider)
+        @if($slider->id == 1)
+          <div class="item active">
+            <img src="{{ asset('public/campaigns/large').'/'.$slider->image }}" alt="Chicago" >
+          </div>
+        @else
+          <div class="item">
+            <img src="{{ asset('public/campaigns/large').'/'.$slider->image }}" alt="Chicago" >
+          </div>
+        @endif      
+      @endforeach
     </div>
 
     <!-- Left and right controls -->

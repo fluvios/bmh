@@ -349,6 +349,8 @@ desired effect
 
               <li @if(Request::is('panel/admin/settings/cabang')) class="active" @endif><a href="{{ route('admin-cabang-index') }}"><i class="fa fa-circle-o"></i> {{ trans('misc.cabang') }}</a></li>
 
+              <li @if(Request::is('panel/admin/settings/slider')) class="active" @endif><a href="{{ route('admin-slider-index') }}"><i class="fa fa-circle-o"></i> Slider</a></li>
+
               <li @if(Request::is('panel/admin/settings/akun-transaksi')) class="active" @endif><a href="{{ route('admin-akun-transaksi-index') }}"><i class="fa fa-circle-o"></i> Akun Transaksi</a></li>
               
             </ul>

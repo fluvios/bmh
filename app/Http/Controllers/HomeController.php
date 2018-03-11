@@ -12,6 +12,7 @@ use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kategori;
 use App\Models\Cabang;
+use App\Models\Slider;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
     {
         $settings = AdminSettings::first();
         $categories = Categories::where('mode', 'on')->orderBy('name')->get();
+        $sliders = Slider::where('isActive', 1)->orderBy('id')->get();
         $data      = Campaigns::where('status', 'active')->orderBy('id', 'DESC')->paginate($settings->result_request);
         $data->map(function ($d){
           $d['provinsi'] = Provinsi::where('id_prov', '=', $d->province_id)->first();
@@ -30,7 +32,7 @@ class HomeController extends Controller
           return $d;
         });
 
-        return view('index.home', ['data' => $data, 'categories' => $categories]);
+        return view('index.home', ['data' => $data, 'categories' => $categories, 'sliders' => $sliders]);
     }
 
     public function search(Request $request)

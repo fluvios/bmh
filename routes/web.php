@@ -104,8 +104,8 @@ Route::get('ajax/donations', 'AjaxController@donations');
 Route::get('ajax/campaign/updates', 'AjaxController@updatesCampaign');
 Route::get('ajax/campaigns', 'AjaxController@campaigns');
 Route::get('ajax/category', 'AjaxController@category');
-Route::get('ajax/tags', function(){
-  return \App\Models\Categories::where('is_funding_type', 'no')->get();
+Route::get('ajax/tags', function () {
+    return \App\Models\Categories::where('is_funding_type', 'no')->get();
 });
 Route::get('ajax/search', 'AjaxController@search');
 
@@ -387,6 +387,33 @@ Route::group(['middleware' => 'role'], function () {
         'uses'  => 'KategoriController@store'
     ]);
 
+    // Slider
+
+    Route::get('panel/admin/settings/slider', [
+        'as'    => 'admin-slider-index',
+        'uses'  => 'SliderController@index'
+    ]);
+
+    Route::get('panel/admin/settings/slider/{id}/edit', [
+        'as'    => 'admin-slider-edit',
+        'uses'  => 'SliderController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/slider/{id}/update', [
+        'as'    => 'admin-slider-update',
+        'uses'  => 'SliderController@update'
+    ]);
+
+    Route::get('panel/admin/settings/slider/add', [
+        'as'    => 'admin-slider-create',
+        'uses'  => 'SliderController@add'
+    ]);
+
+    Route::post('panel/admin/settings/slider/store', [
+        'as'    => 'admin-slider-store',
+        'uses'  => 'SliderController@store'
+    ]);
+
     // Kode Akun
     Route::get('panel/admin/settings/akun-transaksi', [
         'as'    => 'admin-akun-transaksi-index',
@@ -412,7 +439,6 @@ Route::group(['middleware' => 'role'], function () {
         'as'    => 'admin-akun-transaksi-store',
         'uses'  => 'AkunTransaksiController@store'
     ]);
-
 });
 
 /*
@@ -424,20 +450,20 @@ Route::group(['middleware' => 'role'], function () {
 Route::get('donate/{id}/{slug?}', 'DonationsController@show')->middleware('auth');
 Route::post('donate/{id}', 'DonationsController@send');
 Route::post('topup/{id}', 'TopUpController@send');
-Route::get('transfer/{id}', function($id){
+Route::get('transfer/{id}', function ($id) {
     return view('default.transfer')->withResponse($id);
 });
-Route::get('deposit/{id}', function($id){
+Route::get('deposit/{id}', function ($id) {
     return view('default.deposit')->withResponse($id);
 });
-Route::get('transfer_topup/{id}', function($id){
+Route::get('transfer_topup/{id}', function ($id) {
     return view('users.transfer')->withResponse($id);
 });
 Route::post('transfer/{id}', 'DonationsController@transfer');
-Route::post('deposit/{id}', function($id){
-  $donation = App\Models\Donations::where('id', '=', $id)->firstOrFail();
+Route::post('deposit/{id}', function ($id) {
+    $donation = App\Models\Donations::where('id', '=', $id)->firstOrFail();
 
-  return response()->json([
+    return response()->json([
     'success' => true,
     'stripeSuccess' => true,
     'url' => url('paypal/donation/success', $donation->campaigns_id)
