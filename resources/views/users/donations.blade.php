@@ -1,7 +1,7 @@
-<?php 
+<?php
 // ** Data User logged ** //
 	 $settings = App\Models\AdminSettings::first();
-	 
+
 	 $data = App\Models\Donations::leftJoin('campaigns', function($join) {
       $join->on('donations.campaigns_id', '=', 'campaigns.id');
     })
@@ -10,13 +10,13 @@
 	->addSelect('campaigns.title')
 	->orderBy('donations.id','DESC')
     ->paginate(20);
-	 	 
+
 	  ?>
 @extends('app')
 
 @section('title') {{ trans('misc.donations') }} - @endsection
 
-@section('content') 
+@section('content')
 
 
 <div class=" container margin-top-90 margin-bottom-40">
@@ -25,10 +25,10 @@
 		<div class=" login-form-2 col-md-8 margin-bottom-20">
 
 <div class=" table-responsive">
-   <table class="table table-striped"> 
-   	
+   <table class="table table-striped">
+
    	@if( $data->total() !=  0 && $data->count() != 0 )
-   	<thead> 
+   	<thead>
    		<tr>
    		 <th class="active">ID</th>
           <th class="active">{{ trans('auth.full_name') }}</th>
@@ -36,10 +36,11 @@
           <th class="active">{{ trans('misc.donation') }}</th>
            <th class="active">{{ trans('Status') }}</th>
           <th class="active">{{ trans('admin.date') }}</th>
+					<th class="active">Link Referral</th>
           </tr>
-   		  </thead> 
-   		  
-   		  <tbody> 
+   		  </thead>
+
+   		  <tbody>
    		      @foreach( $data as $donation )
                     <tr>
                       <td>{{ $donation->id }}</td>
@@ -48,30 +49,30 @@
                       <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
                       <td>{{ $donation->payment_status }}</td>
                       <td>{{ date('d M, y', strtotime($donation->payment_date)) }}</td>
+											<td>{{url('ref/donasi/'.Auth::user()->email.'/'.$donation->campaigns_id)}}</td>
                     </tr><!-- /.TR -->
                     @endforeach
-                    
+
                     @else
                     <hr />
                     	<h3 class="text-center no-found">{{ trans('misc.no_results_found') }}</h3>
 
-                    @endif   		  		 		
-   		  		 		</tbody> 
+                    @endif
+   		  		 		</tbody>
    		  		 		</table>
    		  		 		</div>
-   		  		 	
-   		  		 	@if( $data->lastPage() > 1 )	
+
+   		  		 	@if( $data->lastPage() > 1 )
    		  		 		{{ $data->links() }}
    		  		 	@endif
-   		  		 	
+
 		</div><!-- /COL MD -->
-		
+
 		<div class="col-md-4">
 			@include('users.navbar-edit')
 		</div>
-		
+
  </div><!-- container -->
- 
+
  <!-- container wrap-ui -->
 @endsection
-

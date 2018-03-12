@@ -40,7 +40,7 @@
 
  @section('content')
 
- 
+
 
  <div class="container margin-top-90 margin-bottom-40 padding-top-40">
 
@@ -54,16 +54,16 @@
 
 			 <div class="form-group">
 				 <label>Jumlah Donasi</label>
-				 
+
 				 <div class="input-group has-success">
 					 <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
 
 					 <input type="text" min="{{$settings->min_donation_amount}}"  autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}">
 				 </div>
-				
+
 			 </div>
 
-<input id="amount" name="amount" type="text" maxlength="15" />
+<!-- <input id="amount" name="amount" type="text" maxlength="15" /> -->
 			 <!-- Start -->
 			 <div class="form-group">
 				 <label>Nama</label>
@@ -100,17 +100,15 @@
            </div>
        </div>
 
-<div class="form-group">
-        <label>Tipe Donasi</label>
-           <div class="radio">
-              <label><input type="radio" name="donation_type" value="Routine">Routine</label>
-           </div>
-           <div class="radio">
-              <label><input type="radio" name="donation_type" value="Isidentil">insidentil</label>
-           </div>
-  
+       <div class="form-group">
+         <label>Tipe Donasi</label>
+         <div class="radio">
+           <label><input type="radio" name="donation_type" value="Routine">Routine</label>
+         </div>
+         <div class="radio">
+           <label><input type="radio" name="donation_type" value="Isidentil">insidentil</label>
+         </div>
        </div>
-			
 
 			 <div class="form-group checkbox icheck">
 				 <label class="margin-zero">
@@ -137,8 +135,20 @@
 		 </div><!-- /COL MD -->
 
 		 <div class="col-md-4">
+       @if($response->categories_id == 21)
+         <div class="panel panel-default">
+           <div class="panel-body">
+               <div class="btn-group btn-block margin-bottom-20 @if( Auth::check() && Auth::user()->id == $response->user()->id ) display-none @endif">
+                 <a class="btn btn-main btn-donate btn-lg btn-block custom-rounded" data-toggle="modal" data-target="#myModal">
+                   Kalkulator
+                 </a>
+               </div>
+           </div>
+         </div>
+       @endif
 
-			 <!-- Start Panel --> <div class="panel panel-default">
+       <!-- Start Panel -->
+       <div class="panel panel-default">
 				 <div class="panel-body">
 					 <img class="img-responsive img-rounded" style="display: inline-block;" src="{{url('public/campaigns/small',$response->small_image)}}" />
 				 </div>
@@ -160,9 +170,6 @@
 					 </small>
 				 </div>
 			 </div><!-- End Panel -->
-
-			
-
 
 			 <!-- Start Panel -->
 			 <div class="panel panel-default">
@@ -251,6 +258,156 @@
 
 		 </div><!-- /COL MD -->
 
+     <!-- Modal -->
+     <div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+         <!-- Modal content-->
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+             <h4 class="modal-title">Kalkulator Zakat</h4>
+           </div>
+           <div class="modal-body">
+             <ul class="nav nav-tabs">
+               <li class="active"><a data-toggle="tab" href="#fitrah">Zakat Fitrah</a></li>
+               <li><a data-toggle="tab" href="#maal">Zakat Maal</a></li>
+               <li><a data-toggle="tab" href="#profesi">Zakat Profesi</a></li>
+             </ul>
+
+             <div class="tab-content">
+               <div id="fitrah" class="tab-pane fade in active">
+                 <form>
+                   <div class="form-group">
+                     <label>Jumlah Anggota Keluarga</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="familyNumber" onkeyup="addZakatFitrah()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Harga Beras</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="ricePrice" value="{{ $settings->harga_beras }}" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Zakat Fitrah</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="fitrahTotal" disabled>
+                     </div>
+                   </div>
+                 </form>
+               </div>
+               <div id="maal" class="tab-pane fade">
+                 <form>
+                   <div class="form-group">
+                     <label>Jumlah Tabungan Per bulan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="savings" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Keuntungan Investasi Per bulan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="investation" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Harga Emas</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="goldPrice" value="{{ $settings->harga_emas }}" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>NISHAB (85 Gram)</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabMal" value="{{ ($settings->harga_emas*85) }}" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Wajib Membayar zakat</label>
+                     <div class="input-group has-success">
+                       <input type="text" autocomplete="off" class="form-control input-lg" name="isZakatMal" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Zakat Mal</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="malTotal" disabled>
+                     </div>
+                   </div>
+                 </form>
+               </div>
+               <div id="profesi" class="tab-pane fade">
+                 <form>
+                   <div class="form-group">
+                     <label>Jumlah Penghasilan Per bulan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="payment" onkeyup="addZakatProfesi()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Pendapatan Lain Per bulan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="others" onkeyup="addZakatProfesi()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Pengeluaran (Utang, Kebutuhan Pokok) Per Bulan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="debt" onkeyup="addZakatProfesi()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Harga Beras</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="ricePrice" value="{{ $settings->harga_beras }}" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>NISHAB (520 Kg Beras)</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabProfesi" value="{{ ($settings->harga_beras*520) }}" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Wajib Membayar zakat</label>
+                     <div class="input-group has-success">
+                       <input type="text" autocomplete="off" class="form-control input-lg" name="isZakatProfesi" disabled>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Zakat Profesi</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="profesiTotal" disabled>
+                     </div>
+                   </div>
+                 </form>
+               </div>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+             </div>
+           </div>
+         </div>
+
+       </div>
+     </div>
+
 	 </div><!-- container wrap-ui -->
 
  <?php /*
@@ -282,6 +439,59 @@
         return false;
     return true;
 }*/
+
+function addZakatFitrah() {
+  var keluarga = document.getElementsByName('familyNumber')[0].value;
+  var beras = document.getElementsByName('ricePrice')[0].value;
+  var total = 3.5 * keluarga * beras;
+  var zakat = document.getElementsByName('fitrahTotal')[0];
+  zakat.value = total;
+  document.getElementsByName('amount')[0].value = total;
+}
+
+function addZakatMal() {
+  var tabungan = document.getElementsByName('savings')[0].value;
+  var investasi = document.getElementsByName('investation')[0].value;
+  var nishab = document.getElementsByName('nishabMal')[0].value;
+  var harta = (tabungan * 12) + (investasi * 12);
+  if (harta > nishab) {
+    var isZakatMal = document.getElementsByName('isZakatMal')[0];
+    isZakatMal.value = "Iya";
+    var total = 0.025 * harta;
+    var zakat = document.getElementsByName('malTotal')[0];
+    zakat.value = total;
+    document.getElementsByName('amount')[0].value = total;
+  } else {
+    var isZakatMal = document.getElementsByName('isZakatMal')[0];
+    isZakatMal.value = "Tidak";
+    var zakat = document.getElementsByName('malTotal')[0];
+    zakat.value = 0;
+    document.getElementsByName('amount')[0].value = 0;
+  }
+
+}
+
+function addZakatProfesi() {
+  var payment = document.getElementsByName('payment')[0].value;
+  var others = document.getElementsByName('others')[0].value;
+  var debt = document.getElementsByName('debt')[0].value;
+  var nishab = document.getElementsByName('nishabProfesi')[0].value;
+  var harta = (payment * 12) + (others * 12) - (debt * 12);
+  if (harta > nishab) {
+    var isZakatProfesi = document.getElementsByName('isZakatProfesi')[0];
+    isZakatProfesi.value = "Iya";
+    var total = 0.025 * harta;
+    var zakat = document.getElementsByName('profesiTotal')[0];
+    zakat.value = total;
+    document.getElementsByName('amount')[0].value = total;
+  } else {
+    var isZakatMal = document.getElementsByName('isZakatProfesi')[0];
+    isZakatMal.value = "Tidak";
+    var zakat = document.getElementsByName('profesiTotal')[0];
+    zakat.value = 0;
+    document.getElementsByName('amount')[0].value = 0;
+  }
+}
 
 $('#onlyNumber').focus();
 

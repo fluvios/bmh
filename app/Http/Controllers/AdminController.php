@@ -223,6 +223,13 @@ class AdminController extends Controller
 
             'email_admin'      => 'required',
 
+            'harga_emas'      => 'required',
+
+            'harga_beras'      => 'required',
+
+            'bonus_registrasi'      => 'required',
+
+            'bonus_donasi'      => 'required',
         );
 
 
@@ -252,6 +259,14 @@ class AdminController extends Controller
         $sql->captcha                = $request->captcha;
 
         $sql->email_verification = $request->email_verification;
+
+        $sql->harga_beras = $request->harga_beras;
+
+        $sql->harga_emas = $request->harga_emas;
+
+        $sql->registration_bonus = $request->bonus_registrasi;
+
+        $sql->donation_bonus = $request->bonus_donasi;
 
         $sql->save();
 

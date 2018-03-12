@@ -74,7 +74,6 @@ Route::get('cabang', function () {
     return view('default.cabang-list')->withData($data);
 });
 
-
 /*
  |
  |-----------------------------------
@@ -84,6 +83,17 @@ Route::get('cabang', function () {
 Route::get('verify/account/{confirmation_code}', 'HomeController@getVerifyAccount')->where('confirmation_code', '[A-Za-z0-9]+');
 
 /*
+
+/*
+ |
+ |-----------------------------------
+ | Referral
+ |--------- -------------------------
+ */
+Route::get('ref/donasi/{email}/{id}', 'ReferralController@refferalDonasi')->middleware('auth');
+Route::get('ref/register/{email}', 'ReferralController@refferalRegistrasi');
+/*
+
 /*
  |-----------------------------------
  | Authentication
@@ -178,6 +188,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('account', 'UserController@account');
     Route::post('account', 'UserController@update_account');
     Route::get('account/topup', 'UserController@topup');
+    Route::get('account/referral', 'UserController@referral');
     Route::post('account/address/home', 'UserController@update_adress_home');
     Route::post('account/address/company', 'UserController@update_adress_work');
 

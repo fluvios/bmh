@@ -1,6 +1,6 @@
 
-<?php 
-$userAuth = Auth::user(); 
+<?php
+$userAuth = Auth::user();
 ?>
 <div class="panel panel-default ">
           <div class="panel-body">
@@ -13,7 +13,7 @@ $userAuth = Auth::user();
             <a href="{{ url('account') }}" class="btn btn-primary">
               <i class="icon icon-pencil myicon-right"></i> Edit Kontak
             </a>
-         
+
           </div>
         </div>
 <ul class="nav nav-pills nav-stacked">
@@ -54,7 +54,7 @@ $userAuth = Auth::user();
 
 	</li>
 
-@if( $userAuth->role == 'admin' ) 
+@if( $userAuth->role == 'admin' )
 
 	<li class="margin-bottom-5">
 
@@ -93,7 +93,7 @@ $userAuth = Auth::user();
 
 			<i class="fa fa-money myicon-right"></i> {{ trans('misc.withdrawals') }}
 
-		</a> <!-- **** ./ list-group-item 
+		</a> <!-- **** ./ list-group-item
 
 	</li>**** -->
 
@@ -120,5 +120,16 @@ $userAuth = Auth::user();
 
 	</li>
 
+  <li class="margin-bottom-5">
+
+  		<!-- **** list-group-item **** -->
+
+  		<a href="{{ url('account/referral') }}" class="list-group-item @if(Request::is('account/referral'))active @endif">
+
+  			<i class="ion ion-link myicon-right"></i> Affiliation System
+
+  		</a> <!-- **** ./ list-group-item **** -->
+
+  	</li>
 
 </ul>

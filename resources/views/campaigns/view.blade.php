@@ -2,10 +2,10 @@
 
 $settings = App\Models\AdminSettings::first();
 
-if($response->goal > 0) {
-	$percentage = round($response->donations()->where('payment_status', '=', 'paid')->sum('donation') / $response->goal * 100);
+if ($response->goal > 0) {
+    $percentage = round($response->donations()->where('payment_status', '=', 'paid')->sum('donation') / $response->goal * 100);
 } else {
-	$percentage = round($response->donations()->where('payment_status', '=', 'paid')->sum('donation') / 100);
+    $percentage = round($response->donations()->where('payment_status', '=', 'paid')->sum('donation') / 100);
 }
 
 // if ($percentage > 2000) {
@@ -460,7 +460,6 @@ $province = App\Models\Provinsi::where('id_prov', '=', $response->province_id)->
 		@endif
 
 	</div><!-- /COL MD -->
-
 </div><!-- container wrap-ui -->
 @endsection
 

@@ -28,6 +28,7 @@ class KategoriController extends Controller
     {
     	$kategori = new Kategori();
     	$kategori->nama = $request->nama;
+      $kategori->slug = $request->slug;
     	$kategori->is_active = $request->input('is_active', 0);
     	if ($kategori->save()) {
     		return redirect(route('admin-kategori-index'))->with('success_message', trans('admin.success_add'));
@@ -40,7 +41,7 @@ class KategoriController extends Controller
     {
     	if (!$kategori = Kategori::find($id)) {
     		return redirect()->back()->with('error_message', 'Kategori not found');
-    	} 
+    	}
     	$action = route('admin-kategori-update', $id);
     	$title  = 'Edit Kategori';
     	return view('admin.form-kategori', compact('kategori', 'action', 'title'));
@@ -52,6 +53,7 @@ class KategoriController extends Controller
     		return redirect()->back()->with('error_message', 'Kategori not found');
     	}
     	$kategori->nama = $request->nama;
+      $kategori->slug = $request->slug;      
     	$kategori->is_active = $request->is_active;
     	if ($kategori->save()) {
     		return redirect(route('admin-kategori-index'))->with('success_message', trans('admin.success_update'));

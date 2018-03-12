@@ -191,6 +191,47 @@
                       </div>
                     </div>
                   </div><!-- /.box-body -->
+
+                  <!-- Start Box Body -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Harga Beras</label>
+                      <div class="col-sm-10">
+                        <input type="text" value="{{ $settings->harga_beras }}" name="harga_beras" class="form-control" placeholder="Harga Beras">
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+
+                  <!-- Start Box Body -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Harga Emas</label>
+                      <div class="col-sm-10">
+                        <input type="text" value="{{ $settings->harga_emas }}" name="harga_emas" class="form-control" placeholder="Harga Emas">
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+
+                  <!-- Start Box Body -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Bonus Registrasi</label>
+                      <div class="col-sm-10">
+                        <input type="text" value="{{ $settings->registration_bonus }}" name="bonus_registrasi" class="form-control" placeholder="Bonus Registrasi">
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+
+                  <!-- Start Box Body -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Bonus Donasi</label>
+                      <div class="col-sm-10">
+                        <input type="text" value="{{ $settings->donation_bonus }}" name="bonus_donasi" class="form-control" placeholder="Bonus Donasi">
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+
                   
                   <div class="box-footer">
                     <button type="submit" class="btn btn-success">{{ trans('admin.save') }}</button>

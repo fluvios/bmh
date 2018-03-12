@@ -39,7 +39,7 @@ class UserController extends Controller
   public function dashboard()
   {
     $user = Auth::user();
-    return view('users.dashboard', [ 
+    return view('users.dashboard', [
       'user' => $user,
     ]);
   }//<--- End Method
@@ -47,6 +47,11 @@ class UserController extends Controller
   public function account()
   {
     return view('users.account');
+  }//<--- End Method
+
+  public function referral()
+  {
+    return view('users.referral');
   }//<--- End Method
 
   public function topup()
