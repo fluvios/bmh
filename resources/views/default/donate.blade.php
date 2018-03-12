@@ -63,7 +63,6 @@
 
 			 </div>
 
-<!-- <input id="amount" name="amount" type="text" maxlength="15" /> -->
 			 <!-- Start -->
 			 <div class="form-group">
 				 <label>Nama</label>

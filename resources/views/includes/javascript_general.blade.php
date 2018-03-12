@@ -25,7 +25,9 @@
     <script src="{{ asset('public/js/jquery.form.js') }}"></script>
 
     <script src="{{ asset('public/plugins/sweetalert/sweetalert.min.js') }}"></script>
- <script src="{{ asset('public/js/curr.js') }}"></script>
+    
+    <!-- <script src="{{ asset('public/js/curr.js') }}"></script> -->
+    
     <script src="{{ asset('public/js/holder.min.js') }}"></script>
 
     <script src="{{ asset('public/js/jquery.slides.js') }}"></script>
