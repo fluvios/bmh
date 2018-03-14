@@ -1,59 +1,30 @@
-(function($, undefined) {
+/**
+ * JavaScript Code Snippet
+ * Convert Number to Rupiah & vice versa
+ * https://gist.github.com/845309
+ *
+ * Copyright 2011-2012, Faisalman
+ * Licensed under The MIT License
+ * http://www.opensource.org/licenses/mit-license  
+ *
+ */
 
-    "use strict";
+function convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka.toString().split('').reverse().join('');
+    for (var i = 0; i < angkarev.length; i++) if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+    rupiah = rupiah.split('', rupiah.length - 1).reverse().join('');
+    return (rupiah.length < 1 ? '0' : rupiah);
+}
+/**
+ * Usage example:
+ * alert(convertToRupiah(10000000)); -> "Rp. 10.000.000"
+ */
 
-    // When ready.
-    $(function() {
-        
-        var $form = $( "#formDonation" );
-        var $input = $form.find( "#onlyNumber" );
-
-        $input.on( "keyup", function( event ) {
-            
-            
-            // When user select text in the document, also abort.
-            var selection = window.getSelection().toString();
-            if ( selection !== '' ) {
-                return;
-            }
-            
-            // When the arrow keys are pressed, abort.
-            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
-                return;
-            }
-            
-            
-            var $this = $( this );
-            
-            // Get the value.
-            var input = $this.val();
-            
-            var input = input.replace(/[\D\s\._\-]+/g, "");
-                    input = input ? parseInt( input, 10 ) : 0;
-
-                    $this.val( function() {
-                        return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
-                    } );
-        } );
-        
-        /**
-         * ==================================
-         * When Form Submitted
-         * ==================================
-         */
-        $form.on( "submit", function( event ) {
-            
-            var $this = $( this );
-            var arr = $this.serializeArray();
-        
-            for (var i = 0; i < arr.length; i++) {
-                    arr[i].value = arr[i].value.replace(/[($)\s\._\-]+/g, ''); // Sanitize the values.
-            };
-            
-            console.log( arr );
-            
-            event.preventDefault();
-        });
-        
-    });
-})(jQuery);
+function convertToAngka(rupiah) {
+    return parseInt(rupiah.replace(/,.*|[^0-9]/g, ''), 10);
+}
+/**
+ * Usage example:
+ * alert(convertToAngka("Rp 10.000.123")); -> 10000123
+ */

@@ -46,8 +46,6 @@ class CampaignsController extends Controller
       'categories_id.required' => trans('misc.please_select_category'),
       'description.required' => trans('misc.description_required'),
       'description.text_required' => trans('misc.text_required'),
-      'goal.min' => trans('misc.amount_minimum', ['symbol' => $this->settings->currency_symbol, 'code' => $this->settings->currency_code]),
-      'goal.max' => trans('misc.amount_maximum', ['symbol' => $this->settings->currency_symbol, 'code' => $this->settings->currency_code]),
       "photo.max"   => trans('misc.max_size').' '.Helper::formatBytes($sizeAllowed, 1),
     );
 
@@ -57,7 +55,7 @@ class CampaignsController extends Controller
         'photo'           => 'required|mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
         'title'             => 'required|min:3|max:45',
         'categories_id'  => 'required',
-        'goal'             => 'required|integer|min:'.$this->settings->min_campaign_amount,
+        'goal'             => 'required',
         'location'        => 'required|max:50',
         'description'  => 'text_required|required|min:20',
       ], $messages);
@@ -68,7 +66,7 @@ class CampaignsController extends Controller
         'photo'           => 'mimes:jpg,gif,png,jpe,jpeg|image_size:>='.$dimensions[0].',>='.$dimensions[1].'|max:'.$this->settings->file_size_allowed.'',
         'title'             => 'required|min:3|max:45',
         'categories_id'  => 'required',
-        'goal'             => 'required|integer|min:'.$this->settings->min_campaign_amount,
+        'goal'             => 'required',
         'location'        => 'required|max:50',
         'description'  => 'required|min:20|text_required',
       ], $messages);
@@ -202,7 +200,7 @@ class CampaignsController extends Controller
         $sql->date               = Carbon::now();
         $sql->status             = $_status;
         $sql->token_id         = str_random(200);
-        $sql->goal               = trim($this->request->goal);
+        $sql->goal               = trim(Helper::convert_to_number($this->request->goal));
         $sql->location          = $city->nama;
         $sql->province_id = $city->id_prov;
         $sql->city_id = $city->id_kab;
@@ -435,7 +433,7 @@ class CampaignsController extends Controller
         $sql->large_image   = $image_large;
         $sql->description     = Helper::removeBR($description);
         $sql->user_id          = Auth::user()->id;
-        $sql->goal               = trim($this->request->goal);
+        $sql->goal               = trim(Helper::convert_to_number($this->request->goal));
         $sql->location          = $city->nama;
         $sql->province_id = $city->id_prov;
         $sql->city_id = $city->id_kab;

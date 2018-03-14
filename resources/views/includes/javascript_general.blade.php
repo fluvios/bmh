@@ -26,7 +26,7 @@
 
     <script src="{{ asset('public/plugins/sweetalert/sweetalert.min.js') }}"></script>
     
-    <!-- <script src="{{ asset('public/js/curr.js') }}"></script> -->
+    <script src="{{ asset('public/js/curr.js') }}"></script>
 
     <script src="{{ asset('public/js/currency.min.js') }}"></script>
 

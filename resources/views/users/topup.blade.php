@@ -41,7 +41,21 @@ $banks = \App\Models\Banks::all();
 					<option value="200000">Rp.200,000</option>
 					<option value="500000">Rp.500,000</option>
 					<option value="1000000">Rp.1,000,000</option>
+					<option value="voucher">Voucher</option>
 				</select>
+			</div>
+
+			<div class="form-group checkbox icheck">
+				 <label class="margin-zero">
+					 <input class="no-show" name="others" type="checkbox" value="1">
+					 <span class="margin-lft5 keep-login-title">Pilih Untuk Nominal Lainnya (Minimal Rp.200,000)</span>
+				 </label>
+
+				 <div class="input-group has-success">
+					 <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+
+					 <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('amount') }}" onkeyup="convertToRupiah($event)">
+				 </div>
 			</div>
 
 			<div class="form-group">
@@ -56,9 +70,6 @@ $banks = \App\Models\Banks::all();
 				</div>
 				<div class="radio">
 				   <label><input type="radio" name="payment_gateway" value="Midtrans">Payment Gateway</label>
-				</div>
-				<div class="radio">
-					 <label><input type="radio" name="payment_gateway" value="Payment" disabled>Pembayaran Lain</label>
 				</div>
 			</div>
 			<!-- Alert -->

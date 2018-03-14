@@ -58,7 +58,7 @@
 				 <div class="input-group has-success">
 					 <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
 
-					 <input type="text" min="{{$settings->min_donation_amount}}"  autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}">
+					 <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}" onkeyup="convertToRupiah($event)">
 				 </div>
 
 			 </div>
