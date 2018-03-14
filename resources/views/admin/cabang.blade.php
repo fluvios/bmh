@@ -63,12 +63,11 @@
 
           <div class="box-body table-responsive no-padding">
 
-            <table class="table table-hover">
-
-              <tbody>
+            <table id="donation" class="table table-hover">
 
 
                 @if( $cabangs->total() !=  0 && $cabangs->count() != 0 )
+                <thead>
 
                 <tr>
 
@@ -82,7 +81,9 @@
 
                 </tr><!-- /.TR -->
 
+                </thead>
 
+                <tbody>
                   @foreach( $cabangs as $cabang )
 
                   <tr>

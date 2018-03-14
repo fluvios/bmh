@@ -63,26 +63,24 @@
 
           <div class="box-body table-responsive no-padding">
 
-            <table class="table table-hover">
-
-              <tbody>
-
+            <table id="donation" class="table table-hover">
 
                 @if( $kategoris->total() !=  0 && $kategoris->count() != 0 )
+                <thead>
+                  <tr>
 
-                <tr>
+                    <th class="active">ID</th>
 
-                  <th class="active">ID</th>
+                    <th class="active">Nama kategori</th>
 
-                  <th class="active">Nama kategori</th>
+                    <th class="active">{{ trans('admin.actions') }}</th>
 
-                  <th class="active">{{ trans('admin.actions') }}</th>
+                    <td class="active">Status</td>
 
-                  <td class="active">Status</td>
+                  </tr><!-- /.TR -->
+                </thead>
 
-                </tr><!-- /.TR -->
-
-
+                <tbody>
                   @foreach( $kategoris as $kategori )
 
                   <tr>
