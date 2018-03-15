@@ -232,6 +232,11 @@ Route::group(['middleware' => 'auth'], function () {
         return view('users.donations');
     });
 
+    // Topups
+    Route::get('account/mutasi', function () {
+        return view('users.mutasi');
+    });    
+
     // Report Campaign
     Route::get('report/campaign/{id}/{user}', 'CampaignsController@report');
 

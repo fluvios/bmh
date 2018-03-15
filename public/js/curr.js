@@ -5,7 +5,7 @@
  *
  * Copyright 2011-2012, Faisalman
  * Licensed under The MIT License
- * http://www.opensource.org/licenses/mit-license  
+ * http://www.opensource.org/licenses/mit-license
  *
  */
 

@@ -43,7 +43,6 @@ class TopUpController extends Controller
     //<----------- ****** DELIVERY ************** ----->
     if ($this->request->payment_gateway == 'Delivery') {
       // Insert DB
-      // Insert DB
       $sql = new DepositLog;
       $sql->user_id = $this->request->user_id;
       $sql->fullname = $user->name;
@@ -84,8 +83,9 @@ class TopUpController extends Controller
       $sql->save();
   
       // Get Donation Id
-      $response = $sql->id;
-      $url = url('transfer_topup', $response);
+      $response = DepositLog::find($sql->id);
+      $response['bank'] = Banks::findOrFail($sql->bank_id);
+      $url = url('transfer_topup', $response->id);
       $token = '';
       if ($isMidtrans) {
         try {

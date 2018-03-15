@@ -45,7 +45,7 @@ $banks = \App\Models\Banks::all();
 				</select>
 			</div>
 
-			<div class="form-group checkbox icheck">
+			<!-- <div class="form-group checkbox icheck">
 				 <label class="margin-zero">
 					 <input class="no-show" name="others" type="checkbox" value="1">
 					 <span class="margin-lft5 keep-login-title">Pilih Untuk Nominal Lainnya (Minimal Rp.200,000)</span>
@@ -56,7 +56,7 @@ $banks = \App\Models\Banks::all();
 
 					 <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('amount') }}" onkeyup="convertToRupiah($event)">
 				 </div>
-			</div>
+			</div> -->
 
 			<div class="form-group">
 				<label for="payment_gateway">Metode Pembayaran</label>

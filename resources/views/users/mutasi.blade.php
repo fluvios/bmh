@@ -2,19 +2,14 @@
 // ** Data User logged ** //
      $settings = App\Models\AdminSettings::first();
 
-     $data = App\Models\Donations::leftJoin('campaigns', function ($join) {
-         $join->on('donations.campaigns_id', '=', 'campaigns.id');
-     })
-  ->where('donations.user_id', Auth::user()->id)
-    ->select('donations.*')
-    ->addSelect('campaigns.title')
-    ->orderBy('donations.id', 'DESC')
+     $data = App\Models\DepositLog::where('user_id', Auth::user()->id)
+    ->orderBy('id', 'DESC')
     ->paginate(20);
 
       ?>
 @extends('app')
 
-@section('title') {{ trans('misc.donations') }} - @endsection
+@section('title') Mutasi - @endsection
 
 @section('css')
 
@@ -26,7 +21,7 @@
 
 
 <div class=" container margin-top-90 margin-bottom-40">
-	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.donations') }}</h2>
+	 <h2 class="subtitle-color-7 text-uppercase">Mutasi</h2>
 		<!-- Col MD -->
 		<div class=" login-form-2 col-md-8 margin-bottom-20">
 
@@ -38,12 +33,9 @@
    		<tr>
    		 <th class="active">ID</th>
           <th class="active">{{ trans('auth.full_name') }}</th>
-          <th class="active">{{ trans_choice('misc.campaigns_plural', 1) }}</th>
-          <th class="active">{{ trans('misc.donation') }}</th>
-           <th class="active">{{ trans('Status') }}</th>
-          <th class="active">{{ trans('admin.date') }}</th>
-			<th class="active">Link Referral</th>
-          </tr>
+		    <th class="active">Saldo</th>
+		    <th class="active">Status</th>
+            <th class="active">Tanggal Pembelian</th>
    		  </thead>
 
    		  <tbody>
@@ -51,11 +43,9 @@
                     <tr>
                       <td>{{ $donation->id }}</td>
                       <td>{{ $donation->fullname }}</td>
-                      <td><a href="{{url('campaign',$donation->campaigns_id)}}" target="_blank">{{ str_limit($donation->title, 10, '...') }} <i class="fa fa-external-link-square"></i></a></td>
-                      <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
+                      <td>{{ $settings->currency_symbol.number_format($donation->amount - $donation->amount_key) }}</td>
                       <td>{{ $donation->payment_status }}</td>
-                      <td>{{ date('d M, y', strtotime($donation->payment_date)) }}</td>
-											<td>{{url('ref/donasi/'.Auth::user()->email.'/'.$donation->campaigns_id)}}</td>
+                      <td>{{ date('d M, y', strtotime($donation->transfer_date)) }}</td>
                     </tr><!-- /.TR -->
                     @endforeach
 

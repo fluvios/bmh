@@ -87,7 +87,7 @@ class DonationsController extends Controller
 
     $validator = Validator::make($this->request->all(), [
       // 'amount' => 'required|integer|min:'.$this->settings->min_donation_amount.'|max:'.$this->settings->max_donation_amount,
-      'amount' => 'required|integer|min:'.$this->settings->min_donation_amount.'',
+      'amount' => 'required',
       'full_name' => 'required|max:25',
       'email' => 'required|max:100',
       'comment' => 'max:100',
@@ -233,7 +233,7 @@ class DonationsController extends Controller
         $sql->txn_id = 'null';
         $sql->fullname = $this->request->full_name;
         $sql->email = $this->request->email;
-        $sql->donation = $this->request->amount;
+        $sql->donation = Helper::convert_to_number($this->request->amount);
         $sql->donation_type = $this->request->donation_type;
         $sql->payment_gateway = $this->request->payment_gateway;
         $sql->comment = $this->request->comment;
@@ -296,7 +296,7 @@ class DonationsController extends Controller
       $sql->txn_id = 'null';
       $sql->fullname = $this->request->full_name;
       $sql->email = $this->request->email;
-      $sql->donation = $this->request->amount;
+      $sql->donation = Helper::convert_to_number($this->request->amount);
       $sql->donation_type = $this->request->donation_type;
       $sql->payment_gateway = "Midtrans";
       $sql->comment = $this->request->comment;
@@ -361,7 +361,7 @@ class DonationsController extends Controller
       $sql->txn_id = 'null';
       $sql->fullname = $this->request->full_name;
       $sql->email = $this->request->email;
-      $sql->donation = $this->request->amount + $amountKey;
+      $sql->donation = Helper::convert_to_number($this->request->amount) + $amountKey;
       $sql->donation_type = $this->request->donation_type;
       $sql->payment_gateway = "Transfer";
       $sql->comment = $this->request->comment;
@@ -408,7 +408,7 @@ class DonationsController extends Controller
   public function sendMobile()
   {
     $validator = Validator::make($this->request->all(), [
-      'amount' => 'required|integer',
+      'amount' => 'required',
       'full_name' => 'required|max:25',
       'email' => 'required|max:100',
       'comment' => 'max:100',
