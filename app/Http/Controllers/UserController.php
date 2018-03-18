@@ -87,6 +87,35 @@ class UserController extends Controller
     return redirect('account');
   }//<--- End Method
 
+  public function updateMobile(Request $request)
+  {
+    $input = $request->all();
+
+    $validator = $this->validator($input, $id);
+
+    if ($validator->fails()) {
+      $this->throwValidationException(
+        $request,
+        $validator
+      );
+    }
+
+    $user = User::find($request->user_id);
+    $user->name        = $request->name;
+    $user->email        = $request->email;
+    $user->phone_number_1 = $request->phone_number_1;
+    $user->phone_number_2 = $request->phone_number_2;
+    $user->save();
+
+    // Send new edit data
+    $response = User::find($user->id);
+
+    return response()->json([
+      'success' => true,
+      'response' => $response,      
+    ]);
+  }//<--- End Method
+
   public function password()
   {
     return view('users.password');

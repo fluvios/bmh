@@ -348,7 +348,7 @@
                      <label>Jumlah Harta</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaTotal" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaMalTotal" disabled>
                      </div>
                    </div>
                    <div class="form-group">
@@ -400,7 +400,7 @@
                      <label>Total Pendapatan</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaTotal" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaProfesiTotal" disabled>
                      </div>
                    </div>
                    <!-- <div class="form-group">
@@ -582,8 +582,8 @@ function addZakatMal() {
   var aset = document.getElementsByName('assets')[0].value;
   var nishab = document.getElementsByName('nishabMal')[0].value;
   // var harta = (tabungan * 12) + (investasi * 12);
-  var harta = tabungan + investasi + emas + utang + saham + aset;
-  document.getElementsByName('hartaTotal')[0].value = harta;
+  var harta = (tabungan*1) + (investasi*1) + (emas*1) + (utang*1) + (saham*1) + (aset*1);
+  document.getElementsByName('hartaMalTotal')[0].value = harta;
   if (harta > nishab) {
     var isZakatMal = document.getElementsByName('isZakatMal')[0];
     isZakatMal.value = "Iya";
@@ -607,8 +607,8 @@ function addZakatProfesi() {
   // var debt = document.getElementsByName('debt')[0].value;
   var nishab = document.getElementsByName('nishabProfesi')[0].value;
   // var harta = (payment * 12) + (others * 12) - (debt * 12);
-  var harta = payment + others;
-  document.getElementsByName('hartaTotal')[0].value = harta;
+  var harta = (payment*1) + (others*1);
+  document.getElementsByName('hartaProfesiTotal')[0].value = harta;
   if (harta > nishab) {
     var isZakatProfesi = document.getElementsByName('isZakatProfesi')[0];
     isZakatProfesi.value = "Iya";

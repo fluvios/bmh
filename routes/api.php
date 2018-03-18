@@ -29,7 +29,7 @@ Route::get('account/{id?}/refresh', function($id){
   $user['transaksi'] = App\Models\Donations::where('user_id', '=', $user->id)->count();
   return $user;
 });
-
+Route::post('account/{id}/edit','UserController@updateMobile');
 // Password
 Route::post('account/password', 'UserController@update_password');
 
