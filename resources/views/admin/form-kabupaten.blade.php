@@ -69,6 +69,17 @@
 
             <div class="box-body">
               <div class="form-group">
+                <label class="col-sm-2 control-label">ID Kabupaten/Kota</label>
+                <div class="col-sm-10">
+                  <input type="text" value="{{ $kabupaten->id_kab?:old('id_kab') }}" name="id_kab" class="form-control" placeholder="ID Kabupaten/Kota">
+                </div>
+              </div>
+            </div><!-- /.box-body -->
+
+            <!-- Start Box Body -->
+
+            <div class="box-body">
+              <div class="form-group">
                 <label class="col-sm-2 control-label">Nama Kabupaten/Kota</label>
                 <div class="col-sm-10">
                   <input type="text" value="{{ $kabupaten->nama?:old('nama') }}" name="nama" class="form-control" placeholder="Nama Kabupaten/Kota">
