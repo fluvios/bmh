@@ -51,6 +51,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.css"/>
 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"/>
+
   <!-- Theme style -->
 
   <link href="{{ asset('public/admin/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
@@ -352,7 +354,7 @@ desired effect
               <li @if(Request::is('panel/admin/settings/slider')) class="active" @endif><a href="{{ route('admin-slider-index') }}"><i class="fa fa-circle-o"></i> Slider</a></li>
 
               <li @if(Request::is('panel/admin/settings/akun-transaksi')) class="active" @endif><a href="{{ route('admin-akun-transaksi-index') }}"><i class="fa fa-circle-o"></i> Akun Transaksi</a></li>
-              
+
             </ul>
 
           </li><!-- ./Links -->
@@ -381,6 +383,13 @@ desired effect
 
           </li><!-- ./Links -->
 
+          <!-- Links -->
+
+          <li @if(Request::is('panel/admin/settings/kabupaten')) class="active" @endif>
+
+            <a href="{{ url('panel/admin/settings/kabupaten') }}"><i class="fa fa-map-signs"></i> <span>Kabupaten</span></a>
+
+          </li><!-- ./Links -->
 
 
           <!-- Links -->
@@ -549,7 +558,14 @@ desired effect
 
 <!-- Datatables -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -573,7 +589,11 @@ $(document).ready(function() {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-        }
+        },
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     } );
 } );
 </script>

@@ -403,6 +403,33 @@ Route::group(['middleware' => 'role'], function () {
         'uses'  => 'KategoriController@store'
     ]);
 
+    // Kabupaten
+
+    Route::get('panel/admin/settings/kabupaten', [
+        'as'    => 'admin-kabupaten-index',
+        'uses'  => 'KabupatenController@index'
+    ]);
+
+    Route::get('panel/admin/settings/kabupaten/{id_kab}/edit', [
+        'as'    => 'admin-kabupaten-edit',
+        'uses'  => 'KabupatenController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/kabupaten/{id_kab}/update', [
+        'as'    => 'admin-kabupaten-update',
+        'uses'  => 'KabupatenController@update'
+    ]);
+
+    Route::get('panel/admin/settings/kabupaten/add', [
+        'as'    => 'admin-kabupaten-create',
+        'uses'  => 'KabupatenController@add'
+    ]);
+
+    Route::post('panel/admin/settings/kabupaten/store', [
+        'as'    => 'admin-kabupaten-store',
+        'uses'  => 'KabupatenController@store'
+    ]);
+
     // Slider
 
     Route::get('panel/admin/settings/slider', [

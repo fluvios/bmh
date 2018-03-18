@@ -54,6 +54,10 @@ class TopUpController extends Controller
 
       // Get Topup
       $response = DepositLog::find($sql->id);
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTopupTransfer($sql, $user, $bank));
+      }
 
       return response()->json([
         'success' => true,
@@ -87,6 +91,12 @@ class TopUpController extends Controller
       $response['bank'] = Banks::findOrFail($sql->bank_id);
       $url = url('transfer_topup', $response->id);
       $token = '';
+
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTopupTransfer($sql, $user, $bank));
+      }
+
       if ($isMidtrans) {
         try {
           $params = [
@@ -115,10 +125,6 @@ class TopUpController extends Controller
         } catch (\Exception $e) {
   
         }
-      }
-  
-      if ($bank = Banks::find($sql->bank_id)) {
-        event(new NewBankTopupTransfer($sql, $user, $bank));
       }
 
       // Redirect to transfer page

@@ -303,17 +303,52 @@
                <div id="maal" class="tab-pane fade">
                  <form>
                    <div class="form-group">
-                     <label>Jumlah Tabungan Per bulan</label>
+                     <label>Uang Kas & Bank</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="savings" onkeyup="addZakatMal()">
                      </div>
                    </div>
                    <div class="form-group">
-                     <label>Jumlah Keuntungan Investasi Per bulan</label>
+                     <label>Total Asset (yg digunakan tidak perlu dihitung)</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="assets" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Piutang Tertagih</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="debts" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Emas & Perhiasan lain</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="golds" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Saham, obligasi, dana pensiun, asuransi yang diterima</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="stocks" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Dana yg diinvestasikan</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="investation" onkeyup="addZakatMal()">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Harta</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaTotal" disabled>
                      </div>
                    </div>
                    <div class="form-group">
@@ -362,12 +397,19 @@
                      </div>
                    </div>
                    <div class="form-group">
+                     <label>Total Pendapatan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaTotal" disabled>
+                     </div>
+                   </div>
+                   <!-- <div class="form-group">
                      <label>Pengeluaran (Utang, Kebutuhan Pokok) Per Bulan</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="debt" onkeyup="addZakatProfesi()">
                      </div>
-                   </div>
+                   </div> -->
                    <div class="form-group">
                      <label>Harga Beras</label>
                      <div class="input-group has-success">
@@ -534,8 +576,14 @@ function addZakatFitrah() {
 function addZakatMal() {
   var tabungan = document.getElementsByName('savings')[0].value;
   var investasi = document.getElementsByName('investation')[0].value;
+  var emas = document.getElementsByName('golds')[0].value;
+  var utang = document.getElementsByName('debts')[0].value;
+  var saham = document.getElementsByName('stocks')[0].value;
+  var aset = document.getElementsByName('assets')[0].value;
   var nishab = document.getElementsByName('nishabMal')[0].value;
-  var harta = (tabungan * 12) + (investasi * 12);
+  // var harta = (tabungan * 12) + (investasi * 12);
+  var harta = tabungan + investasi + emas + utang + saham + aset;
+  document.getElementsByName('hartaTotal')[0].value = harta;
   if (harta > nishab) {
     var isZakatMal = document.getElementsByName('isZakatMal')[0];
     isZakatMal.value = "Iya";
@@ -556,9 +604,11 @@ function addZakatMal() {
 function addZakatProfesi() {
   var payment = document.getElementsByName('payment')[0].value;
   var others = document.getElementsByName('others')[0].value;
-  var debt = document.getElementsByName('debt')[0].value;
+  // var debt = document.getElementsByName('debt')[0].value;
   var nishab = document.getElementsByName('nishabProfesi')[0].value;
-  var harta = (payment * 12) + (others * 12) - (debt * 12);
+  // var harta = (payment * 12) + (others * 12) - (debt * 12);
+  var harta = payment + others;
+  document.getElementsByName('hartaTotal')[0].value = harta;
   if (harta > nishab) {
     var isZakatProfesi = document.getElementsByName('isZakatProfesi')[0];
     isZakatProfesi.value = "Iya";

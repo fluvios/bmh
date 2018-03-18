@@ -449,6 +449,11 @@ class DonationsController extends Controller
       // Get Donation Data
       $response = $sql;
 
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, $user, $bank));
+      }
+
       return response()->json([
         'donation' => $response,
         'success' => true,
@@ -489,6 +494,11 @@ class DonationsController extends Controller
         // Get Donation Data
         $response = $sql;
 
+        $user = User::find($this->request->user_id);
+        if ($bank = Banks::find($sql->bank_id)) {
+          event(new NewBankTransfer($sql, $user, $bank));
+        }
+
         return response()->json([
           'donation' => $response,
           'success' => true,
@@ -527,6 +537,12 @@ class DonationsController extends Controller
 
       // Get Donation Id
       $response = $sql->id;
+
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, $user, $bank));
+      }
+
       $url      = '';
       $token    = '';
       try {
@@ -594,6 +610,11 @@ class DonationsController extends Controller
       // Get Donation Data
       $response = Donations::find($sql->id);
       $response['bank'] = Banks::findOrFail($sql->bank_id);
+      
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, $user, $bank));
+      }
 
       return response()->json([
         'donation' => $response,
