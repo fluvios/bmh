@@ -355,22 +355,22 @@
                      <label>Harga Emas</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="goldPrice" value="{{ $settings->harga_emas }}" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="goldPrice" value="{{ $settings->harga_emas }}">
                      </div>
                    </div>
                    <div class="form-group">
                      <label>NISHAB (85 Gram)</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabMal" value="{{ ($settings->harga_emas*85) }}" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabMal" value="{{ ($settings->harga_emas*85) }}">
                      </div>
                    </div>
-                   <div class="form-group">
+                   <!-- <div class="form-group">
                      <label>Wajib Membayar zakat</label>
                      <div class="input-group has-success">
                        <input type="text" autocomplete="off" class="form-control input-lg" name="isZakatMal" disabled>
                      </div>
-                   </div>
+                   </div> -->
                    <div class="form-group">
                      <label>Jumlah Zakat Mal</label>
                      <div class="input-group has-success">
@@ -414,22 +414,22 @@
                      <label>Harga Beras</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="ricePrice" value="{{ $settings->harga_beras }}" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="ricePrice" value="{{ $settings->harga_beras }}">
                      </div>
                    </div>
                    <div class="form-group">
                      <label>NISHAB (520 Kg Beras)</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabProfesi" value="{{ ($settings->harga_beras*520) }}" disabled>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabProfesi" value="{{ ($settings->harga_beras*520) }}">
                      </div>
                    </div>
-                   <div class="form-group">
+                   <!-- <div class="form-group">
                      <label>Wajib Membayar zakat</label>
                      <div class="input-group has-success">
                        <input type="text" autocomplete="off" class="form-control input-lg" name="isZakatProfesi" disabled>
                      </div>
-                   </div>
+                   </div> -->
                    <div class="form-group">
                      <label>Jumlah Zakat Profesi</label>
                      <div class="input-group has-success">
@@ -585,18 +585,18 @@ function addZakatMal() {
   var harta = (tabungan*1) + (investasi*1) + (emas*1) + (utang*1) + (saham*1) + (aset*1);
   document.getElementsByName('hartaMalTotal')[0].value = harta;
   if (harta > nishab) {
-    var isZakatMal = document.getElementsByName('isZakatMal')[0];
-    isZakatMal.value = "Iya";
+    // var isZakatMal = document.getElementsByName('isZakatMal')[0];
+    // isZakatMal.value = "Iya";
     var total = 0.025 * harta;
     var zakat = document.getElementsByName('malTotal')[0];
     zakat.value = total;
     document.getElementsByName('amount')[0].value = total;
   } else {
-    var isZakatMal = document.getElementsByName('isZakatMal')[0];
-    isZakatMal.value = "Tidak";
+    // var isZakatMal = document.getElementsByName('isZakatMal')[0];
+    // isZakatMal.value = "Tidak";
     var zakat = document.getElementsByName('malTotal')[0];
-    zakat.value = 0;
-    document.getElementsByName('amount')[0].value = 0;
+    zakat.value = "Tidak mencapai nishab";
+    // document.getElementsByName('amount')[0].value = 0;
   }
 
 }
@@ -610,18 +610,18 @@ function addZakatProfesi() {
   var harta = (payment*1) + (others*1);
   document.getElementsByName('hartaProfesiTotal')[0].value = harta;
   if (harta > nishab) {
-    var isZakatProfesi = document.getElementsByName('isZakatProfesi')[0];
-    isZakatProfesi.value = "Iya";
+    // var isZakatProfesi = document.getElementsByName('isZakatProfesi')[0];
+    // isZakatProfesi.value = "Iya";
     var total = 0.025 * harta;
     var zakat = document.getElementsByName('profesiTotal')[0];
     zakat.value = total;
     document.getElementsByName('amount')[0].value = total;
   } else {
-    var isZakatMal = document.getElementsByName('isZakatProfesi')[0];
-    isZakatMal.value = "Tidak";
+    // var isZakatMal = document.getElementsByName('isZakatProfesi')[0];
+    // isZakatMal.value = "Tidak";
     var zakat = document.getElementsByName('profesiTotal')[0];
-    zakat.value = 0;
-    document.getElementsByName('amount')[0].value = 0;
+    zakat.value = "Tidak mencapai nishab";
+    // document.getElementsByName('amount')[0].value = 0;
   }
 }
 
