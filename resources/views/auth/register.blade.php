@@ -22,8 +22,8 @@
       <h2 class="text-center position-relative">{{ trans('auth.sign_up') }}</h2>
 
       <div class="login-form">
-<h1 class="subtitle-color-5 text-uppercase text-center">{{ trans('auth.sign_up') }}</h1>
-    <p class="subtitle-color-6 text-center"><strong>{{$settings->title}}</strong></p>
+        <h1 class="subtitle-color-5 text-uppercase text-center">{{ trans('auth.sign_up') }}</h1>
+        <p class="subtitle-color-6 text-center"><strong>{{$settings->title}}</strong></p>
         @if (session('notification'))
         <div class="alert alert-success text-center">
 
@@ -43,13 +43,13 @@
 
           <!-- FORM GROUP -->
           <div class="row">
-           <div class="col-md-6">
-          <div class="form-group has-feedback">
-            <input type="hidden" class="form-control login-field custom-rounded" value="{{ old('user_id') }}" name="user_id" placeholder="KTP" title="{{ trans('users.id') }}" autocomplete="off">
+            <div class="col-md-6">
+              <div class="form-group has-feedback">
+                <input type="hidden" class="form-control login-field custom-rounded" value="{{ old('user_id') }}" name="user_id" placeholder="KTP" title="{{ trans('users.id') }}" autocomplete="off">
 
-          </div><!-- ./FORM GROUP -->
-</div>
-</div>
+              </div><!-- ./FORM GROUP -->
+            </div>
+          </div>
 
           <!-- FORM GROUP -->
           <div class="form-group has-feedback">
@@ -57,22 +57,22 @@
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div><!-- ./FORM GROUP -->
 
-         <div class="row">
-           <div class="col-md-6">
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('phone1') }}" name="phone1" placeholder="{{ trans('users.phone1') }}" title="{{ trans('users.phone1') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-        </div>
-      </div>
-      
-         <div class="col-md-6">
-          <!-- FORM GROUP -->
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control login-field custom-rounded" value="{{ old('email') }}" name="email" placeholder="{{ trans('auth.email') }}" title="{{ trans('auth.email') }}" autocomplete="off">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-          </div><!-- ./FORM GROUP -->
- </div>
+          <div class="row">
+            <div class="col-md-6">
+              <!-- FORM GROUP -->
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control login-field custom-rounded" value="{{ old('phone1') }}" name="phone1" placeholder="{{ trans('users.phone1') }}" title="{{ trans('users.phone1') }}" autocomplete="off">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <!-- FORM GROUP -->
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control login-field custom-rounded" value="{{ old('email') }}" name="email" placeholder="{{ trans('auth.email') }}" title="{{ trans('auth.email') }}" autocomplete="off">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+              </div><!-- ./FORM GROUP -->
+            </div>
           </div>
 
           <!-- FORM GROUP -->
@@ -97,11 +97,11 @@
             </div>
           </div>
           @endif
-<div class="row">
-           
-          <button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('auth.sign_up') }}</button>
-        
-      </div>
+          <div class="row">
+
+            <button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('auth.sign_up') }}</button>
+
+          </div>
         </form>
       </div><!-- Login Form -->
 

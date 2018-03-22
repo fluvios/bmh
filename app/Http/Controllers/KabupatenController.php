@@ -11,20 +11,19 @@ class KabupatenController extends Controller
     public function index(Request $request)
     {
 			$kabupatens = Kabupaten::paginate(10);
-			$provinces = Provinsi::all();
     	$kabupatens->appends(['page']);
     	return view('admin.kabupaten',[
-				'kabupatens' => $kabupatens,
-				'provinces' => $provinces
+				'kabupatens' => $kabupatens
     	]);
     }
 
     public function add()
     {
     	$kabupaten = new Kabupaten();
-    	$action = route('admin-kabupaten-store');
+			$provinces = Provinsi::all();
+			$action = route('admin-kabupaten-store');
     	$title  = trans('misc.add_new');
-    	return view('admin.form-kabupaten', compact('kabupaten', 'action', 'title'));
+    	return view('admin.form-kabupaten', compact('kabupaten', 'provinces', 'action', 'title'));
     }
 
     public function store(Request $request)

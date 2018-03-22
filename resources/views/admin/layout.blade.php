@@ -387,7 +387,7 @@ desired effect
 
           <li @if(Request::is('panel/admin/settings/kabupaten')) class="active" @endif>
 
-            <a href="{{ url('panel/admin/settings/kabupaten') }}"><i class="fa fa-map-signs"></i> <span>Kabupaten</span></a>
+            <a href="{{ url('panel/admin/settings/kabupaten') }}"><i class="fa fa-map-signs"></i> <span>Kota</span></a>
 
           </li><!-- ./Links -->
 

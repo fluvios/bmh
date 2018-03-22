@@ -345,13 +345,6 @@
                      </div>
                    </div>
                    <div class="form-group">
-                     <label>Jumlah Harta</label>
-                     <div class="input-group has-success">
-                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaMalTotal" disabled>
-                     </div>
-                   </div>
-                   <div class="form-group">
                      <label>Harga Emas</label>
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
@@ -363,6 +356,13 @@
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabMal" value="{{ ($settings->harga_emas*85) }}">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Jumlah Harta</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaMalTotal" disabled>
                      </div>
                    </div>
                    <!-- <div class="form-group">
@@ -396,13 +396,6 @@
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="others" onkeyup="addZakatProfesi()">
                      </div>
                    </div>
-                   <div class="form-group">
-                     <label>Total Pendapatan</label>
-                     <div class="input-group has-success">
-                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaProfesiTotal" disabled>
-                     </div>
-                   </div>
                    <!-- <div class="form-group">
                      <label>Pengeluaran (Utang, Kebutuhan Pokok) Per Bulan</label>
                      <div class="input-group has-success">
@@ -422,6 +415,13 @@
                      <div class="input-group has-success">
                        <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
                        <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="nishabProfesi" value="{{ ($settings->harga_beras*520) }}">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Total Pendapatan</label>
+                     <div class="input-group has-success">
+                       <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
+                       <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="hartaProfesiTotal" disabled>
                      </div>
                    </div>
                    <!-- <div class="form-group">

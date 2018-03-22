@@ -1,5 +1,5 @@
-<?php 
-$userAuth = Auth::user(); 
+<?php
+$userAuth = Auth::user();
 $categoriesMenu = App\Models\Kategori::orderBy('nama')->take(6)->get();
 $categoriesTotal = App\Models\Kategori::count();
 $cabang = App\Models\Cabang::orderBy('nama')->take(6)->get();
@@ -17,36 +17,36 @@ $cabangTotal = App\Models\Cabang::count();
 
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          	
+
           	 <?php if( isset( $totalNotify ) ) : ?>
         	<span class="notify"><?php echo $totalNotify; ?></span>
         	<?php endif; ?>
-        	
+
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}">
           	<img src="{{ asset('public/img/logo.png') }}" class="logo" />
           	</a>
-        </div><!-- navbar-header --> 
-        
+        </div><!-- navbar-header -->
+
         <div class="navbar-collapse collapse">
-		     
+
         	<ul class="nav navbar-nav navbar-lift ">
-          		
-          		
-          		
+
+
+
           		<li class="dropdown"  >
         				<a  class="@if(Request::is('/')) active-navbar @endif> text-uppercase font-default" href="{{ url('/') }}">HOME</a>
         			</li>
-        		
-        		@if( $categoriesTotal != 0 )	
+
+        		@if( $categoriesTotal != 0 )
         		<li class="dropdown">
         			<a href="javascript:void(0);"  data-toggle="dropdown" class="text-uppercase font-default">KATEGORI
         				<i class="ion-chevron-down margin-lft5"></i>
         				</a>
-        				
+
         				<!-- DROPDOWN MENU -->
         				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
         				@foreach(  $categoriesMenu as $kategori)
@@ -56,23 +56,23 @@ $cabangTotal = App\Models\Cabang::count();
         							</a>
         					</li>
         					@endforeach
-        					
+
         					@if( $categoriesTotal > 6 )
 			        		<li><a href="{{ url('kategori') }}">
 			        			<strong>{{ trans('misc.view_all') }} <i class="fa fa-long-arrow-right"></i></strong>
 			        		</a></li>
 			        		@endif
         				</ul><!-- DROPDOWN MENU -->
-        				
+
         		</li><!-- Categories -->
         		@endif
         		<!-- Cabang-->
-        			@if( $cabangTotal != 0 )	
+        			@if( $cabangTotal != 0 )
         		<li class="dropdown">
         			<a href="javascript:void(0);"  data-toggle="dropdown" class="text-uppercase font-default">CABANG
         				<i class="ion-chevron-down margin-lft5"></i>
         				</a>
-        				
+
         				<!-- DROPDOWN MENU -->
         				<ul class="dropdown-menu arrow-up" role="menu" aria-labelledby="dropdownMenu2">
         				@foreach(  $cabang as $cabang)
@@ -82,14 +82,14 @@ $cabangTotal = App\Models\Cabang::count();
         							</a>
         					</li>
         					@endforeach
-        					
+
         					@if( $cabangTotal > 6 )
 			        		<li><a href="{{ url('cabang') }}">
 			        			<strong>{{ trans('misc.view_all') }} <i class="fa fa-long-arrow-right"></i></strong>
 			        		</a></li>
 			        		@endif
         				</ul><!-- DROPDOWN MENU -->
-        				
+
         		</li><!-- cabang-->
         		@endif
         			@foreach( \App\Models\Pages::where('show_navbar', '1')->get() as $_page )
@@ -101,31 +101,31 @@ $cabangTotal = App\Models\Cabang::count();
 
 
            <ul class="nav navbar-nav navbar-right">
-        		
+
         		@if( Auth::check() )
-        			
+
         			<li class="dropdown" >
 			          <a href="javascript:void(0);" data-toggle="dropdown" class="userAvatar myprofile dropdown-toggle">
 			          		<img src="{{ asset('public/avatar').'/'.$userAuth->avatar }}" alt="User" class="img-circle avatarUser" width="35" height="35" />
-			          		<span class="title-dropdown font-default"><strong>{{ trans('users.my_profile') }}</strong></span> 
+			          		<span class="title-dropdown font-default"><strong>{{ trans('users.my_profile') }}</strong></span>
 			          		<i class="ion-chevron-down margin-lft5"></i>
 			          	</a>
-			          
+
 			          <!-- DROPDOWN MENU -->
 			          <ul class="dropdown-menu arrow-up nav-session" role="menu" aria-labelledby="dropdownMenu4">
-	          		 @if( $userAuth->role == 'admin' )		 	
+	          		 @if( $userAuth->role == 'admin' )
 	          		 	<li>
 	          		 		<a href="{{ url('panel/admin') }}" class="text-overflow">
 	          		 			<i class="icon-cogs myicon-right"></i> {{ trans('admin.admin') }}</a>
 	          		 			</li>
 	          		 			@endif
-	          		 			
+
 	          		 			<li>
 	          		 			<a href="{{ url('dashboard') }}" class="text-overflow">
 	          		 				<i class="glyphicon glyphicon-cog myicon-right"></i>Dasboard
 	          		 				</a>
 	          		 			</li>
-                      @if( $userAuth->role == 'admin' ) 
+                      @if( $userAuth->role == 'admin' )
 	          		 			<li>
 	          		 			<a href="{{ url('account/campaigns') }}" class="text-overflow">
 	          		 				<i class="ion ion-speakerphone myicon-right"></i> {{ trans('misc.campaigns') }}
@@ -137,9 +137,9 @@ $cabangTotal = App\Models\Cabang::count();
 	          		 				<i class="fa fa-heart myicon-right"></i> {{ trans('misc.likes') }}
 	          		 				</a>
 	          		 			</li>
-	          		 			
-	          		 			
-	          		 		          		 	
+
+
+
 	          		 		<li>
 	          		 			<a href="{{ url('logout') }}" class="logout text-overflow">
 	          		 				<i class="glyphicon glyphicon-log-out myicon-right"></i> {{ trans('users.logout') }}
@@ -147,17 +147,17 @@ $cabangTotal = App\Models\Cabang::count();
 	          		 		</li>
 	          		 	</ul><!-- DROPDOWN MENU -->
 	          		</li>
-	          		 @if( $userAuth->role == 'admin' )	
+	          		 @if( $userAuth->role == 'admin' )
 	          		<li><a class="log-in custom-rounded" href="{{url('create/campaign')}}" title="{{trans('misc.create_campaign')}}">
 					<i class="glyphicon glyphicon-edit"></i> <span class="title-dropdown font-default"><strong>{{trans('misc.create_campaign')}}</strong></span></a>
 					</li>
 					@endif
 					@else
-					
-					<li class="dropdown"><a class=" @if(Request::is("login")) active-navbar   @endif> text-uppercase font-default" href="{{url('login')}}">{{trans('auth.login')}}</a></li>
-						
+
+					<li class="dropdown"><a class=" @if(Request::is("login")) active-navbar   @endif> text-uppercase font-default" href="{{url('login')}}">{{trans('auth.sign_in')}}</a></li>
+
 					<li class="dropdown">
-						<a class=" @if(Request::is("register")) active-navbar   @endif> text-uppercase font-default" href="{{url('register')}}">
+						<a class=" @if(Request::is("register")) active-navbar   @endif> text-uppercase font-default" href="{{url('login')}}">
 						<i class="glyphicon glyphicon-user"></i> {{trans('auth.sign_up')}}
 						</a>
 						</li>
@@ -167,26 +167,26 @@ $cabangTotal = App\Models\Cabang::count();
           			<a href="#search"  class="text-uppercase font-default">
         				<i class="glyphicon glyphicon-search"></i> <span class="title-dropdown font-default"><strong>{{ trans('misc.search') }}</strong></span>
         				</a>
-          			
+
           			<!--<ul class="dropdown-menu arrow-up list-search">
 	        			<li>
-	        				
+
 	        				<form action="{{ url('search') }}" method="get" class="formSearh">
 							  <div class="col-thumb">
 							    <input type="text" name="q" id="btnItems" class="focus-off" placeholder="{{trans('misc.search')}}">
 							  </div>
 							  <button type="submit" class="btn btn-success btn-xs btn_search" id="btnSearch">{{trans('misc.search')}}</button>
 							</form>
-	        				
+
 	        			</li>
 	        		</ul>-->
           		</li>
           </ul>
-            
+
          </div><!--/.navbar-collapse -->
      </div>
  </div>
- 
+
 <div id="search">
     <button type="button" class="close">×</button>
     <form autocomplete="off" action="{{ url('search') }}" method="get">
