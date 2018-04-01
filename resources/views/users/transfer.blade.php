@@ -49,7 +49,7 @@ Transfer
           <div class="row">
              <div class="col-sm-6 margin-bottom-5 subtitle-color-13 text-uppercase">
                Silahkan transfer :
-               <img class="margin-top-20" src="{{ asset('public/bank/'. $bank->logo) }}" height="85%" width="85%">
+               <img class="margin-top-20" src="{{ asset('public/bank/large/'. $bank->logo) }}" height="85%" width="85%">
              </div>
              <div class="col-sm-4 pull-right">
                <h3 class="text-uppercase subtitle-color-14">{{ $bank->account_number }}</h3>

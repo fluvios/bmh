@@ -81,6 +81,7 @@ return array(
 	'select_file'               =>      'Select an File',
 	'add_project'               =>      'Add to project?',
 	'click_select_image'        =>      'Click to select an image',
+	'click_select_logo'        =>      'Click to upload bank logo',
 	'attach_file_support'       =>      'Files support:',
 	'maximum_tags'              =>      'Maximum 10 tags',
 	'width_min'                 =>      'The image must be greater than, or equal to 650px in width',

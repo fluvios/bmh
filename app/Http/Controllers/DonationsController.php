@@ -680,6 +680,12 @@ class DonationsController extends Controller
           'stripeSuccess' => true,
           'url' => url('paypal/donation/success', $donation->campaigns_id)
         ]);
+
+        // return response()->json([
+        //   'success' => true,
+        //   'stripeSuccess' => true,
+        //   'url' => url('paypal/donation/success', $donation->campaigns_id)
+        // ]);
     //   }
     // }
   }

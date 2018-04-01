@@ -81,7 +81,7 @@ $followed = App\Models\Like::where('user_id',Auth::user()->id)->count();
                 <td>{{ $donation->fullname }}</td>
                 <td><a href="{{url('campaign',$donation->campaigns_id)}}" target="_blank">{{ str_limit($donation->title, 10, '...') }} <i class="fa fa-external-link-square"></i></a></td>
                 <td>{{ $donation->email }}</td>
-                <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
+                <td class="text-right">{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
                 <td>{{ date('d M, y', strtotime($donation->payment_date)) }}</td>
               </tr><!-- /.TR -->
               @php

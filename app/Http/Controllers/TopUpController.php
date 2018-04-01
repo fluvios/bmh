@@ -12,6 +12,7 @@ use App\Models\Banks;
 use App\Helper;
 use App\Includes\Veritrans\Veritrans_VtWeb;
 use App\Includes\Veritrans\Veritrans_Snap;
+use App\Includes\Veritrans\Veritrans_Notification;
 use DB;
 use App\Events\NewBankTopupTransfer;
 
@@ -69,10 +70,15 @@ class TopUpController extends Controller
 
     //<----------- ****** TRANSFER ************** ----->
     else {
-      $isMidtrans = $this->request->payment_gateway == 'Midtrans';
+      // $isMidtrans = $this->request->payment_gateway == 'Midtrans';
+      if($this->request->payment_gateway == 'Midtrans') {
+        $isMidtrans = true;
+      } else {
+        $isMidtrans = false;
+      }
 
       $amountKey = $isMidtrans ? 0 : Helper::randomCheckKey();
-      
+
       //<----------- ****** TRANSFER ************** ----->
       // Insert DB
       $sql = new DepositLog;
@@ -85,11 +91,11 @@ class TopUpController extends Controller
       $sql->amount_key = $amountKey;
       $sql->expired_date = DB::raw('NOW() + INTERVAL 1 DAY');
       $sql->save();
-  
+
       // Get Donation Id
-      $response = DepositLog::find($sql->id);
-      $response['bank'] = Banks::findOrFail($sql->bank_id);
-      $url = url('transfer_topup', $response->id);
+      $response = DepositLog::findOrFail($sql->id);
+      $response['bank'] = $isMidtrans ? 0 : Banks::findOrFail($sql->bank_id);
+      $url = url('transfer_topup', $response);
       $token = '';
 
       $user = User::find($this->request->user_id);
@@ -123,11 +129,11 @@ class TopUpController extends Controller
             $url = Veritrans_VtWeb::getRedirectionUrl($params);
           }
         } catch (\Exception $e) {
-  
+
         }
       }
 
-      // Redirect to transfer page
+      // Return Response
       return response()->json([
         'success' => true,
         'deposit' => $response,
@@ -210,7 +216,7 @@ class TopUpController extends Controller
     $isMidtrans = $this->request->payment_gateway == 'Midtrans';
 
     $amountKey = $isMidtrans ? 0 : Helper::randomCheckKey();
-    
+
     //<----------- ****** TRANSFER ************** ----->
     // Insert DB
     $sql = new DepositLog;
@@ -226,7 +232,7 @@ class TopUpController extends Controller
 
     // Get Donation Id
     $response = $sql->id;
-    $url = url('transfer_topup', $response);
+    $url = '';
     $token = '';
     if ($isMidtrans) {
       try {
@@ -359,7 +365,7 @@ class TopUpController extends Controller
       $now_saldo = $user->saldo + $data->amount;
       $user->saldo = $now_saldo;
       $user->save();
-      
+
       $data->save();
     }
 

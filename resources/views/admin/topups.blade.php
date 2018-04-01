@@ -60,7 +60,7 @@
 
                   <td>{{ $topup->email }}</td>
 
-                  <td>{{ $settings->currency_symbol.number_format($topup->amount) }}</td>
+                  <td class="text-right">{{ $settings->currency_symbol.number_format($topup->amount) }}</td>
 
                   <td>{{ date('d M Y', strtotime($topup->transfer_date)) }}</td>
 

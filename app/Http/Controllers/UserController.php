@@ -46,7 +46,11 @@ class UserController extends Controller
 
   public function account()
   {
-    return view('users.account');
+    $user = Auth::user();
+    $user['rumah'] = Address::where('user_id', '=', $user->id)->where('jenis', '=', 'rumah')->first();
+    $user['kantor'] = Address::where('user_id', '=', $user->id)->where('jenis', '=', 'kantor')->first();
+          
+    return view('users.account', ['user' => $user]);
   }//<--- End Method
 
   public function referral()
@@ -146,7 +150,7 @@ class UserController extends Controller
     $address = Address::where('user_id', '=', $id)->where('jenis', '=', 'rumah')->firstOrFail();
     $address->alamat = $input['fullhomeaddress'];
     $address->telepon = $input['homephone'];
-    $address->kodepos = $input['postalcode'];
+    $address->kodepos = $input['homepostalcode'];
     $address->provinsi = $input['homeprovince'];
     $address->Kabupaten = $input['homestate'];
     $address->Kecamatan = $input['homeregion'];
@@ -190,7 +194,7 @@ class UserController extends Controller
     $address->Kelurahan = $input['companyvillage'];
     $address->save();
 
-    return redirect('account');
+    return Redirect::route('account');
   }
 
   public function update_password(Request $request)

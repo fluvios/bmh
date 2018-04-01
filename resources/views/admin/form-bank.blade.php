@@ -23,8 +23,7 @@
 
       <i class="fa fa-angle-right margin-separator"></i> 
 
-      Kategori
-
+      Bank
       <i class="fa fa-angle-right margin-separator"></i> 
 
       {{ $title }}
@@ -64,13 +63,13 @@
 
             @include('errors.errors-forms')
 
-          <div class="filer-input-dragDrop position-relative @if($slider->image != '') hoverClass @endif" id="draggable">
+          <div class="filer-input-dragDrop position-relative @if($bank->logo != '') hoverClass @endif" id="draggable">
             <input type="file" accept="image/*" name="image" id="filePhoto">
 
             <!-- previewPhoto -->
-            <div class="previewPhoto" @if($slider->image != '')style='display: block; background-image: url("{{asset('public/campaigns/large/'.$slider->image)}}");' @endif>
+            <div class="previewPhoto" @if($bank->logo != '')style='display: block; background-image: url("{{asset('public/bank/large/'.$bank->logo)}}");' @endif>
 
-              <div class="btn btn-danger btn-sm btn-remove-photo" id="removePhoto" data-id="{{$slider->id}}">
+              <div class="btn btn-danger btn-sm btn-remove-photo" id="removePhoto" data-id="{{$bank->id}}">
                 <i class="fa fa-trash myicon-right"></i> {{trans('misc.delete')}}
               </div>
 
@@ -85,7 +84,7 @@
                 <h3>{{ trans('misc.max_size') }}: {{App\Helper::formatBytes($settings->file_size_allowed * 1024) .' - '.$settings->min_width_height_image}} </h3>
               </div>
             </div>
-          </div>
+          </div>            
 
             <!-- Start Box Body -->
 
@@ -93,39 +92,11 @@
 
               <div class="form-group">
 
-                <label class="col-sm-2 control-label">{{ trans('admin.status') }}</label>
+                <label class="col-sm-2 control-label">{{ trans('admin.name') }}</label>
 
                 <div class="col-sm-10">
 
-                  
-
-                  <div class="radio">
-
-                  <label class="padding-zero">
-
-                    <input type="radio" name="isActive" value="1" @if( $slider->isActive == '1' ) checked @endif>
-
-                    {{ trans('admin.active') }}
-
-                  </label>
-
-                </div>
-
-                
-
-                <div class="radio">
-
-                  <label class="padding-zero">
-
-                    <input type="radio" name="isActive" value="0" @if( $slider->isActive == '0' ) checked @endif>
-
-                    {{ trans('admin.disabled') }}
-
-                  </label>
-
-                </div>
-
-                
+                  <input type="text" value="{{  $bank->name?:old('name') }}" name="name" class="form-control" placeholder="{{ trans('admin.name') }}">
 
                 </div>
 
@@ -134,9 +105,21 @@
             </div><!-- /.box-body -->
 
 
+            <!-- Start Box Body -->
+
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">No Rekening</label>
+                <div class="col-sm-10">
+                  <input type="text" value="{{ $bank->account_number?:old('account_number') }}" name="account_number" class="form-control" placeholder="No Rekening">
+                </div>
+              </div>
+            </div><!-- /.box-body -->
+
+
             <div class="box-footer">
 
-              <a href="{{ route('admin-slider-index') }}" class="btn btn-default">{{ trans('admin.cancel') }}</a>
+              <a href="{{ url('panel/admin/settings/bank') }}" class="btn btn-default">{{ trans('admin.cancel') }}</a>
 
               <button type="submit" class="btn btn-success pull-right">{{ trans('admin.save') }}</button>
 

@@ -307,9 +307,9 @@ return array(
 	'date_deadline' => 'Deadline',
 
 	// <!---------- Cabang ---------------------!>
-	'cabang' => 'Cabang',
-	'kode_cabang' => 'Kode Cabang',
-	'nama_cabang' => 'Nama Cabang',
-	'edit_cabang' => 'Ubah Cabang',
-	'from_cabang' => 'Campaign dari Cabang',
+	'cabang' => 'Lokasi Program',
+	'kode_cabang' => 'Kode Lokasi Program',
+	'nama_cabang' => 'Nama Lokasi Program',
+	'edit_cabang' => 'Ubah Lokasi Program',
+	'from_cabang' => 'Lokasi Program',
 );

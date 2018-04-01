@@ -48,7 +48,7 @@
                       <td>{{ $donation->fullname }}</td>
                       <td><a href="{{url('campaign',$donation->campaigns_id)}}" target="_blank">{{ str_limit($donation->campaigns()->title, 10, '...') }} <i class="fa fa-external-link-square"></i></a></td>
                       <td>{{ $donation->email }}</td>
-                      <td>{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
+                      <td class="text-right">{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
                       <td>{{ date('d M Y', strtotime($donation->payment_date)) }}</td>
                       <td>{{ $donation->getPaymentMethod()}}</td>
                       <td>{{ $donation->payment_status }}</td>

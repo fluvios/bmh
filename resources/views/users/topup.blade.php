@@ -69,7 +69,7 @@ $banks = \App\Models\Banks::all();
 					 <label><input type="radio" name="payment_gateway" value="Deposit" disabled>Saldo</label>
 				</div>
 				<div class="radio">
-				   <label><input type="radio" name="payment_gateway" value="Midtrans">Payment Gateway</label>
+				   <label><input type="radio" name="payment_gateway" value="Midtrans">Multipayment</label>
 				</div>
 			</div>
 			<!-- Alert -->

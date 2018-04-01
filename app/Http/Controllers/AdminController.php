@@ -475,7 +475,9 @@ class AdminController extends Controller
 
     public function addBank()
     {
-        return view('admin.add-bank');
+        $action = route('admin-bank-store');
+        $title  = trans('misc.add_new');
+        return view('admin.form-bank', compact('slider', 'action', 'title'));
     }
 
     public function storeBank(Request $request)
@@ -487,11 +489,142 @@ class AdminController extends Controller
 
       // Save User first
       $bank = new Banks;
+      $temp = 'public/temp/';
+      $path_small = 'public/bank/small/';
+      $path_large = 'public/bank/large/';
+
+      if ($request->hasFile('image')) {
+          $extension    = $request->file('image')->getClientOriginalExtension();
+          $file_large     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+          $file_small     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+    
+          if ($request->file('image')->move($temp, $file_large)) {
+              set_time_limit(0);
+    
+              //=============== Image Large =================//
+              $width  = Helper::getWidth($temp.$file_large);
+              $height = Helper::getHeight($temp.$file_large);
+              // $max_width = '800';
+    
+              // if ($width < $height) {
+              //     $max_width = '400';
+              // }
+    
+              // if ($width > $max_width) {
+              //     $scale = $max_width / $width;
+              //     $uploaded = Helper::resizeImage($temp.$file_large, $width, $height, $scale, $temp.$file_large);
+              // } else {
+              //     $scale = 1;
+              //     $uploaded = Helper::resizeImage($temp.$file_large, $width, $height, $scale, $temp.$file_large);
+              // }
+    
+              //=============== Small Large =================//
+              // Helper::resizeImageFixed($temp.$file_large, 400, 300, $temp.$file_small);
+    
+              //======= Copy Folder Small and Delete...
+              if (\File::exists($temp.$file_small)) {
+                  \File::copy($temp.$file_small, $path_small.$file_small);
+                  \File::delete($temp.$file_small);
+              }//<--- IF FILE EXISTS
+    
+              Image::make($temp.$file_large)->orientate();
+    
+              //======= Copy Folder Large and Delete...
+              if (\File::exists($temp.$file_large)) {
+                  \File::copy($temp.$file_large, $path_large.$file_large);
+                  \File::delete($temp.$file_large);
+              }//<--- IF FILE EXISTS
+          }
+    
+          $image_small  = $file_small;
+          $image_large  = $file_large;
+      }//<====== End HasFile
+
+      $bank->logo = $image_large;
       $bank->name = $request->name;
       $bank->account_number = $request->account_number;
       $bank->save();
 
       \Session::flash('success_message', trans('admin.success_add'));
+      return redirect('panel/admin/settings/bank');
+    }
+
+    public function editBank(Request $request, $id)
+    {
+        if (!$bank = Banks::find($id)) {
+            return redirect()->back()->with('error_message', 'Bank not found');
+        }
+        $action = route('admin-bank-update', $id);
+        $title  = 'Edit Bank';
+        return view('admin.form-bank', compact('bank', 'action', 'title'));
+    }
+
+    public function updateBank(Request $request)
+    {
+      $this->validate($request, [
+          'name' => 'required',
+          'account_number' => 'required',
+      ]);
+
+      // Save User first
+      $bank = new Banks;
+      $temp = 'public/temp/';
+      $path_small = 'public/bank/small/';
+      $path_large = 'public/bank/large/';
+
+      if ($request->hasFile('image')) {
+          $extension    = $request->file('image')->getClientOriginalExtension();
+          $file_large     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+          $file_small     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+    
+          if ($request->file('image')->move($temp, $file_large)) {
+              set_time_limit(0);
+    
+              //=============== Image Large =================//
+              $width  = Helper::getWidth($temp.$file_large);
+              $height = Helper::getHeight($temp.$file_large);
+              // $max_width = '800';
+    
+              // if ($width < $height) {
+              //     $max_width = '400';
+              // }
+    
+              // if ($width > $max_width) {
+              //     $scale = $max_width / $width;
+              //     $uploaded = Helper::resizeImage($temp.$file_large, $width, $height, $scale, $temp.$file_large);
+              // } else {
+              //     $scale = 1;
+              //     $uploaded = Helper::resizeImage($temp.$file_large, $width, $height, $scale, $temp.$file_large);
+              // }
+    
+              //=============== Small Large =================//
+              // Helper::resizeImageFixed($temp.$file_large, 400, 300, $temp.$file_small);
+    
+              //======= Copy Folder Small and Delete...
+              if (\File::exists($temp.$file_small)) {
+                  \File::copy($temp.$file_small, $path_small.$file_small);
+                  \File::delete($temp.$file_small);
+              }//<--- IF FILE EXISTS
+    
+              Image::make($temp.$file_large)->orientate();
+    
+              //======= Copy Folder Large and Delete...
+              if (\File::exists($temp.$file_large)) {
+                  \File::copy($temp.$file_large, $path_large.$file_large);
+                  \File::delete($temp.$file_large);
+              }//<--- IF FILE EXISTS
+          }
+    
+          $image_small  = $file_small;
+          $image_large  = $file_large;
+      }//<====== End HasFile
+
+      $bank->logo = $image_large;
+      $bank->name = $request->name;
+      $bank->account_number = $request->account_number;
+      $bank->save();
+
+      \Session::flash('success_message', trans('admin.success_update'));
       return redirect('panel/admin/settings/bank');
     }
 

@@ -82,7 +82,7 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
             <label>Kebutuhan Dana</label>
             <div class="input-group">
               <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-              <input type="text" class="form-control" name="goal" id="onlyNumber" value="{{ old('goal') }}" placeholder="Kebutuhan Dana" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+              <input type="text" class="form-control text-right" name="goal" id="onlyNumber" value="{{ old('goal') }}" placeholder="Kebutuhan Dana" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
             </div>
           </div>
 

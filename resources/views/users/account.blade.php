@@ -1,7 +1,3 @@
-<?php 
-// ** Data User logged ** //
-     $user = Auth::user();
-	  ?>
 @extends('app')
 
 @section('title') {{ trans('users.account_settings') }} - @endsection
@@ -97,7 +93,7 @@
 				</form>
 			</div>
 			<div id="address" class="tab-pane fade">
-				<form action="{{ url('address/home') }}" method="post" name="form">
+				<form action="{{ url('account/address/home') }}" method="post" name="form">
 
 						<H4>Alamat Pribadi</H4>
 					
@@ -106,56 +102,55 @@
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Alamat Rumah</label>
-						<textarea type="text" class="form-control login-field custom-rounded" value="" name="fullhomeaddress">
-						</textarea>
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->alamat?:old('fullhomeaddress')}}" name="fullhomeaddress">
 						</div><!-- ***** Form Group ***** -->
 						
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Telepon</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homephone">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->telepon?:old('homephone')}}" name="homephone">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Kode Pos</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homepostalcode">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kodepos?:old('homepostalcode')}}" name="homepostalcode">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Provinsi</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homeprovince">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->provinsi?:old('homeprovince')}}" name="homeprovince">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Kabupaten</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homestate">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kabupaten?:old('homestate')}}" name="homestate">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Kecamatan</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homeregion">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kecamatan?:old('homeregion')}}" name="homeregion">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
 							<label class="font-default">Kelurahan</label>
-							<input type="text" class="form-control login-field custom-rounded" value="" name="homevillage">
+							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kelurahan?:old('homevillage')}}" name="homevillage">
 						</div>
 						<!-- ***** Form Group ***** -->
 
 					<button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('misc.save_changes') }}</button>	
 				</form>
 
-				<form action="{{ url('address/company') }}" method="post" name="form">
+				<form action="{{ url('account/address/company') }}" method="post" name="form">
 
 					<H4>Alamat Kantor</H4>
 
@@ -164,56 +159,55 @@
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Alamat</label>
-					<textarea type="text" class="form-control login-field custom-rounded" value="" name="fullcompanyaddress">
-					</textarea>
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->alamat?:old('fullcompanyaddress')}}" name="fullcompanyaddress">
 					</div><!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Telepon</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companyphone">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->telepon?:old('companyphone')}}" name="companyphone">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Ext.</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companyext">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->ext?:old('companyext')}}" name="companyext">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Kode Pos</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companypostalcode">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kodepos?:old('companypostalcode')}}" name="companypostalcode">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Provinsi</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companyprovince">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->provinsi?:old('companyprovince')}}" name="companyprovince">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Kabupaten</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companystate">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kabupaten?:old('companystate')}}" name="companystate">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Kecamatan</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companyregion">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kecamatan?:old('companyregion')}}" name="companyregion">
 					</div>
 					<!-- ***** Form Group ***** -->
 
 					<!-- ***** Form Group ***** -->
 					<div class="form-group has-feedback">
 						<label class="font-default">Kelurahan</label>
-						<input type="text" class="form-control login-field custom-rounded" value="" name="companyvillage">
+						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kelurahan?:old('companyvillage')}}" name="companyvillage">
 					</div>
 					<!-- ***** Form Group ***** -->
 

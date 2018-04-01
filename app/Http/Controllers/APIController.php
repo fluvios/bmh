@@ -47,11 +47,18 @@ class APIController extends Controller
               $days_remaining = floor($remaining / 86400);
           }
 
+          if (str_slug($campaign->title) == '') {
+            $slugUrl  = '';
+          } else {
+            $slugUrl  = str_slug($campaign->title);
+          }
+
           $campaign['donation'] = $donations;
           $campaign['update'] = $updates;
           $campaign['total'] = $total;
           $campaign['days_remaining'] = $days_remaining;
-          
+          $campaign['slug'] = $slugUrl;
+
           return $campaign;
         });
 

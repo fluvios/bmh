@@ -85,7 +85,7 @@ $cities = App\Models\Kabupaten::all();
             <label>Kebutuhan Dana</label>
             <div class="input-group">
               <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
-              <input type="text" class="form-control" name="goal" id="onlyNumber" value="{{ App\Helper::convert_to_rupiah($data->goal) }}" placeholder="Kebutuhan Dana" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+              <input type="text" class="form-control text-right" name="goal" id="onlyNumber" value="{{ App\Helper::convert_to_rupiah($data->goal) }}" placeholder="Kebutuhan Dana" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
             </div>
           </div>
 

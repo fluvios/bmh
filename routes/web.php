@@ -277,7 +277,15 @@ Route::group(['middleware' => 'role'], function () {
     // banks
     Route::get('panel/admin/settings/bank', 'AdminController@bank');
     Route::get('panel/admin/settings/bank/add', 'AdminController@addBank');
-    Route::post('panel/admin/settings/bank/add', 'AdminController@storeBank');
+    Route::post('panel/admin/settings/bank/add', [
+        'as'    => 'admin-bank-store',
+        'uses'  => 'AdminController@storeBank'
+    ]);
+    Route::get('panel/admin/settings/bank/edit/{id?}', 'AdminController@editBank');
+    Route::post('panel/admin/settings/bank/edit/{id?}', [
+        'as'    => 'admin-bank-update',
+        'uses'  => 'AdminController@updateBank'
+    ]);
 
     // Amils
     Route::get('panel/admin/amils', 'AdminController@amils');
@@ -511,6 +519,11 @@ Route::post('deposit/{id}', function ($id) {
     'stripeSuccess' => true,
     'url' => url('paypal/donation/success', $donation->campaigns_id)
   ]);
+    // return response()->json([
+    //     'success' => true,
+    //     'stripeSuccess' => true,
+    //     'url' => url('/')
+    // ]);
 });
 Route::post('transfer_topup/{id}', 'TopUpController@transfer');
 

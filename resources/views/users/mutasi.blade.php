@@ -43,7 +43,7 @@
                     <tr>
                       <td>{{ $donation->id }}</td>
                       <td>{{ $donation->fullname }}</td>
-                      <td>{{ $settings->currency_symbol.number_format($donation->amount - $donation->amount_key) }}</td>
+                      <td class="text-right">{{ $settings->currency_symbol.number_format($donation->amount - $donation->amount_key) }}</td>
                       <td>{{ $donation->payment_status }}</td>
                       <td>{{ date('d M, y', strtotime($donation->transfer_date)) }}</td>
                     </tr><!-- /.TR -->

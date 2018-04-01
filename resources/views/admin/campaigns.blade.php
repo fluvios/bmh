@@ -140,9 +140,9 @@
 
                       	</td>
 
-                      <td>{{ $settings->currency_symbol.number_format($campaign->goal) }}</td>
+                      <td class="text-right">{{ $settings->currency_symbol.number_format($campaign->goal) }}</td>
 
-                      <td>{{ $settings->currency_symbol.number_format($campaign->donations()->where('payment_status', '=', 'paid')->sum('donation')) }}</td>
+                      <td class="text-right">{{ $settings->currency_symbol.number_format($campaign->donations()->where('payment_status', '=', 'paid')->sum('donation')) }}</td>
 
                       <td>
 

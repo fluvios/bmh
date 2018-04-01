@@ -58,7 +58,7 @@
 				 <div class="input-group has-success">
 					 <div class="input-group-addon addon-dollar">{{$settings->currency_symbol}}</div>
 
-					 <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg" name="amount" value="{{ old('donation') }}" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+					 <input type="text" autocomplete="off" id="onlyNumber" class="form-control input-lg text-right" name="amount" value="{{ old('donation') }}" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
 				 </div>
 
 			 </div>
@@ -92,7 +92,7 @@
               <label><input type="radio" name="payment_gateway" value="Deposit">Saldo</label>
            </div>
            <div class="radio">
-              <label><input type="radio" name="payment_gateway" value="Midtrans">Payment Gateway</label>
+              <label><input type="radio" name="payment_gateway" value="Midtrans">Multipayment</label>
            </div>
            <div class="radio">
               <label><input type="radio" name="payment_gateway" value="Payment" disabled>Pembayaran Lain</label>
