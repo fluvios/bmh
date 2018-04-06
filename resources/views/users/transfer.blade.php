@@ -31,15 +31,15 @@ Transfer
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-8 subtitle-color-15">Nominal Saldo</div>
-            <div class="col-sm-4 subtitle-color-15 pull-right">{{ $settings->currency_symbol.number_format($amount) }}</div>
+            <div class="col-sm-4 subtitle-color-15 pull-right">{{ $settings->currency_symbol }}<p class="pull-right">{{ number_format($amount) }}</p></div>
           </div>
           <div class="row">
             <div class="col-sm-8 subtitle-color-15">Kode Unik (akan didonasikan)</div>
-            <div class="col-sm-4 subtitle-color-15 pull-right garis">{{ $settings->currency_symbol.number_format($donationlog->amount_key) }}</div>
+            <div class="col-sm-4 subtitle-color-15 pull-right garis">{{ $settings->currency_symbol }}<p class="pull-right">{{ number_format($donationlog->amount_key) }}</p></div>
           </div>
           <div class="row">
             <div class="col-sm-8 subtitle-color-15">Total</div>
-            <div class="col-sm-4 subtitle-color-16 pull-right">{{ $settings->currency_symbol.number_format($donationlog->amount) }}</div>
+            <div class="col-sm-4 subtitle-color-16 pull-right">{{ $settings->currency_symbol }}<p class="pull-right">{{ number_format($donationlog->amount) }}</p></div>
           </div>
           <div class="row">
             <div class="alert alert-warning btn-sm alert-fonts" role="alert">

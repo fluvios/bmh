@@ -101,6 +101,10 @@ Route::get('ref/register/{email}', 'ReferralController@refferalRegistrasi');
  */
 Auth::routes();
 
+// Facebook
+Route::get('/redirect', 'SocialAuthFacebookController@redirect');
+Route::get('/callback', 'SocialAuthFacebookController@callback');
+
 // Logout
 Route::get('/logout', 'Auth\LoginController@logout');
 

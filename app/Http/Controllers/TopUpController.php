@@ -35,7 +35,8 @@ class TopUpController extends Controller
       return response()->json([
         'success' => false,
         'errors' => $validator->getMessageBag()->toArray(),
-      ]);
+        'message' => 'field can not be empty'
+        ]);
     }
 
     $user = User::where('id', '=',  $this->request->user_id)->firstOrFail();

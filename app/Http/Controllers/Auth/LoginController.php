@@ -141,7 +141,9 @@ class LoginController extends Controller
         if ($this->auth->attempt($credentials, $request->has('remember'))) {
             if ($this->auth->User()->status == 'active') {
                 // return redirect()->intended('/');
-                return $this->auth->User();
+                $user = $this->auth->User(); 
+                $user['login-type'] = 'auth';                
+                return $user;
             } elseif ($this->auth->User()->status == 'suspended') {
                 return array( 'status' => 'error',
                       'status' => trans('validation.user_suspended'));
@@ -152,6 +154,22 @@ class LoginController extends Controller
         }
 
         return array('status' => 'error','message' => $this->getFailedLoginMessage());
+    }
+
+    public function facebookLogin(Request $request)
+    {
+        $this->validate($request, [
+          'user_id'    => 'required',
+        ]);
+
+        $user = User::where('user_id', '=', $request->user_id)->first();
+        
+        if($user) {
+            $user['login-type'] = 'facebook';
+            return $user;
+        }
+
+        return array('status' => 'error','message' => 'error from facebook');
     }
 
     /**

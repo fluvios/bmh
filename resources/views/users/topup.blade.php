@@ -62,7 +62,7 @@ $banks = \App\Models\Banks::all();
 				<label for="payment_gateway">Metode Pembayaran</label>
 				@foreach(  $banks as $bank )
 				 <div class="radio">
-					 <label><input type="radio" name="payment_gateway" value="{{$bank->id}}">{{ $bank->name }}</label>
+					 <label><input type="radio" name="payment_gateway" value="{{$bank->id}}"><img src="{{asset('public/bank/large').'/'.$bank->logo}}" width="100" /></label>
 				 </div>
 				@endforeach
 				<div class="radio">

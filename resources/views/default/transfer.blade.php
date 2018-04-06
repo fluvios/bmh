@@ -32,16 +32,15 @@
          <div class="panel-body">
            <div class="row">
                <div class="col-sm-8 subtitle-color-15">Nominal Donasi</div>
-               <div class="col-sm-4  subtitle-color-15 pull-left">{{ $settings->currency_symbol.number_format($amount) }}</div>
+               <div class="col-sm-4  subtitle-color-15 pull-left">{{ $settings->currency_symbol }}<p class="pull-right">{{ number_format($amount) }}</p></div>
            </div>
            <div class="row ">
                <div class="col-sm-8 subtitle-color-15">Kode Unik (akan didonasikan)</div>
-               <div class="col-sm-4 subtitle-color-15 pull-left garis">{{  $settings->currency_symbol.number_format($donations->amount_key) }}</div>
-               
+               <div class="col-sm-4 subtitle-color-15 pull-left garis">{{  $settings->currency_symbol }}<p class="pull-right">{{ number_format($donations->amount_key) }}</p></div>               
            </div>
            <div class="row margin-bottom-20">
                <div class="col-sm-8 subtitle-color-15">Total</div>
-               <div class="col-sm-4 subtitle-color-16 pull-left">{{ $settings->currency_symbol.number_format($donations->donation) }}</div>
+               <div class="col-sm-4 subtitle-color-16 pull-left">{{ $settings->currency_symbol }}<p class="pull-right">{{ number_format($donations->donation) }}</p></div>
            </div>
            <div class="row">
              <div class=" alert alert-warning btn-sm alert-fonts" role="alert">

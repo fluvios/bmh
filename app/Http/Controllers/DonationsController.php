@@ -420,6 +420,7 @@ class DonationsController extends Controller
       return response()->json([
         'success' => false,
         'errors' => $validator->getMessageBag()->toArray(),
+        'message' => 'field can not be empty'
       ]);
     }
 

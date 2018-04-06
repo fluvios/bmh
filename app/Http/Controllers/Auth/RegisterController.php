@@ -7,6 +7,7 @@ use Validator;
 use App\Models\AdminSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Mail;
 use App\Includes\apifunction;
 
@@ -131,6 +132,35 @@ class RegisterController extends Controller
         'role' => 'normal',
         'token' => $token,
         'confirmation_code' => $confirmation_code
+      ]);
+    }
+
+    protected function createFacebook(Request $request)
+    {
+      $token = str_random(75);
+
+      $user = new User();
+      $user->user_id = $request->user_id;
+      $user->born_date = '';
+      $user->phone_number_1 = '';
+      $user->phone_number_2 = '';
+      $user->name = '';
+      $user->email = $request->user_id;
+      $user->password = '';
+      $user->countries_id = 'Indonesia';
+      $user->avatar = 'default.jpg';
+      $user->status = 'active';
+      $user->role = 'normal';
+      $user->token = $token;
+      $user->confirmation_code = '';
+      $user->save();
+      
+      $temp = User::where('user_id', '=', $request->user_id)->first();
+      $temp['login-type'] = 'facebook';
+
+      return response()->json([
+        'success' => true,
+        'user' => $temp
       ]);
     }
 }

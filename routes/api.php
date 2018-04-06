@@ -19,7 +19,8 @@ Route::get('/user', function (Request $request) {
 
 // Route for Auth
 Route::post('login', 'Auth\LoginController@mobileLogin');
-Route::post('register', 'Auth\RegisterController@create');
+Route::post('login-facebook', 'Auth\LoginController@facebookLogin');
+Route::post('register', 'Auth\RegisterController@createFacebook');
 Route::post('account', 'UserController@update_account');
 Route::post('account/address/home', 'UserController@update_adress_home');
 Route::post('account/address/company', 'UserController@update_adress_work');
