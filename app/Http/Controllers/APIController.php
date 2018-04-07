@@ -16,6 +16,7 @@ use App\Models\Like;
 use App\Models\Cabang;
 use App\Models\Kategori;
 use App\Models\AkunTransaksi;
+use App\Models\Magazines;
 use Carbon\Carbon;
 
 class APIController extends Controller
@@ -105,6 +106,11 @@ class APIController extends Controller
     {
         return $data = Donations::orderBy('id', 'DESC')->paginate(100);
     }//<--- End Method
+    
+    public function magazines()
+    {
+        return Magazines::orderBy('id', 'DESC')->paginate(100);
+    }
 
     public function cabang()
     {
