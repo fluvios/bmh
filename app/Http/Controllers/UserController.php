@@ -93,25 +93,20 @@ class UserController extends Controller
 
   public function updateMobile(Request $request)
   {
-    $input = $request->all();
 
-    $validator = $this->validator($input, $id);
+    $user = User::where('id', '=', $request->user_id)->first();
 
-    if ($validator->fails()) {
-      $this->throwValidationException(
-        $request,
-        $validator
-      );
+    if($request->password) {
+      $user->password  = \Hash::make($request->password);
     }
 
-    $user = User::find($request->user_id);
     $user->name        = $request->name;
     $user->email        = $request->email;
     $user->phone_number_1 = $request->phone_number_1;
     $user->phone_number_2 = $request->phone_number_2;
+    
     $user->save();
 
-    // Send new edit data
     $response = User::find($user->id);
 
     return response()->json([

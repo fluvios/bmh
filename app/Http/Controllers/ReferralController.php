@@ -6,6 +6,7 @@ use App\Models\ReferralDonasi;
 use App\Models\ReferralRegistrasi;
 use App\Models\User;
 use App\Models\Donations;
+use App\Models\Campaigns;
 use App\Models\AdminSettings;
 
 use Illuminate\Http\Request;
@@ -21,16 +22,24 @@ class ReferralController extends Controller
   {
       $users = User::where('email', $email)->first();
       $donation = Donations::where('id', $id)->first();
-      $campaign = Campaigns::where('id', $donation->campaign_id)->first();
+      $campaign = Campaigns::where('id', $donation->campaigns_id)->first();
 
+    if (str_slug($campaign->title) == '') {
+        $slugUrl  = '';
+    } else {
+        $slugUrl  = '/'.str_slug($campaign->title);
+    }
+
+    $url_campaign = $campaign->id.$slugUrl;
+      
       $referralDonasi = new ReferralDonasi();
-      $referralDonasi->link_donasi = url('donate/'.$campaign->id.$campaign->slug);
+      $referralDonasi->link_donasi = url('donate/'.$url_campaign);
       $referralDonasi->email = $users->email;
-      $referralDonasi->bonus = $this->settings->donation_bonus;
+      $referralDonasi->bonus = ($campaign->affiliator_bonus_percentage/100) * $donation->donation;
 
       $referralDonasi->save();
 
-      redirect('donate/'.$campaign->id.$campaign->slug);
+      return redirect('donate/'.$url_campaign);
   }
 
   public function refferalRegistrasi($email)
@@ -43,6 +52,6 @@ class ReferralController extends Controller
 
       $referralRegistrasi->save();
 
-      redirect('register');
+      return redirect('login');
   }
 }

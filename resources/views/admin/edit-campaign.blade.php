@@ -220,6 +220,23 @@
 
                   </div><!-- /.box-body -->
 
+                 <!-- Start Box Body -->
+
+                  <div class="box-body">
+
+                    <div class="form-group">
+
+                      <label class="col-sm-2 control-label">Persentase Bonus Affiliasi</label>
+
+                      <div class="col-sm-10">
+
+                        <input type="text" value="{{ $data->affiliator_bonus_percentage }}" name="affiliation_bonus" class="form-control" placeholder="Percentage (0-100)">
+
+                      </div>
+
+                    </div>
+
+                  </div><!-- /.box-body -->
 
                   <div class="box-body">
                     <div class="form-group">

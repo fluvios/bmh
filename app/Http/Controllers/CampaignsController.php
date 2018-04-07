@@ -58,6 +58,7 @@ class CampaignsController extends Controller
         'goal'             => 'required',
         'location'        => 'required|max:50',
         'description'  => 'text_required|required|min:20',
+        'affiliation_bonus' = 'required'
       ], $messages);
 
         // Update Rules
@@ -69,6 +70,7 @@ class CampaignsController extends Controller
         'goal'             => 'required',
         'location'        => 'required|max:50',
         'description'  => 'required|min:20|text_required',
+        'affiliation_bonus' => 'required'
       ], $messages);
         }
     }
@@ -207,6 +209,7 @@ class CampaignsController extends Controller
         $sql->categories_id = $this->request->categories_id;
         $sql->cabang_id = $this->request->cabang_id;
         $sql->deadline = CampaignsController::getDeadline($this->request->deadline);
+        $sql->affiliator_bonus_percentage = $this->request->affiliation_bonus;
         $sql->save();
 
         KategoriCampaign::bulkAdd($sql->id, $this->request->input('kategori', []));
@@ -440,6 +443,7 @@ class CampaignsController extends Controller
         $sql->cabang_id = $this->request->cabang_id;
         $sql->finalized          = $finish_campaign;
         $sql->categories_id  = $this->request->categories_id;
+        $sql->affiliator_bonus_percentage = $this->request->affiliation_bonus;
         $sql->save();
 
         $id_campaign = $sql->id;

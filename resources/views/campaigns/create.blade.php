@@ -128,6 +128,12 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
             <textarea name="description" rows="4" id="description" class="form-control tinymce-txt" placeholder="{{ trans('misc.campaign_description_placeholder') }}">{{ old('description') }}</textarea>
           </div>
 
+          <!-- Start Form Group -->
+          <div class="form-group">
+            <label>Persentase Bonus Affiliasi</label>
+            <input type="text" value="{{ old('affiliation_bonus') }}" name="affiliation_bonus" id="affiliation_bonus" class="form-control" placeholder="Percentage (0-100)">
+          </div><!-- /.form-group-->
+
           <!-- Alert -->
           <div class="alert alert-danger display-none" id="dangerAlert">
             <ul class="list-unstyled" id="showErrors"></ul>

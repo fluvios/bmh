@@ -1124,6 +1124,7 @@ class AdminController extends Controller
 
             'description'  => 'text_required|required|min:20',
 
+            'affiliation_bonus' => 'required'
         );
 
 
@@ -1190,6 +1191,8 @@ class AdminController extends Controller
         $sql->akun_transaksi_id = $request->akun_transaksi_id;
 
         $sql->cabang_id = $request->cabang_id;
+
+        $sql->affiliator_bonus_percentage = $request->affiliation_bonus;
 
         $sql->save();
 

@@ -152,6 +152,9 @@
 
 						  	<option @if( $settings->file_size_allowed == 10240 ) selected="selected" @endif value="10240">10 MB</option>
 
+						  	<option @if( $settings->file_size_allowed == 20480 ) selected="selected" @endif value="20480">20 MB</option>
+
+						  	<option @if( $settings->file_size_allowed == 51200 ) selected="selected" @endif value="51200">50 MB</option>                
                           </select>
 
                           <span class="help-block ">{{ trans('admin.upload_max_filesize_info') }} <strong><?php echo str_replace('M', 'MB', ini_get('upload_max_filesize')) ?></strong></span>

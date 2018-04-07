@@ -90,7 +90,7 @@ Route::get('verify/account/{confirmation_code}', 'HomeController@getVerifyAccoun
  | Referral
  |--------- -------------------------
  */
-Route::get('ref/donasi/{email}/{id}', 'ReferralController@refferalDonasi')->middleware('auth');
+Route::get('ref/donasi/{email}/{id}', 'ReferralController@refferalDonasi');
 Route::get('ref/register/{email}', 'ReferralController@refferalRegistrasi');
 /*
 
@@ -365,29 +365,36 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('panel/admin/campaigns/reported', 'AdminController@reportedCampaigns');
     Route::post('panel/admin/campaigns/reported/delete', 'AdminController@reportedDeleteCampaigns');
 
-    Route::get('panel/admin/settings/cabang', [
-        'as'    => 'admin-cabang-index',
-        'uses'  => 'CabangController@index'
+    // Magazine
+    Route::get('panel/admin/magazine', [
+        'as'    => 'admin-magazine-index',
+        'uses'  => 'MagazinesController@index'
     ]);
 
-    Route::get('panel/admin/settings/cabang/{id}/edit', [
-        'as'    => 'admin-cabang-edit',
-        'uses'  => 'CabangController@edit'
+    Route::get('panel/admin/magazine/{id}/edit', [
+        'as'    => 'admin-magazine-edit',
+        'uses'  => 'MagazinesController@edit'
     ]);
 
-    Route::post('panel/admin/settings/cabang/{id}/update', [
-        'as'    => 'admin-cabang-update',
-        'uses'  => 'CabangController@update'
+    Route::post('panel/admin/magazine/{id}/update', [
+        'as'    => 'admin-magazine-update',
+        'uses'  => 'MagazinesController@update'
     ]);
 
-    Route::get('panel/admin/settings/cabang/add', [
-        'as'    => 'admin-cabang-create',
-        'uses'  => 'CabangController@add'
+    Route::get('panel/admin/magazine/add', [
+        'as'    => 'admin-magazine-create',
+        'uses'  => 'MagazinesController@add'
     ]);
 
-    Route::post('panel/admin/settings/cabang/store', [
-        'as'    => 'admin-cabang-store',
-        'uses'  => 'CabangController@store'
+    Route::post('panel/admin/magazine/store', [
+        'as'    => 'admin-magazine-store',
+        'uses'  => 'MagazinesController@store'
+    ]);
+
+    // Kategori
+    Route::get('panel/admin/settings/kategori', [
+        'as'    => 'admin-kategori-index',
+        'uses'  => 'KategoriController@index'
     ]);
 
     Route::get('panel/admin/settings/kategori', [
@@ -413,6 +420,33 @@ Route::group(['middleware' => 'role'], function () {
     Route::post('panel/admin/settings/kategori/store', [
         'as'    => 'admin-kategori-store',
         'uses'  => 'KategoriController@store'
+    ]);
+
+    // Cabang
+
+    Route::get('panel/admin/settings/cabang', [
+        'as'    => 'admin-cabang-index',
+        'uses'  => 'CabangController@index'
+    ]);
+
+    Route::get('panel/admin/settings/cabang/{id}/edit', [
+        'as'    => 'admin-cabang-edit',
+        'uses'  => 'CabangController@edit'
+    ]);
+
+    Route::post('panel/admin/settings/cabang/{id}/update', [
+        'as'    => 'admin-cabang-update',
+        'uses'  => 'CabangController@update'
+    ]);
+
+    Route::get('panel/admin/settings/cabang/add', [
+        'as'    => 'admin-cabang-create',
+        'uses'  => 'CabangController@add'
+    ]);
+
+    Route::post('panel/admin/settings/cabang/store', [
+        'as'    => 'admin-cabang-store',
+        'uses'  => 'CabangController@store'
     ]);
 
     // Kabupaten

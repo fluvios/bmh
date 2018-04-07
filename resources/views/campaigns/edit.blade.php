@@ -111,6 +111,12 @@ $cities = App\Models\Kabupaten::all();
             <textarea name="description" rows="4" id="description" class="form-control tinymce-txt" placeholder="{{ trans('misc.campaign_description_placeholder') }}">{{ $data->description }}</textarea>
           </div>
 
+          <!-- Start Form Group -->
+          <div class="form-group">
+            <label>Persentase Bonus Affiliasi</label>
+            <input type="text" value="{{ $data->affiliator_bonus_percentage }}" name="affiliation_bonus" id="affiliation_bonus" class="form-control" placeholder="Percentage (0-100)">
+          </div><!-- /.form-group-->          
+
           <div class="form-group checkbox icheck">
             <label class="margin-zero">
               <input class="no-show" name="finish_campaign" type="checkbox" value="1">

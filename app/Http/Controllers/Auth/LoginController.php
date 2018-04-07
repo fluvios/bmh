@@ -167,9 +167,9 @@ class LoginController extends Controller
         if($user) {
             $user['login-type'] = 'facebook';
             return $user;
+        } else {
+            return array('status' => 'error','message' => 'error from facebook');
         }
-
-        return array('status' => 'error','message' => 'error from facebook');
     }
 
     /**

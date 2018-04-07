@@ -305,6 +305,7 @@ return array(
 	'no_time_anymore' => 'Waktu Campaign Sudah Selesai',
 	'unlimited' => 'Campaign Tidak Terbatas',
 	'date_deadline' => 'Deadline',
+	'edit_magazine' => 'Edit Majalah',
 
 	// <!---------- Cabang ---------------------!>
 	'cabang' => 'Lokasi Program',

@@ -375,6 +375,14 @@ desired effect
 
           </li><!-- ./Links -->
 
+         <!-- Links -->
+
+          <li @if(Request::is('panel/admin/magazine')) class="active" @endif>
+
+            <a href="{{ url('panel/admin/magazine') }}"><i class="fa fa-file-pdf-o"></i> <span>Majalah</span></a>
+
+          </li><!-- ./Links -->          
+
           <!-- Links -->
 
           <li @if(Request::is('panel/admin/settings/kategori')) class="active" @endif>

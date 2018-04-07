@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '1030581603764130',
+        'client_secret' => '6bfdffc28bd657bb3496ae1fd66d354f',
+        'redirect' => 'http://localhost/bmh-web-prod/callback',
+    ],
+
 ];
