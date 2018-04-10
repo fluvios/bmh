@@ -33,6 +33,7 @@ Route::get('account/{id?}/refresh', function($id){
 Route::post('account/{id}/edit','UserController@updateMobile');
 // Password
 Route::post('account/password', 'UserController@update_password');
+Route::get('filter', 'APIController@filter');
 
 // Upload Avatar
 Route::post('upload/avatar', 'UserController@upload_avatar');

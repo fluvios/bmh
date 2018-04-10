@@ -86,7 +86,7 @@
                   <tr>
 
                     <td>{{ $slider->id }}</td>
-                    <td>{{ $slider->name }}</td>
+                    <td>{{ $slider->filename }}</td>
                     <td> 
                       <a href="{{ route('admin-magazine-edit', $slider->id) }}" class="btn btn-success btn-xs padding-btn">
 

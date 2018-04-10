@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Magazines;
 
 use App\Http\Requests;
+use Auth;
 
 class MagazinesController extends Controller
 {
@@ -33,8 +34,10 @@ class MagazinesController extends Controller
         $path_large = 'public/magazine/';
 
         if ($request->hasFile('image')) {
-            $file_large     = $request->file('image')->getClientOriginalName();
-      
+            $extension    = $request->file('image')->getClientOriginalExtension();
+            $file_large     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+            $name = $request->file('image')->getClientOriginalName();
+
             if ($request->file('image')->move($temp, $file_large)) {
       
                 //======= Copy Folder Large and Delete...
@@ -48,7 +51,8 @@ class MagazinesController extends Controller
         }//<====== End HasFile
 
         $magazine->name = $image_large;
-    	if ($magazine->save()) {
+        $magazine->filename = $name;
+        if ($magazine->save()) {
     		return redirect(route('admin-magazine-index'))->with('success_message', trans('admin.success_add'));
     	} else {
     		return redirect()->back();
@@ -74,7 +78,9 @@ class MagazinesController extends Controller
         $path_large = 'public/magazine/';
 
         if ($request->hasFile('image')) {
-            $file_large = $request->file('image')->getClientOriginalName();
+            $extension    = $request->file('image')->getClientOriginalExtension();
+            $file_large     = strtolower(Auth::user()->id.time().str_random(40).'.'.$extension);
+            $name = $request->file('image')->getClientOriginalName();
       
             if ($request->file('image')->move($temp, $file_large)) {
       
@@ -88,7 +94,9 @@ class MagazinesController extends Controller
             $image_large  = $file_large;
         }//<====== End HasFile
 
-        $magazine->nama = $image_large;
+        $magazine->name = $image_large;
+        $magazine->filename = $name;
+        
     	if ($magazine->save()) {
     		return redirect(route('admin-magazine-index'))->with('success_message', trans('admin.success_update'));
     	} else {

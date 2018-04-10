@@ -11,10 +11,12 @@ use App\Models\Categories;
 use App\Models\Donations;
 use App\Models\DepositLog;
 use App\Models\Updates;
+use App\Models\Kabupaten;
 use App\Helper;
 use App\Models\Like;
 use App\Models\Cabang;
 use App\Models\Kategori;
+use App\Models\KategoriCampaign;
 use App\Models\AkunTransaksi;
 use App\Models\Magazines;
 use Carbon\Carbon;
@@ -59,6 +61,7 @@ class APIController extends Controller
           $campaign['total'] = $total;
           $campaign['days_remaining'] = $days_remaining;
           $campaign['slug'] = $slugUrl;
+          $campaign['kategori'] = KategoriCampaign::where('campaign_id', $campaign->id)->get();
 
           return $campaign;
         });
@@ -110,6 +113,16 @@ class APIController extends Controller
     public function magazines()
     {
         return Magazines::orderBy('id', 'DESC')->paginate(100);
+    }
+
+    public function filter()
+    {
+        $data = [];
+        $data['kategori'] = Kategori::all();
+        $data['jenis-dana'] = Categories::all();
+        $data['kota'] = Kabupaten::all();
+
+        return $data;
     }
 
     public function cabang()
