@@ -306,6 +306,7 @@ return array(
 	'unlimited' => 'Campaign Tidak Terbatas',
 	'date_deadline' => 'Deadline',
 	'edit_magazine' => 'Edit Majalah',
+	'broadcast' => 'Broadcast',
 
 	// <!---------- Cabang ---------------------!>
 	'cabang' => 'Lokasi Program',
@@ -313,4 +314,6 @@ return array(
 	'nama_cabang' => 'Nama Lokasi Program',
 	'edit_cabang' => 'Ubah Lokasi Program',
 	'from_cabang' => 'Lokasi Program',
+
+	
 );

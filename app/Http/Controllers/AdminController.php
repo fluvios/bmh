@@ -12,6 +12,7 @@ use App\Models\Banks;
 use App\Models\CampaignsReported;
 use App\Models\Donations;
 use App\Models\DonationsLog;
+use App\Models\ReferralDonasi;
 use App\Models\Categories;
 use App\Models\Withdrawals;
 use App\Models\KategoriCampaign;
@@ -484,6 +485,7 @@ class AdminController extends Controller
     {
       $this->validate($request, [
           'name' => 'required',
+          'branch' => 'required',
           'account_number' => 'required',
       ]);
 
@@ -542,6 +544,7 @@ class AdminController extends Controller
 
       $bank->logo = $image_large;
       $bank->name = $request->name;
+      $bank->branch = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();
 
@@ -563,6 +566,7 @@ class AdminController extends Controller
     {
       $this->validate($request, [
           'name' => 'required',
+          'branch' => 'required',        
           'account_number' => 'required',
       ]);
 
@@ -621,6 +625,7 @@ class AdminController extends Controller
 
       $bank->logo = $image_large;
       $bank->name = $request->name;
+      $bank->branch = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();
 
@@ -662,6 +667,18 @@ class AdminController extends Controller
         if ($data->payment_status != 'paid') {
             $data->payment_status = 'paid';
             $data->save();
+        }
+
+        $campaign = Campaigns::findOrFail($data->campaigns_id);
+        $percentage = $campaign->affiliator_bonus_percentage;
+
+        $request = new Request();
+        $value = $request->cookie('refDonation');
+        $refDonation = ReferralDonasi::find($value);
+        if(isset($refDonation)) {
+            $refDonation->status = 'add';
+            $refDonation->bonus = ($percentage/100) * $data->donation;
+            $refDonation->save();
         }
 
         return redirect('panel/admin/donations/'.$id);

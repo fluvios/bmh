@@ -383,6 +383,22 @@ desired effect
 
           </li><!-- ./Links -->          
 
+         <!-- Links -->
+
+          <li @if(Request::is('panel/admin/bonus')) class="active" @endif>
+
+            <a href="{{ url('panel/admin/bonus') }}"><i class="fa fa-money"></i> <span>Bonus Affiliator</span></a>
+
+          </li><!-- ./Links -->
+
+         <!-- Links -->
+
+          <li @if(Request::is('panel/admin/broadcast')) class="active" @endif>
+
+            <a href="{{ url('panel/admin/broadcast') }}"><i class="fa fa-envelope"></i> <span>Broadcast</span></a>
+
+          </li><!-- ./Links -->
+
           <!-- Links -->
 
           <li @if(Request::is('panel/admin/settings/kategori')) class="active" @endif>

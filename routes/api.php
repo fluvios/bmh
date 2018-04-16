@@ -45,8 +45,11 @@ Route::get('donations/{id?}', function($id) {
   return App\Models\Donations::where('campaigns_id', '=', $id)->where('payment_status', '=', 'paid')->get();
 });
 
-// Route for campaign
+// Route for magazines
 Route::get('magazines', 'APIController@magazines');
+
+// Route for user
+Route::get('user', 'APIController@user');
 
 // Route for amils
 Route::get('amil', function() {

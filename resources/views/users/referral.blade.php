@@ -2,10 +2,10 @@
 // ** Data User logged ** //
 $settings = App\Models\AdminSettings::first();
 
-$data = App\Models\ReferralRegistrasi::paginate(20);
-$data2 = App\Models\ReferralDonasi::paginate(20);
+$data = App\Models\ReferralRegistrasi::where('status','add')->paginate(20);
+$data2 = App\Models\ReferralDonasi::where('status','add')->paginate(20);
 
-$total = App\Models\ReferralRegistrasi::sum('bonus') + App\Models\ReferralDonasi::sum('bonus');
+$total = App\Models\ReferralRegistrasi::where('status','add')->sum('bonus') + App\Models\ReferralDonasi::where('status','add')->sum('bonus');
 ?>
 @extends('app')
 
@@ -95,6 +95,10 @@ $total = App\Models\ReferralRegistrasi::sum('bonus') + App\Models\ReferralDonasi
 		{{ $data->links() }}
 		@endif
 		<h3>Total Bonus: {{ $settings->currency_symbol.number_format($total) }}</h3>
+		<form method="post" action="{{ url('account/referral') }}" enctype="multipart/form-data">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<button type="submit" class="btn btn-success pull-right">Tarik Bonus</button>		
+		</form>
 	</div><!-- /COL MD -->
 
 	<div class="col-md-4">

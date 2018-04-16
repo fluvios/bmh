@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\AdminSettings;
 use App\Models\Campaigns;
 use App\Models\Address;
+use App\Models\ReferralRegistrasi;
+use App\Models\ReferralDonasi;
 use App\Helper;
 use Carbon\Carbon;
 
@@ -56,6 +58,24 @@ class UserController extends Controller
   public function referral()
   {
     return view('users.referral');
+  }//<--- End Method
+
+  public function withdrawl()
+  {
+    $data = ReferralRegistrasi::where('status','add')->get();
+    $data2 = ReferralDonasi::where('status','add')->get();
+
+    foreach($data as $registrasi) {
+      $registrasi->status = 'pending';
+      $registrasi->save();
+    }
+
+    foreach($data2 as $donasi) {
+      $donasi->status = 'pending';
+      $donasi->save();
+    }
+
+    return redirect('account/referral');
   }//<--- End Method
 
   public function topup()

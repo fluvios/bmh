@@ -54,9 +54,9 @@
              </div>
              <div class="col-sm-4 pull-right">
                <h3 class="text-uppercase subtitle-color-14">{{ $bank->account_number }}</h3>
-               <h5 class="text-uppercase">Atas nama: {{ $bank->account_name }}</h5>
+               <!-- <h5 class="text-uppercase">Atas nama: {{ $bank->account_name }}</h5>
                <h5 class="text-uppercase">Cabang: {{ $bank->branch }}</h5>
-               <h5 class="text-uppercase">{{ $bank->name }} ({{ $bank->slug }})</h5>
+               <h5 class="text-uppercase">{{ $bank->name }} ({{ $bank->slug }})</h5> -->
              </div>
            </div>
            <div class="row">

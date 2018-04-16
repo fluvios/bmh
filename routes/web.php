@@ -193,6 +193,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('account', 'UserController@update_account');
     Route::get('account/topup', 'UserController@topup');
     Route::get('account/referral', 'UserController@referral');
+    Route::post('account/referral', 'UserController@withdrawl');
     Route::post('account/address/home', 'UserController@update_adress_home');
     Route::post('account/address/company', 'UserController@update_adress_work');
 
@@ -364,6 +365,53 @@ Route::group(['middleware' => 'role'], function () {
     // Campaigns Reported
     Route::get('panel/admin/campaigns/reported', 'AdminController@reportedCampaigns');
     Route::post('panel/admin/campaigns/reported/delete', 'AdminController@reportedDeleteCampaigns');
+
+    // Bonus
+    Route::get('panel/admin/bonus', [
+        'as'    => 'admin-bonus-index',
+        'uses'  => 'BonusController@index'
+    ]);
+
+    Route::get('panel/admin/bonus/{id}/detail/donasi', [
+        'as'    => 'admin-bonus-detail-donasi',
+        'uses'  => 'BonusController@detailDonasi'
+    ]);
+
+    Route::get('panel/admin/bonus/{id}/detail/registrasi', [
+        'as'    => 'admin-bonus-detail-registrasi',
+        'uses'  => 'BonusController@detailRegistrasi'
+    ]);
+
+    Route::get('panel/admin/bonus/{id}/accept-donasi', [
+        'as'    => 'admin-bonus-accept-donasi',
+        'uses'  => 'BonusController@acceptDonasi'
+    ]);
+
+    Route::get('panel/admin/bonus/{id}/accept-registrasi', [
+        'as'    => 'admin-bonus-accept-registrasi',
+        'uses'  => 'BonusController@acceptRegistrasi'
+    ]);
+
+    // Broadcast
+    Route::get('panel/admin/broadcast', [
+        'as'    => 'admin-broadcast-index',
+        'uses'  => 'BroadcastController@index'
+    ]);
+
+    Route::get('panel/admin/broadcast/{id}/detail', [
+        'as'    => 'admin-broadcast-detail',
+        'uses'  => 'BroadcastController@detail'
+    ]);
+
+    Route::get('panel/admin/broadcast/add', [
+        'as'    => 'admin-broadcast-create',
+        'uses'  => 'BroadcastController@add'
+    ]);
+
+    Route::post('panel/admin/broadcast/store', [
+        'as'    => 'admin-broadcast-store',
+        'uses'  => 'BroadcastController@store'
+    ]);
 
     // Magazine
     Route::get('panel/admin/magazine', [

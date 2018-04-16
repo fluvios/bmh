@@ -19,6 +19,8 @@ use App\Models\Kategori;
 use App\Models\KategoriCampaign;
 use App\Models\AkunTransaksi;
 use App\Models\Magazines;
+use App\Models\User;
+
 use Carbon\Carbon;
 
 class APIController extends Controller
@@ -148,6 +150,20 @@ class APIController extends Controller
             return [
                 'id'   => $data->id,
                 'text' => $data->nama
+            ];
+        });
+        return $result;
+    }
+
+    public function user()
+    {
+        $term = $this->request->input('term');
+        $page = $this->request->input('page',1);
+        $result =  User::paginate(10, ['*'],'page', $page);
+        $result->getCollection()->transform(function($data) {
+            return [
+                'id'   => $data->email,
+                'text' => $data->name
             ];
         });
         return $result;

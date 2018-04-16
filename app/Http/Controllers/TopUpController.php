@@ -94,17 +94,18 @@ class TopUpController extends Controller
       $sql->save();
 
       // Get Donation Id
-      $response = DepositLog::findOrFail($sql->id);
-      $response['bank'] = $isMidtrans ? 0 : Banks::findOrFail($sql->bank_id);
+      $response = DepositLog::find($sql->id);
+      $response['bank'] = $isMidtrans ? 0 : Banks::find($sql->bank_id);
       $url = url('transfer_topup', $response);
       $token = '';
 
-      $user = User::find($this->request->user_id);
-      if ($bank = Banks::find($sql->bank_id)) {
-        event(new NewBankTopupTransfer($sql, $user, $bank));
-      }
-
       if ($isMidtrans) {
+        $user = User::find($this->request->user_id);
+
+        if ($bank = Banks::find($sql->bank_id)) {
+          event(new NewBankTopupTransfer($sql, $user, $bank));
+        }
+  
         try {
           $params = [
             'transaction_details' => [

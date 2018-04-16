@@ -89,7 +89,9 @@
 
                   <td>{{ $bank->id }}</td>
 
-                  <td><img src="{{asset('public/bank/large').'/'.$bank->logo}}" width="40" /> {{ $bank->name }}</td>
+                  <td>
+                    <img src="{{asset('public/bank/large').'/'.$bank->logo}}" width="40" /> 
+                  </td>
                   <td>{{ $bank->account_number }}</td>
                   <td> <a href="{{ url('panel/admin/settings/bank/edit',$bank->id) }}" class="btn btn-success btn-xs padding-btn">
 

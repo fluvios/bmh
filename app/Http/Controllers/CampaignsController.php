@@ -58,7 +58,7 @@ class CampaignsController extends Controller
         'goal'             => 'required',
         'location'        => 'required|max:50',
         'description'  => 'text_required|required|min:20',
-        'affiliation_bonus' = 'required'
+        'affiliation_bonus' => 'required'
       ], $messages);
 
         // Update Rules
