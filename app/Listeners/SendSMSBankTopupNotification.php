@@ -40,6 +40,6 @@ class SendSMSBankTopupNotification
 
     public function getSMSFormat($amount, $bank, $expiry)
     {
-        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk Topup sebelum '. $expiry .' WIB';
+        return env('APP_URL').': Silakan melakukan Transfer Sebesar ' . $amount . ' ke Rekening: '. $bank->name . ' ' . $bank->account_number . ' Atas nama: '.$bank->account_name . ' untuk Topup Saldo sebelum '. $expiry .' WIB';
     }
 }
