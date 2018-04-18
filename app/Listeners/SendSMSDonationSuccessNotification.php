@@ -42,6 +42,6 @@ class SendSMSDonationSuccessNotification
 
     public function getSMSFormat()
     {
-        return 'Terima kasih telah berdonasi di '.env('APP_URL');
+        return 'Terima kasih donasi anda sudah Kami Terima Semoga Dapat bermanfaat buat kita semua'.env('APP_URL');
     }
 }
