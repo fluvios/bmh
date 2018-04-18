@@ -2,19 +2,22 @@
 
 namespace App\Listeners;
 
-use App\Events\NewBankTopupTransfer;
+use App\Events\TopupSuccess;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Includes\apifunction;
 use App\Models\AdminSettings;
 
-class SendSMSBankTopupNotification
+
+class SendSMSTopupNotification
 {
     /**
      * SMS Provider
      */
     public $smsProvider;
+
+    public $settings;
 
     /**
      * Create the event listener.
@@ -30,16 +33,16 @@ class SendSMSBankTopupNotification
     /**
      * Handle the event.
      *
-     * @param  NewBankTransfer  $event
+     * @param  TopupSuccess  $event
      * @return void
      */
-    public function handle(NewBankTopupTransfer $event)
+    public function handle(TopupSuccess $event)
     {
-        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->deposit->amount), $event->bank, $event->deposit->getExpiry()));
+        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->depositLog->amount), $this->settings->currency_symbol. ' ' .number_format($event->user->saldo)));
     }
 
-    public function getSMSFormat($amount, $bank, $expiry)
+    public function getSMSFormat($amount, $balance)
     {
-        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk Topup sebelum '. $expiry .' WIB';
+        return env('APP_URL').': Topup saldo anda sebesar '. $amount .' berhasil. Saldo anda sekarang '.$balance;
     }
 }
