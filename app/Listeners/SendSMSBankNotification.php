@@ -5,25 +5,19 @@ namespace App\Listeners;
 use App\Events\NewBankTransfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
-use App\Includes\apifunction;
+use Mail;
+use App\Models\Campaigns;
 use App\Models\AdminSettings;
 
-class SendSMSBankNotification
+class SendEmailBankNotification
 {
-    /**
-     * SMS Provider
-     */
-    public $smsProvider;
-
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(apifunction $smsProvider, AdminSettings $settings)
+    public function __construct(AdminSettings $settings)
     {
-        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
 
@@ -35,11 +29,24 @@ class SendSMSBankNotification
      */
     public function handle(NewBankTransfer $event)
     {
-        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->donation->donation), $event->bank, $event->donation->campaigns_id, $event->donation->getExpiry()));
-    }
-
-    public function getSMSFormat($amount, $bank, $campaignId, $expiry)
-    {
-        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk donasi #'. $campaignId. ' sebelum '. $expiry .' WIB';
+        $title_site    = $this->settings->title;
+        $_email_noreply = $this->settings->email_no_reply;
+        $amount         = $this->settings->currency_symbol. ' ' .number_format($event->donation->donation);
+        $campaign       = Campaigns::find($event->donation->campaigns_id);
+        $bank           = $event->bank;
+        $expiry         = $event->donation->getExpiry();
+        Mail::send(
+          'emails.transfer-reminder',
+          compact('amount', 'campaign', 'bank', 'expiry', 'title_site'),
+          function ($message) use (
+            $event,
+            $title_site,
+            $_email_noreply
+          ) {
+            $message->from($_email_noreply, $title_site);
+            $message->subject('PEMBAYARAN DONASI');
+            $message->to($event->donation->email, $event->user->name);
+          }
+        );
     }
 }
