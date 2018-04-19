@@ -5,25 +5,19 @@ namespace App\Listeners;
 use App\Events\NewBankTransfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
-use App\Includes\apifunction;
+use Mail;
+use App\Models\Campaigns;
 use App\Models\AdminSettings;
 
-class SendSMSBankNotification
+class SendEmailBankNotification
 {
-    /**
-     * SMS Provider
-     */
-    public $smsProvider;
-
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(apifunction $smsProvider, AdminSettings $settings)
+    public function __construct(AdminSettings $settings)
     {
-        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
 
@@ -40,6 +34,6 @@ class SendSMSBankNotification
 
     public function getSMSFormat($amount, $bank, $campaignId, $expiry)
     {
-        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk donasi #'. $campaignId. ' sebelum '. $expiry .' WIB';
+        return env('APP_URL').': Silakan melakukan Transfer Sebesar ' . $amount . ' Ke Rekening : '. $bank->name . ' ' . $bank->account_number . ' Atas Nama :  '.$bank->account_name . ' sebelum '. $expiry .' WIB';
     }
 }
