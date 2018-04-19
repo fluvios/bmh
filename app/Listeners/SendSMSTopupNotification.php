@@ -43,6 +43,6 @@ class SendSMSTopupNotification
 
     public function getSMSFormat($amount, $balance)
     {
-        return env('APP_URL').': Topup sebesar '. $amount .' berhasil. Saldo anda sekarang '.$balance;
+        return env('APP_URL').': Topup saldo anda sebesar '. $amount .' berhasil. Saldo anda sekarang '.$balance;
     }
 }
