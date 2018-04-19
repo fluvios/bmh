@@ -2,55 +2,44 @@
 
 namespace App\Listeners;
 
-use App\Events\TopupSuccess;
+use App\Events\NewBankTopupTransfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Mail;
 
+use App\Includes\apifunction;
 use App\Models\AdminSettings;
 
-class SendEmailTopupNotification
+class SendSMSBankTopupNotification
 {
-    public $settings;
+    /**
+     * SMS Provider
+     */
+    public $smsProvider;
 
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(AdminSettings $settings)
+    public function __construct(apifunction $smsProvider, AdminSettings $settings)
     {
+        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
 
     /**
      * Handle the event.
      *
-     * @param  TopupSuccess  $event
+     * @param  NewBankTransfer  $event
      * @return void
      */
-    public function handle(TopupSuccess $event)
+    public function handle(NewBankTopupTransfer $event)
     {
-        $data = $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->depositLog->amount), $this->settings->currency_symbol. ' ' .number_format($event->user->saldo));
-        $title_site    = $this->settings->title;
-        $_email_noreply = $this->settings->email_no_reply;
-        Mail::send(
-          'emails.plain-text',
-          compact('data', 'title_site'),
-          function ($message) use (
-            $event,
-            $title_site,
-            $_email_noreply
-          ) {
-            $message->from($_email_noreply, $title_site);
-            $message->subject('Topup Success');
-            $message->to($event->depositLog->email, $event->user->name);
-          }
-        );
+        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->deposit->amount), $event->bank, $event->deposit->getExpiry()));
     }
 
-    public function getSMSFormat($amount, $balance)
+    public function getSMSFormat($amount, $bank, $expiry)
     {
-        return env('APP_URL').': Topup sebesar '. $amount .' berhasil. Saldo anda sekarang '.$balance;
+        return env('APP_URL').': Silakan melakukan Transfer Sebesar ' . $amount . ' ke Rekening: '. $bank->name . ' ' . $bank->account_number . ' Atas nama: '.$bank->account_name . ' untuk Topup Saldo sebelum '. $expiry .' WIB';
     }
 }
