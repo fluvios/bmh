@@ -6,27 +6,17 @@ use App\Events\BalanceReduced;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use App\Includes\apifunction;
+use Mail;
 use App\Models\AdminSettings;
-
-
-class SendSMSBalanceReducedNotification
+class SendEmailBalanceReducedNotification
 {
-    /**
-     * SMS Provider
-     */
-    public $smsProvider;
-
-    public $settings;
-
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(apifunction $smsProvider, AdminSettings $settings)
+    public function __construct(AdminSettings $settings)
     {
-        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
 
@@ -38,7 +28,22 @@ class SendSMSBalanceReducedNotification
      */
     public function handle(BalanceReduced $event)
     {
-        $this->smsProvider->sendSms($event->user->getPhoneNumber(), $this->getSMSFormat($event->currentBalance, $event->prevBalance));
+        $data = $this->getSMSFormat($event->currentBalance, $event->prevBalance);
+        $title_site    = $this->settings->title;
+        $_email_noreply = $this->settings->email_no_reply;
+        Mail::send(
+          'emails.plain-text',
+          compact('data', 'title_site'),
+          function ($message) use (
+            $event,
+            $title_site,
+            $_email_noreply
+          ) {
+            $message->from($_email_noreply, $title_site);
+            $message->subject('PEMOTONGAN SALDO');
+            $message->to($event->user->email, $event->user->name);
+          }
+        );
     }
 
     public function getSMSFormat($currentBalance, $prevBalance)
