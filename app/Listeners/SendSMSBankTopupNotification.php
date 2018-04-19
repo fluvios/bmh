@@ -5,41 +5,49 @@ namespace App\Listeners;
 use App\Events\NewBankTopupTransfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
-use App\Includes\apifunction;
 use App\Models\AdminSettings;
+use Mail;
 
-class SendSMSBankTopupNotification
+class SendEmailBankTopupNotification
 {
-    /**
-     * SMS Provider
-     */
-    public $smsProvider;
-
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(apifunction $smsProvider, AdminSettings $settings)
+    public function __construct(AdminSettings $settings)
     {
-        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
 
     /**
      * Handle the event.
      *
-     * @param  NewBankTransfer  $event
+     * @param  NewBankTopupTransfer  $event
      * @return void
      */
     public function handle(NewBankTopupTransfer $event)
     {
-        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->deposit->amount), $event->bank, $event->deposit->getExpiry()));
+        $data = $this->getSMSFormat($this->settings->currency_symbol. ' ' .number_format($event->deposit->amount), $event->bank, $event->deposit->getExpiry());
+        $title_site    = $this->settings->title;
+        $_email_noreply = $this->settings->email_no_reply;
+        Mail::send(
+          'emails.plain-text',
+          compact('data', 'title_site'),
+          function ($message) use (
+            $event,
+            $title_site,
+            $_email_noreply
+          ) {
+            $message->from($_email_noreply, $title_site);
+            $message->subject('PEMBAYARAN TOPUP SALDO');
+            $message->to($event->deposit->email, $event->deposit->fullname);
+          }
+        );
     }
 
     public function getSMSFormat($amount, $bank, $expiry)
     {
-        return env('APP_URL').': Segera transfer TEPAT ' . $amount . ' ke rek '. $bank->name . ' ' . $bank->account_number . ' an. '.$bank->account_name . ' untuk Topup sebelum '. $expiry .' WIB';
+        return env('APP_URL').': Silakan melakukan Transfer Sebesar ' . $amount . ' ke Rekening: '. $bank->name . ' ' . $bank->account_number . ' Atas nama: '.$bank->account_name . ' untuk Topup Saldo sebelum '. $expiry .' WIB';
     }
 }
