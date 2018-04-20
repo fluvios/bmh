@@ -60,7 +60,6 @@
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">	
 
-
             @include('errors.errors-forms')
 
           <div class="filer-input-dragDrop position-relative @if($bank->logo != '') hoverClass @endif" id="draggable">
@@ -92,11 +91,11 @@
 
               <div class="form-group">
 
-                <label class="col-sm-2 control-label">{{ trans('admin.name') }}</label>
+                <label class="col-sm-2 control-label">Nama Akun Bank</label>
 
                 <div class="col-sm-10">
 
-                  <input type="text" value="{{  $bank->name?:old('name') }}" name="name" class="form-control" placeholder="{{ trans('admin.name') }}">
+                  <input type="text" value="{{  $bank->account_name?:old('name') }}" name="name" class="form-control" placeholder="{{ trans('admin.name') }}">
 
                 </div>
 

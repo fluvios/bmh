@@ -87,6 +87,21 @@
             </div>
           </div>
 
+          <!-- Start Form Group -->
+          <div class="box-body">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Lokasi Slider</label>
+              <div class="col-sm-10">
+                <select name="category_id" class="form-control">
+                  <option value="0">Home</option>
+                  @foreach(  App\Models\Categories::where('mode','on')->where('is_funding_type','yes')->orderBy('name')->get() as $category )
+                  <option value="{{$category->id}}">{{ $category->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>          
+          </div><!-- /.form-group-->          
+
             <!-- Start Box Body -->
 
             <div class="box-body">

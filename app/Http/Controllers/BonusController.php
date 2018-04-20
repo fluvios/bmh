@@ -52,7 +52,7 @@ class BonusController extends Controller
         $donasi = ReferralDonasi::where('email', $id)->where('status', 'pending')->get();
         # Set Status to send        
         foreach ($donasi as $d) {
-            $d->status = 'withdrawl';
+            $d->status = 'withdrawal';
             $d->save();
         }
         # redirect to first page
@@ -65,7 +65,7 @@ class BonusController extends Controller
         $registrasi = ReferralRegistrasi::where('email', $id)->where('status', 'pending')->get();
         # Set Status to send        
         foreach ($registrasi as $r) {
-            $r->status = 'withdrawl';
+            $r->status = 'withdrawal';
             $r->save();
         }
         # redirect to first page

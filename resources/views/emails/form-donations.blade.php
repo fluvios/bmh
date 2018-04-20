@@ -29,7 +29,7 @@
 	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.donations') }}</h2>
 		<!-- Col MD -->
 		<div class=" login-form-2 col-md-8 margin-bottom-20">
-        <a href="{{ url('account/donations/send') }}" type="button" class="btn btn-default" >Send Data</a><br><br>
+        <a href="{{ url('account/donation/send') }}" type="button" class="btn btn-default" >Send Data</a><br><br>
 <div class=" table-responsive">
    <table id="donation" class="table table-striped">
 
@@ -68,11 +68,6 @@
    		  		 	</table>
    		  		</div>
 		</div><!-- /COL MD -->
-
-		<div class="col-md-4">
-			@include('users.navbar-edit')
-		</div>
-
  </div><!-- container -->
 
  <!-- container wrap-ui -->

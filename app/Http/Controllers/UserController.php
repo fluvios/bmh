@@ -14,6 +14,8 @@ use App\Models\ReferralDonasi;
 use App\Helper;
 use Carbon\Carbon;
 
+use Mail;
+
 class UserController extends Controller
 {
   protected function validator(array $data, $id = null)
@@ -77,6 +79,27 @@ class UserController extends Controller
 
     return redirect('account/referral');
   }//<--- End Method
+
+  public function sendPdf()
+  {
+    # code...
+    $titleSite = 'Berbagikebaikan.org';
+    $messageTitle = 'Data Donasi';
+    $sender = AdminSettings::first()->email_no_reply;
+    $reciever = Auth::user();
+    
+    Mail::send(
+      'emails.form-donations',
+      array( 'fullname' => Auth::user()->name, 'title_site' => 'Berbagikebaikan.org' ),
+      function ($message) use ($sender, $titleSite, $reciever, $messageTitle) {
+          $message->from($sender, $titleSite)
+        ->to($reciever->email, $reciever->name)
+        ->subject($messageTitle);
+      }
+    );
+
+    return redirect()->back();
+  }
 
   public function topup()
   {

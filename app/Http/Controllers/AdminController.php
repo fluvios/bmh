@@ -476,9 +476,10 @@ class AdminController extends Controller
 
     public function addBank()
     {
+        $bank = new Banks;
         $action = route('admin-bank-store');
         $title  = trans('misc.add_new');
-        return view('admin.form-bank', compact('slider', 'action', 'title'));
+        return view('admin.form-bank', compact('bank', 'action', 'title'));
     }
 
     public function storeBank(Request $request)
@@ -543,7 +544,7 @@ class AdminController extends Controller
       }//<====== End HasFile
 
       $bank->logo = $image_large;
-      $bank->name = $request->name;
+      $bank->account_name = $request->name;
       $bank->branch = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();
@@ -624,7 +625,7 @@ class AdminController extends Controller
       }//<====== End HasFile
 
       $bank->logo = $image_large;
-      $bank->name = $request->name;
+      $bank->account_name = $request->name;
       $bank->branch = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();

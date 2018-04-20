@@ -39,4 +39,9 @@ return [
         'client_secret' => '6bfdffc28bd657bb3496ae1fd66d354f',
         'redirect' => 'http://berbagikebaikan.org/callback',
     ],
+    'google' => [ 
+        'client_id' => '68089184379-gp9s4krpk747i4iin7boeu1s8uu77gle.apps.googleusercontent.com',
+        'client_secret' => 'YA4bJH-KOg4GkQN4nmIo5PIz',
+        'redirect' => 'http://localhost/login/google/callback' 
+    ],
 ];

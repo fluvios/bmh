@@ -102,8 +102,8 @@ Route::get('ref/register/{email}', 'ReferralController@refferalRegistrasi');
 Auth::routes();
 
 // Facebook
-Route::get('/redirect', 'SocialAuthFacebookController@redirect');
-Route::get('/callback', 'SocialAuthFacebookController@callback');
+Route::get('/redirect/{service}', 'SocialAuthFacebookController@redirect');
+Route::get('/callback/{service}', 'SocialAuthFacebookController@callback');
 
 // Logout
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -236,6 +236,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('account/donations', function () {
         return view('users.donations');
     });
+
+    // Send Pdf
+    Route::get('account/donations/send', 'UserController@sendPdf');
 
     // Topups
     Route::get('account/mutasi', function () {

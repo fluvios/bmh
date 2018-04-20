@@ -78,6 +78,24 @@
               </div>
             </div><!-- /.box-body -->
 
+            <!-- Start Box Body -->
+
+            <div class="box-body">
+
+              <div class="form-group">
+
+                <label class="col-sm-2 control-label">Judul Pesan</label>
+
+                <div class="col-sm-10">
+
+                  <input type="text" value="{{  old('title') }}" name="title" class="form-control" placeholder="Judul Pesan">
+
+                </div>
+
+              </div>
+
+            </div><!-- /.box-body -->            
+
             <div class="box-body">
               <div class="form-group">
                 <label class="col-sm-2 control-label">Content</label>

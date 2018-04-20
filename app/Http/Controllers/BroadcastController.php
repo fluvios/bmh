@@ -44,10 +44,12 @@ class BroadcastController extends Controller
         $broadcast = new Broadcast();
         $broadcast->sender = Auth::user()->email;
         $broadcast->reciever = implode(",", $request->input('reciever', []));
+        $broadcast->title = $request->title;
         $broadcast->content = $request->content;
 
         #send data to each user
         $titleSite = 'Berbagikebaikan.org';
+        $messageTitle = $request->title;
         $sender = Auth::user()->email;
         $recievers = $request->input('reciever', []);
         foreach ($recievers as $reciever) {
@@ -55,10 +57,10 @@ class BroadcastController extends Controller
             Mail::send(
                 'emails.broadcast-message',
                 array( 'data' => $request->content, 'fullname' => Auth::user()->name, 'title_site' => 'Berbagikebaikan.org' ),
-                function ($message) use ($sender, $user, $titleSite, $reciever) {
+                function ($message) use ($sender, $user, $titleSite, $reciever, $messageTitle) {
                     $message->from($sender, $titleSite)
                   ->to($user->email, $user->name)
-                  ->subject('Broadcast Message - '.$titleSite);
+                  ->subject($messageTitle);
                 }
               );
         }

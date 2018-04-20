@@ -73,7 +73,7 @@
 							</div><!-- row -->
 
 							<button type="submit" id="submitLogin" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('auth.sign_in') }}</button>
-                            <a href="{{url('/redirect')}}" class="btn btn-block btn-lg custom-rounded btn-primary">Login with Facebook</a>
+                            <a href="{{url('/redirect/google')}}" class="btn btn-block btn-lg custom-rounded btn-danger">Login with Google</a>
 						</form>
 
 					</div>

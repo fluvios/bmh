@@ -24,7 +24,7 @@ class HomeController extends Controller
     {
         $settings = AdminSettings::first();
         $categories = Categories::where('mode', 'on')->orderBy('name')->get();
-        $sliders = Slider::where('isActive', 1)->orderBy('id')->get();
+        $sliders = Slider::where('isActive', 1)->where('category_id', 0)->orderBy('id')->get();
         $data      = Campaigns::where('status', 'active')->orderBy('id', 'DESC')->paginate($settings->result_request);
         $data->map(function ($d){
           $d['provinsi'] = Provinsi::where('id_prov', '=', $d->province_id)->first();
@@ -119,6 +119,8 @@ class HomeController extends Controller
         $settings = AdminSettings::first();
 
         $category = Categories::where('slug', '=', $slug)->where('mode', 'on')->firstOrFail();
+        $sliders = Slider::where('isActive', 1)->where('category_id', '=', $category->id)->orderBy('id')->get();
+        $first = Slider::where('isActive', 1)->where('category_id', '=', $category->id)->orderBy('id')->first();
         $data       = Campaigns::where('status', 'active')->where('categories_id', $category->id)->orderBy('id', 'DESC')->paginate($settings->result_request);
         $data->map(function ($d){
           $d['provinsi'] = Provinsi::where('id_prov', '=', $d->province_id)->first();
@@ -126,7 +128,7 @@ class HomeController extends Controller
           return $d;
         });
         
-        return view('default.category', ['data' => $data, 'category' => $category]);
+        return view('default.category', ['data' => $data, 'category' => $category, 'sliders' => $sliders, 'first' => $first]);
     }// End Method
 
     public function kategori($slug)

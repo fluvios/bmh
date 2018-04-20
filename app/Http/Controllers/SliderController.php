@@ -84,6 +84,7 @@ class SliderController extends Controller
 
         $slider->image = $image_large;
         $slider->isActive = $request->input('isActive', 0);
+        $slider->category_id = $request->input('category_id');
         if ($slider->save()) {
             return redirect(route('admin-slider-index'))->with('success_message', trans('admin.success_add'));
         } else {
@@ -159,7 +160,8 @@ class SliderController extends Controller
             $slider->image = $image_large;
         }//<====== End HasFile
 
-        $slider->isActive = $request->isActive;
+        $slider->isActive = $request->input('isActive', 0);
+        $slider->category_id = $request->input('category_id');
         if ($slider->save()) {
             return redirect(route('admin-slider-index'))->with('success_message', trans('admin.success_update'));
         } else {

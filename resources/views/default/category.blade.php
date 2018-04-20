@@ -4,6 +4,47 @@
 @section('title'){{ $category->name.' - ' }}@endsection
 
 @section('content') 
+<div id="myCarousel" data-ride="carousel" class="carousel">
+  <div class="wrap-jumbotron position-relative">
+    <!-- <h1 class="title-site txt-left" id="titleSite">{{$settings->welcome_text}}</h1>
+    <p class="subtitle-site txt-left"><strong>{{$settings->welcome_subtitle}}</strong></p> -->
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner padding-top-40">
+      <!-- <div class="item active">
+        <img src="http://www.bmh.or.id/wp-content/uploads/2018/02/1349-x-630-banner-2-new-01.jpg" alt="Los Angeles" ">
+      </div> -->
+
+      @foreach($sliders as $slider)
+        @if($slider->id == $first->id)
+          <div class="item active">
+            <img src="{{ asset('public/campaigns/large').'/'.$slider->image }}" alt="Chicago" >
+          </div>
+        @else
+          <div class="item">
+            <img src="{{ asset('public/campaigns/large').'/'.$slider->image }}" alt="Chicago" >
+          </div>
+        @endif      
+      @endforeach
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
 
 <div class="container margin-top-80 margin-bottom-40">
 <!-- Col MD -->
@@ -11,8 +52,6 @@
 
 	<h2 class="subtitle-color-7 margin-bottom-20 text-center text-uppercase">Jenis Dana <a>{{ $category->name }}
        </a> </h2>
-       
-   
 
 	@if( $data->total() != 0 )	
 

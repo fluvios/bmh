@@ -12,9 +12,9 @@ class SocialAuthFacebookController extends Controller
    *
    * @return void
    */
-  public function redirect()
+  public function redirect($service)
   {
-      return Socialite::driver('facebook')->redirect();
+      return Socialite::driver( $service )->redirect();
   }
 
   /**
@@ -22,8 +22,8 @@ class SocialAuthFacebookController extends Controller
    *
    * @return callback URL from facebook
    */
-  public function callback()
+  public function callback($service)
   {
-     
+      return redirect()->intended('/');
   }
 }

@@ -22,6 +22,7 @@ use App\Models\Magazines;
 use App\Models\User;
 
 use Carbon\Carbon;
+use DB;
 
 class APIController extends Controller
 {
@@ -60,10 +61,11 @@ class APIController extends Controller
 
           $campaign['donation'] = $donations;
           $campaign['update'] = $updates;
-          $campaign['total'] = $total;
+          $campaign['total'] = intval($total);
           $campaign['days_remaining'] = $days_remaining;
           $campaign['slug'] = $slugUrl;
-          $campaign['kategori'] = KategoriCampaign::where('campaign_id', $campaign->id)->get();
+          $kategori = KategoriCampaign::where('campaign_id', $campaign->id)->pluck('kategori_id');
+          $campaign['kategori'] = str_replace (array('[', ']'), '' , $kategori);
 
           return $campaign;
         });
