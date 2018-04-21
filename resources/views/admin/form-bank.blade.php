@@ -83,7 +83,23 @@
                 <h3>{{ trans('misc.max_size') }}: {{App\Helper::formatBytes($settings->file_size_allowed * 1024) .' - '.$settings->min_width_height_image}} </h3>
               </div>
             </div>
-          </div>            
+          </div>
+          
+            <div class="box-body">
+
+              <div class="form-group">
+
+                <label class="col-sm-2 control-label">Nama Bank</label>
+
+                <div class="col-sm-10">
+
+                  <input type="text" value="{{  $bank->name?:old('branch') }}" name="branch" class="form-control" placeholder="Nama Bank">
+
+                </div>
+
+              </div>
+
+            </div>                      
 
             <!-- Start Box Body -->
 
@@ -105,7 +121,7 @@
 
             <!-- Start Box Body -->
 
-            <div class="box-body">
+            <!-- <div class="box-body">
 
               <div class="form-group">
 
@@ -119,7 +135,9 @@
 
               </div>
 
-            </div><!-- /.box-body -->
+            </div> -->
+            
+            <!-- /.box-body -->
 
             <!-- Start Box Body -->
 

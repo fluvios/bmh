@@ -545,7 +545,7 @@ class AdminController extends Controller
 
       $bank->logo = $image_large;
       $bank->account_name = $request->name;
-      $bank->branch = $request->branch;
+      $bank->name = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();
 
@@ -626,7 +626,7 @@ class AdminController extends Controller
 
       $bank->logo = $image_large;
       $bank->account_name = $request->name;
-      $bank->branch = $request->branch;
+      $bank->name = $request->branch;
       $bank->account_number = $request->account_number;
       $bank->save();
 

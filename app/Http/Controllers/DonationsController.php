@@ -390,9 +390,9 @@ class DonationsController extends Controller
       //   }
       // );
 
-      if ($bank = Banks::find($sql->bank_id)) {
-        event(new NewBankTransfer($sql, Auth::user(), $bank));
-      }
+      // if ($bank = Banks::find($sql->bank_id)) {
+      //   event(new NewBankTransfer($sql, Auth::user(), $bank));
+      // }
 
       // Redirect to transfer page
       return response()->json([
@@ -450,10 +450,10 @@ class DonationsController extends Controller
       // Get Donation Data
       $response = $sql;
 
-      $user = User::find($this->request->user_id);
-      if ($bank = Banks::find($sql->bank_id)) {
-        event(new NewBankTransfer($sql, $user, $bank));
-      }
+      // $user = User::find($this->request->user_id);
+      // if ($bank = Banks::find($sql->bank_id)) {
+      //   event(new NewBankTransfer($sql, $user, $bank));
+      // }
 
       return response()->json([
         'donation' => $response,
@@ -495,10 +495,10 @@ class DonationsController extends Controller
         // Get Donation Data
         $response = $sql;
 
-        $user = User::find($this->request->user_id);
-        if ($bank = Banks::find($sql->bank_id)) {
-          event(new NewBankTransfer($sql, $user, $bank));
-        }
+        // $user = User::find($this->request->user_id);
+        // if ($bank = Banks::find($sql->bank_id)) {
+        //   event(new NewBankTransfer($sql, $user, $bank));
+        // }
 
         return response()->json([
           'donation' => $response,
@@ -539,10 +539,10 @@ class DonationsController extends Controller
       // Get Donation Id
       $response = $sql->id;
 
-      $user = User::find($this->request->user_id);
-      if ($bank = Banks::find($sql->bank_id)) {
-        event(new NewBankTransfer($sql, $user, $bank));
-      }
+      // $user = User::find($this->request->user_id);
+      // if ($bank = Banks::find($sql->bank_id)) {
+      //   event(new NewBankTransfer($sql, $user, $bank));
+      // }
 
       $url      = '';
       $token    = '';

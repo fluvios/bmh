@@ -73,6 +73,47 @@ class APIController extends Controller
         return $campaigns;
     }
 
+    public function campaign($id)
+    {
+        $settings = AdminSettings::first();
+        $campaigns = Campaigns::where('status', 'active')->where('categories_id', $id)
+        ->orderBy('id', 'DESC')->paginate($settings->result_request);
+        $campaigns->map(function ($campaign){
+          $donations = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->get();
+          $updates = Updates::where('campaigns_id', '=', $campaign->id)->orderBy('id','desc')->get();
+          $total = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->sum('donation');
+          
+          $timeNow = strtotime(Carbon::now());
+
+          if( $campaign->deadline != '' ) {
+              $deadline = strtotime($campaign->deadline);
+      
+              $date = strtotime($campaign->deadline);
+              $remaining = $date - $timeNow;
+      
+              $days_remaining = floor($remaining / 86400);
+          }
+
+          if (str_slug($campaign->title) == '') {
+            $slugUrl  = '';
+          } else {
+            $slugUrl  = str_slug($campaign->title);
+          }
+
+          $campaign['donation'] = $donations;
+          $campaign['update'] = $updates;
+          $campaign['total'] = intval($total);
+          $campaign['days_remaining'] = $days_remaining;
+          $campaign['slug'] = $slugUrl;
+          $kategori = KategoriCampaign::where('campaign_id', $campaign->id)->pluck('kategori_id');
+          $campaign['kategori'] = str_replace (array('[', ']'), '' , $kategori);
+
+          return $campaign;
+        });
+
+        return $campaigns;
+    }
+
     public function campaignDetail($id, $slug = null)
     {
         return Campaigns::where('id', $id)->where('status', 'active')->firstOrFail();

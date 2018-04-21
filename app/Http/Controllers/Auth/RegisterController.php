@@ -144,14 +144,14 @@ class RegisterController extends Controller
       $user->born_date = '';
       $user->phone_number_1 = '';
       $user->phone_number_2 = '';
-      $user->name = '';
-      $user->email = $request->user_id;
+      $user->name = $request->name;
+      $user->email = $request->email;
       $user->password = '';
       $user->countries_id = 'Indonesia';
       $user->avatar = 'default.jpg';
       $user->status = 'active';
       $user->role = 'normal';
-      $user->token = $token;
+      $user->token = $request->idToken;
       $user->confirmation_code = '';
       $user->save();
       

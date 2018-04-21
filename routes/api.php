@@ -40,6 +40,7 @@ Route::post('upload/avatar', 'UserController@upload_avatar');
 
 // Route for campaign
 Route::get('campaigns', 'APIController@campaigns');
+Route::get('campaign/{id?}', 'APIController@campaign');
 Route::get('campaign/{id?}/{slug?}','APIController@campaignDetail');
 Route::get('donations/{id?}', function($id) {
   return App\Models\Donations::where('campaigns_id', '=', $id)->where('payment_status', '=', 'paid')->get();

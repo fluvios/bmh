@@ -204,7 +204,7 @@ class CampaignsController extends Controller
         $sql->token_id         = str_random(200);
         $sql->goal               = trim(Helper::convert_to_number($this->request->goal));
         $sql->location          = $city->nama;
-        $sql->province_id = $city->id_prov;
+        $sql->province_id = $this->request->province;
         $sql->city_id = $city->id_kab;
         $sql->categories_id = $this->request->categories_id;
         $sql->cabang_id = $this->request->cabang_id;
@@ -438,7 +438,7 @@ class CampaignsController extends Controller
         $sql->user_id          = Auth::user()->id;
         $sql->goal               = trim(Helper::convert_to_number($this->request->goal));
         $sql->location          = $city->nama;
-        $sql->province_id = $city->id_prov;
+        $sql->province_id = $this->request->province;
         $sql->city_id = $city->id_kab;
         $sql->cabang_id = $this->request->cabang_id;
         $sql->finalized          = $finish_campaign;

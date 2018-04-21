@@ -1,6 +1,8 @@
 <?php
 $settings = App\Models\AdminSettings::first();
+$provinces = App\Models\Provinsi::all();
 $cities = App\Models\Kabupaten::all();
+$tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 ?>
 @extends('app')
 
@@ -105,6 +107,16 @@ $cities = App\Models\Kabupaten::all();
               @endforeach
             </select>
           </div><!-- /.form-group-->
+
+          <!-- Start Form Group -->
+          <div class="form-group">
+            <label>Provinsi Campaign</label>
+            <select name="province" class="form-control input-lg select2" id="province">
+              @foreach($provinces as $province)
+                <option value="{{ $province->id_prov }}">{{ $province->nama }}</option>
+              @endforeach
+            </select>
+          </div><!-- /.form-group-->            
 
           <div class="form-group">
             <label>Deskripsi Program</label>
