@@ -10,7 +10,7 @@
   src: url('../fonts/lato/lato-bold.eot');
   src: url('../fonts/lato/lato-bold.eot?#iefix') format('embedded-opentype'), url('../fonts/lato/lato-bold.woff') format('woff'), url('../fonts/lato/lato-bold.ttf') format('truetype'), url('../fonts/lato/lato-bold.svg#latobold') format('svg');
   font-weight: bold;
-  font-style: normal;
+  font-style: normal; 
 }
 @font-face {
   font-family: 'Lato';
@@ -2695,6 +2695,11 @@ a:active.btn-trans {
 }
 .avatar-campaign {
   vertical-align: bottom;
+  margin-right: 5px;
+  position: relative;
+    -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+    -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, .5);
 }
 .list-group-item.active,
 .list-group-item.active:hover,
