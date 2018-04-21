@@ -37,7 +37,7 @@
     <div class="caption">
        <p class="desc-campaigns">
         @if( isset($key->user()->id) )
-        <img src="{{ asset('public/avatar').'/'.$key->user()->avatar }}" width="50" height="50" class="img-circle avatar-campaign" /> {{ $key->user()->name}}
+        <img  src="{{ asset('public/avatar').'/'.$key->user()->avatar }}" width="50" height="50" class="img-circle avatar-campaign" /> <strong>{{ $key->user()->name}}</strong>
         @else
         <img src="{{ asset('public/avatar/default.jpg') }}" width="50" height="50" class="img-circle avatar-campaign" /> {{ trans('misc.user_not_available') }}
         @endif
@@ -48,7 +48,7 @@
         </a>
         </h1>
         @if(isset($key->kabupaten))
-          <h5 class="btn-block  subtitle-color text-uppercase>:"> WILAYAH: {{ $key->kabupaten->nama }}</h5>
+          <h5 class="btn-block  subtitle-color text-uppercase>:"> <span class="glyphicons glyphicons-map-marker"></span> {{ $key->kabupaten->nama }}</h5>
         @endif
 
       <p class="desc-campaigns">
