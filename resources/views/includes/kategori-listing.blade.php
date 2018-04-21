@@ -26,7 +26,7 @@ $_image = 'default.jpg';
 
 	<a href="{{ url('kategori',$category->slug) }}">
 
-		{{ $category->nama }} ({{$category->kategoriCampaign()->count()}})
+		{{ $category->nama }}
 
 	</a>
 
