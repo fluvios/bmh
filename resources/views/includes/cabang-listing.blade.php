@@ -14,7 +14,7 @@ $_image = 'default.jpg';
 
 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 row-margin-20">
 
-<a href="{{ url('category',$category->kode) }}">
+<a href="{{ url('cabang',$category->kode) }}">
 
   <img class="img-responsive btn-block custom-rounded" src="{{asset('public/img-category')}}/{{ $_image }}" alt="{{ $category->nama }}">
 
@@ -26,7 +26,7 @@ $_image = 'default.jpg';
 
 	<a href="{{ url('cabang',$category->kode) }}">
 
-		{{ $category->nama }} ({{$category->campaigns()->count()}})
+		{{ $category->nama }} 
 
 	</a>
 
