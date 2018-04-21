@@ -37,7 +37,7 @@
     <div class="caption">
        <p class="desc-campaigns">
         @if( isset($key->user()->id) )
-        <img src="{{ asset('public/avatar').'/'.$key->user()->avatar }}" width="50" height="50" class="img-circle avatar-campaign" /> {{ $key->user()->name}}
+        <img src="{{ asset('public/avatar').'/'.$key->user()->avatar }}" width="50" height="50" class="img-circle avatar-campaign" /> <a>{{ $key->user()->name}}</a>
         @else
         <img src="{{ asset('public/avatar/default.jpg') }}" width="50" height="50" class="img-circle avatar-campaign" /> {{ trans('misc.user_not_available') }}
         @endif
