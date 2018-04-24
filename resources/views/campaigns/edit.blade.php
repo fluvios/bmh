@@ -2,6 +2,7 @@
 $settings = App\Models\AdminSettings::first();
 $provinces = App\Models\Provinsi::all();
 $cities = App\Models\Kabupaten::all();
+$cabangs = App\Models\Cabang::all();
 $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 ?>
 @extends('app')
@@ -94,7 +95,10 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
           <div class="form-group">
             <label for=""> {{ trans('misc.from_cabang') }} </label>
             <select class="form-control select2" id="cabang-id" name="cabang_id">
-              <option value="{{ $data->cabang_id }}" selected>{{ App\Models\Cabang::find($data->cabang_id)->nama }}</option>
+              <!-- <option value="{{ $data->cabang_id }}" selected>{{ App\Models\Cabang::find($data->cabang_id)->nama }}</option> -->
+                @foreach($cabangs as $cabang)
+                  <option value="{{ $cabang->id }}">{{ $cabang->nama }}</option>
+                @endforeach            
             </select>
           </div>
 
@@ -432,28 +436,29 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
   }
 
   initTinymce();
-  $('#cabang-id').select2({
-    ajax: {
-      url: '{{ url('api/cabang') }}',
-      dataType : 'json',
-      delay : 220,
-      data : function(params){
-          return {
-              q : params.term,
-              page : params.page
-          };
-      },
-      processResults : function(data, params){
-          params.page = params.page || 1;
-          return {
-              results : data.data,
-              pagination: {
-                  more : (data.per_page  * 10) < data.total
-              }
-          };
-      }
-    }
-  });
+
+  // $('#cabang-id').select2({
+  //   ajax: {
+  //     url: '{{ url('api/cabang') }}',
+  //     dataType : 'json',
+  //     delay : 220,
+  //     data : function(params){
+  //         return {
+  //             q : params.term,
+  //             page : params.page
+  //         };
+  //     },
+  //     processResults : function(data, params){
+  //         params.page = params.page || 1;
+  //         return {
+  //             results : data.data,
+  //             pagination: {
+  //                 more : (data.per_page  * 10) < data.total
+  //             }
+  //         };
+  //     }
+  //   }
+  // });
 
   var $kategoris = $('#kategori-select2').select2({
     multiple: true,
@@ -478,6 +483,8 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
       }
     }
   });
+  
+  $('#cabang-id').select2();
   </script>
 
 

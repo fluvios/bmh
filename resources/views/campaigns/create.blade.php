@@ -1,6 +1,7 @@
 <?php
 $settings = App\Models\AdminSettings::first();
 $cities = App\Models\Kabupaten::all();
+$cabangs = App\Models\Cabang::all();
 $provinces = App\Models\Provinsi::all();
 $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 ?>
@@ -89,7 +90,11 @@ $tags = App\Models\Categories::where('is_funding_type', 'no')->get();
 
           <div class="form-group">
             <label for=""> {{ trans('misc.from_cabang') }} </label>
-            <select class="form-control select2" id="cabang-id" name="cabang_id"></select>
+            <select class="form-control select2" id="cabang-id" name="cabang_id">
+                @foreach($cabangs as $cabang)
+                  <option value="{{ $cabang->id }}">{{ $cabang->nama }}</option>
+                @endforeach            
+            </select>
           </div>
 
           <!-- Start Form Group -->
@@ -450,28 +455,28 @@ function initTinymce() {
 
 initTinymce();
 
-$('#cabang-id').select2({
-  ajax: {
-    url: '{{ url('api/cabang') }}',
-    dataType : 'json',
-    delay : 220,
-    data : function(params){
-        return {
-            q : params.term,
-            page : params.page
-        };
-    },
-    processResults : function(data, params){
-        params.page = params.page || 1;
-        return {
-            results : data.data,
-            pagination: {
-                more : (data.per_page  * 10) < data.total
-            }
-        };
-    }
-  }
-});
+// $('#cabang-id').select2({
+//   ajax: {
+//     url: '{{ url('api/cabang') }}',
+//     dataType : 'json',
+//     delay : 220,
+//     data : function(params){
+//         return {
+//             q : params.term,
+//             page : params.page
+//         };
+//     },
+//     processResults : function(data, params){
+//         params.page = params.page || 1;
+//         return {
+//             results : data.data,
+//             pagination: {
+//                 more : (data.per_page  * 10) < data.total
+//             }
+//         };
+//     }
+//   }
+// });
 
 $('#kategori-select2').select2({
   multiple: true,
@@ -497,6 +502,7 @@ $('#kategori-select2').select2({
   }
 });
 
+$('#cabang-id').select2();
 $('#location').select2();
 </script>
 @endsection

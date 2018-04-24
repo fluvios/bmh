@@ -360,7 +360,7 @@ class TopUpController extends Controller
   public function topupAccept($id)
   {
     $data = DepositLog::findOrFail($id);
-    if ($data->payment_status == 'unpaid') {
+    if ($data->payment_status == 'pending') {
       $data->payment_status = 'paid';
 
       $user = User::findOrFail($data->user_id);

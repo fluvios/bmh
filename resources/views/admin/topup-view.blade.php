@@ -111,7 +111,7 @@
               <!-- start -->
               <dt>Status Pembayaran</dt>
               <dd>
-                @if($data->payment_status == 'unpaid')
+                @if($data->payment_status == 'pending')
                   Belum dibayarkan
                 @elseif($data->payment_status == 'paid')
                   Sudah dibayarkan
@@ -163,7 +163,7 @@
           </div><!-- box body -->
 
           <div class="box-footer">
-              @if($data->payment_status == 'unpaid')
+              @if($data->payment_status == 'pending')
               <a href="{{ url('panel/admin/top_up/status/reject').'/'.$data->id }}" class="btn btn-danger">Tolak</a>
               <a href="{{ url('panel/admin/top_up/status/accept').'/'.$data->id }}" class="btn btn-success">Terima</a>
               @elseif($data->payment_status == 'paid')

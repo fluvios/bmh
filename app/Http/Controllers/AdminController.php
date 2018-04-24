@@ -637,8 +637,7 @@ class AdminController extends Controller
     public function donations()
     {
         $data = Donations::orderBy('id', 'DESC')->paginate(100);
-        $data
-          ->map(function ($d){
+        $data->map(function ($d){
           $bank = Banks::where('id', '=', $d->bank_id)->first();
           $d['bank'] = $bank;
           return $d;

@@ -5,22 +5,26 @@ namespace App\Listeners;
 use App\Events\NewBankTransfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Mail;
-use App\Models\Campaigns;
+
+use App\Includes\apifunction;
 use App\Models\AdminSettings;
 
-class SendEmailBankNotification
+class SendSMSBankNotification
 {
+    /**
+     * SMS Provider
+     */
+    public $smsProvider;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(AdminSettings $settings)
+    public function __construct(apifunction $smsProvider, AdminSettings $settings)
     {
+        $this->smsProvider = $smsProvider;
         $this->settings = $settings::first();
     }
-
     /**
      * Handle the event.
      *

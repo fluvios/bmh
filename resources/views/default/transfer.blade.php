@@ -48,14 +48,14 @@
              </div>
            </div>
            <div class="row">
-             <div class="col-sm-6 margin-bottom-5 subtitle-color-13 text-uppercase">
+             <div class="col-sm-6 subtitle-color-13 text-uppercase">
                Silahkan transfer :
-               <img class="margin-top-20" src="{{ asset('public/bank/large/'. $bank->logo) }}" height="85%" width="85%">
+               <img src="{{ asset('public/bank/large/'. $bank->logo) }}" height="55%" width="55%">
              </div>
-             <div class="col-sm-4 pull-right">
+             <div class="col-sm-4 pull-left">
                <h3 class="text-uppercase subtitle-color-14">{{ $bank->account_number }}</h3>
                <h5 class="text-uppercase">Atas nama: {{ $bank->account_name }}</h5>
-               <h5 class="text-uppercase">Cabang: {{ $bank->branch }}</h5>
+               <!-- <h5 class="text-uppercase">Cabang: {{ $bank->branch }}</h5> -->
                <!-- <h5 class="text-uppercase">{{ $bank->name }} ({{ $bank->slug }})</h5> -->
              </div>
            </div>
