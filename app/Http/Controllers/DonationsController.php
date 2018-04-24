@@ -102,6 +102,14 @@ class DonationsController extends Controller
       ]);
     }
 
+    // Check If Phone Number Not Found
+    if(!isset(Auth::user()->phone_number_1)) {
+      return response()->json([
+        'success' => false,
+        'errors' => 'Anda belum melengkapi data no handphone anda',
+      ]);
+    }
+
     //<----------- ****** PAYPAL ************** ----->
     if ($this->request->payment_gateway == 'Paypal') {
       if ($this->settings->paypal_sandbox == 'true') {
@@ -263,15 +271,9 @@ class DonationsController extends Controller
         $campaignID = $campaign->id;
         $fullNameUser = $this->request->fullname;
 
-        // Mail::send(
-        //   'emails.thanks-donor',
-        //   array( 'data' => $campaignID, 'fullname' => $fullNameUser, 'title_site' => $titleSite ),
-        //   function ($message) use ($sender, $fullNameUser, $titleSite, $_emailUser) {
-        //     $message->from($sender, $titleSite)
-        //     ->to($_emailUser, $fullNameUser)
-        //     ->subject(trans('misc.thanks_donation').' - '.$titleSite);
-        //   }
-        // );
+        if ($bank = Banks::find($sql->bank_id)) {
+          event(new NewBankTransfer($sql, Auth::user(), $bank));
+        }  
 
       } else {
         return response()->json([
@@ -281,7 +283,6 @@ class DonationsController extends Controller
       }
     }
     //<----------- ****** DEPOSIT ************** ----->
-
 
     //<----------- ****** MIDTRANS ************** ----->
     elseif ($this->request->payment_gateway == 'Midtrans') {
@@ -338,6 +339,10 @@ class DonationsController extends Controller
 
       }
 
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, Auth::user(), $bank));
+      }
+
       // Redirect to transfer page
       return response()->json([
         'success' => true,
@@ -390,9 +395,9 @@ class DonationsController extends Controller
       //   }
       // );
 
-      // if ($bank = Banks::find($sql->bank_id)) {
-      //   event(new NewBankTransfer($sql, Auth::user(), $bank));
-      // }
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, Auth::user(), $bank));
+      }
 
       // Redirect to transfer page
       return response()->json([
@@ -424,6 +429,15 @@ class DonationsController extends Controller
       ]);
     }
 
+    // Check If Phone Number Not Found
+    $user = User::find($this->request->user_id);
+    if(!isset($user->phone_number_1)) {
+      return response()->json([
+        'success' => false,
+        'errors' => 'Anda belum melengkapi data no handphone anda',
+      ]);
+    }
+
     $amountKey = Helper::randomCheckKey();
 
     //<----------- ****** DELIVERY ************** ----->
@@ -450,10 +464,10 @@ class DonationsController extends Controller
       // Get Donation Data
       $response = $sql;
 
-      // $user = User::find($this->request->user_id);
-      // if ($bank = Banks::find($sql->bank_id)) {
-      //   event(new NewBankTransfer($sql, $user, $bank));
-      // }
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, $user, $bank));
+      }
 
       return response()->json([
         'donation' => $response,
@@ -495,10 +509,10 @@ class DonationsController extends Controller
         // Get Donation Data
         $response = $sql;
 
-        // $user = User::find($this->request->user_id);
-        // if ($bank = Banks::find($sql->bank_id)) {
-        //   event(new NewBankTransfer($sql, $user, $bank));
-        // }
+        $user = User::find($this->request->user_id);
+        if ($bank = Banks::find($sql->bank_id)) {
+          event(new NewBankTransfer($sql, $user, $bank));
+        }
 
         return response()->json([
           'donation' => $response,
@@ -539,10 +553,10 @@ class DonationsController extends Controller
       // Get Donation Id
       $response = $sql->id;
 
-      // $user = User::find($this->request->user_id);
-      // if ($bank = Banks::find($sql->bank_id)) {
-      //   event(new NewBankTransfer($sql, $user, $bank));
-      // }
+      $user = User::find($this->request->user_id);
+      if ($bank = Banks::find($sql->bank_id)) {
+        event(new NewBankTransfer($sql, $user, $bank));
+      }
 
       $url      = '';
       $token    = '';
@@ -553,10 +567,10 @@ class DonationsController extends Controller
             'gross_amount' => $sql->donation,
           ],
           'item_details'  => [[
-            'id'          => 'campaign-' . $sql->campaigns_id,
+            'id'          => 'Mid-' . $sql->campaigns_id,
             'price'       => $sql->donation,
             'quantity'    => 1,
-            'name'        => "Donasi Campaign ". $sql->campaigns_id,
+            'name'        => $campaign->title,
           ]],
           'customer_details' => [
             'first_name' => $this->request->full_name,
