@@ -212,7 +212,6 @@
 
 			
 
-			<li class="list-group-item"> {{trans('misc.country')}} <span class="pull-right color-strong">@if( $data->countries_id != '' ) {{ $data->country()->country_name }} @else {{ trans('admin.not_established') }} @endif</span></li>
 
 			
 
