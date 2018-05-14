@@ -31,6 +31,7 @@ class SendEmailBankNotification
     {
         $title_site    = $this->settings->title;
         $_email_noreply = $this->settings->email_no_reply;
+        $_email_admin   = $this->settings->email_admin;
         $amount         = $this->settings->currency_symbol. ' ' .number_format($event->donation->donation);
         $campaign       = Campaigns::find($event->donation->campaigns_id);
         $bank           = $event->bank;
@@ -41,11 +42,12 @@ class SendEmailBankNotification
           function ($message) use (
             $event,
             $title_site,
-            $_email_noreply
+            $_email_noreply,
+            $_email_admin
           ) {
             $message->from($_email_noreply, $title_site);
             $message->subject('Transfer Reminder');
-            $message->to($event->donation->email, $event->user->name);
+            $message->to($event->donation->email, $event->user->name)->cc($_email_admin, $_email_noreply);
           }
         );
     }
