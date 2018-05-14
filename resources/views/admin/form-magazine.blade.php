@@ -64,27 +64,34 @@
 
             @include('errors.errors-forms')
 
+          <br><label>Cover Majalah</label>
           <div class="filer-input-dragDrop position-relative @if($magazine->image != '') hoverClass @endif" id="draggable">
             <input type="file" accept="image/*" name="image" id="filePhoto">
 
             <!-- previewPhoto -->
-            <div class="previewPhoto" @if($magazine->name != '')style='background-size: 100px 100px;display: block; background-image: url("{{asset('public/img/pdf.png')}}");' @endif>
+            <div class="previewPhoto" @if($magazine->image != '')style='display: block; background-image: url("{{asset('public/campaigns/large/'.$magazine->image)}}");' @endif>
+
               <div class="btn btn-danger btn-sm btn-remove-photo" id="removePhoto" data-id="{{$magazine->id}}">
                 <i class="fa fa-trash myicon-right"></i> {{trans('misc.delete')}}
               </div>
-              <div>
-                <p style='color: red;'> @if($magazine->name != '') {{$magazine->name}} @endif </p>
-              </div>
+
             </div><!-- previewPhoto -->
+
             <div class="filer-input-inner">
               <div class="filer-input-icon">
                 <i class="fa fa-cloud-upload"></i>
               </div>
               <div class="filer-input-text">
-                <h3 class="margin-bottom-10">Click to select magazine file</h3>
-                <h3>{{ trans('misc.max_size') }}: {{App\Helper::formatBytes($settings->file_size_allowed * 1024)}} </h3>
+                <h3 class="margin-bottom-10">{{ trans('misc.click_select_image') }}</h3>
+                <h3>{{ trans('misc.max_size') }}: {{App\Helper::formatBytes($settings->file_size_allowed * 1024) .' - '.$settings->min_width_height_image}} </h3>
               </div>
             </div>
+          </div>
+
+          <label>File Majalah</label>
+          <div class="filer-input-dragDrop position-relative" id="draggable">
+            <input type="file" accept="pdf/*" id="file-upload" name="magazine">
+            <label id="file-name">@if($magazine->filename != '') {{$magazine->filename}} @endif</label>
           </div>
 
             <div class="box-footer">
@@ -208,6 +215,10 @@ $('input[type="radio"]').iCheck({
   });
 
   $('input[type="file"]').attr('title', window.URL ? ' ' : '');
+
+  $("#file-upload").change(function(){
+    $("#file-name").text(this.files[0].name);
+  });
 
 </script>
 

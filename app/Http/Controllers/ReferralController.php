@@ -6,6 +6,7 @@ use App\Models\ReferralDonasi;
 use App\Models\ReferralRegistrasi;
 use App\Models\User;
 use App\Models\Donations;
+use App\Models\Campaigns;
 use App\Models\AdminSettings;
 
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class ReferralController extends Controller
   {
       $users = User::where('email', $email)->first();
       $donation = Donations::where('id', $id)->first();
+      $campaign = Campaigns::where('id', $donation->campaigns_id)->first();
 
     if (str_slug($campaign->title) == '') {
         $slugUrl  = '';
@@ -48,7 +50,7 @@ class ReferralController extends Controller
 
       $referralRegistrasi = new ReferralRegistrasi();
       $referralRegistrasi->email = $users->email;
-      $referralRegistrasi->status = 'hold';
+      $referralRegistrasi->status = 'add';
       $referralRegistrasi->bonus = $this->settings->registration_bonus;
       $referralRegistrasi->save();
 

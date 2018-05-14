@@ -158,6 +158,24 @@ class UserController extends Controller
     ]);
   }//<--- End Method
 
+  public function updateAddressMobile(Request $request)
+  {
+    $address = Address::where('user_id', '=', $request->user_id)->where('jenis', '=', 'rumah')->firstOrFail();
+    $address->alamat = $request->fullhomeaddress;
+    $address->kodepos = $request->homepostalcode;
+    $address->Kabupaten = $request->homestate;
+    $address->latitude = $request->latitude;
+    $address->longitude = $request->longitude;
+    $address->save();
+    
+    $response = Address::where('user_id', '=', $request->user_id)->where('jenis', '=', 'rumah')->firstOrFail();
+
+    return response()->json([
+      'success' => true,
+      'response' => $response,      
+    ]);
+  }//<--- End Method
+
   public function password()
   {
     return view('users.password');
@@ -170,12 +188,10 @@ class UserController extends Controller
 
     $validator = Validator::make($input, [
       'fullhomeaddress' => 'required',
-      'homephone' => 'required',
       'homepostalcode' => 'required',
-      'homeprovince' => 'required',
       'homestate' => 'required',
-      'homeregion' => 'required',
-      'homevillage' => 'required'
+      'latitude' => 'required',
+      'longitude' => 'required',
     ]);
 
     if ($validator->fails()) {
@@ -187,12 +203,10 @@ class UserController extends Controller
 
     $address = Address::where('user_id', '=', $id)->where('jenis', '=', 'rumah')->firstOrFail();
     $address->alamat = $input['fullhomeaddress'];
-    $address->telepon = $input['homephone'];
     $address->kodepos = $input['homepostalcode'];
-    $address->provinsi = $input['homeprovince'];
     $address->Kabupaten = $input['homestate'];
-    $address->Kecamatan = $input['homeregion'];
-    $address->Kelurahan = $input['homevillage'];
+    $address->latitude = $input['latitude'];
+    $address->longitude = $input['longitude'];
     $address->save();
 
     return redirect('account');

@@ -67,6 +67,7 @@ class SocialAuthFacebookController extends Controller
                 $newSocialUser->last_name = $name[1];
             }
 
+            $newSocialUser->name = $user->name;
             $newSocialUser->password = bcrypt(str_random(16));
             $newSocialUser->token = str_random(64);
             $newSocialUser->save();

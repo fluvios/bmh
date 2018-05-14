@@ -28,9 +28,11 @@ Route::get('account/{id?}/refresh', function($id){
   $user = App\Models\User::where('id', '=', $id)->firstOrFail();
   $user['donasi'] = App\Models\Donations::where('user_id', '=', $user->id)->sum('donation');
   $user['transaksi'] = App\Models\Donations::where('user_id', '=', $user->id)->count();
+  $user['address'] = App\Models\Address::where('user_id', '=', $user->id)->where('jenis', '=', 'rumah')->firstOrFail();
   return $user;
 });
 Route::post('account/{id}/edit','UserController@updateMobile');
+Route::post('account/{id}/address','UserController@updateAddressMobile');
 // Password
 Route::post('account/password', 'UserController@update_password');
 Route::get('filter', 'APIController@filter');

@@ -12,6 +12,7 @@ use App\Models\DonationsLog;
 use App\Models\User;
 use App\Models\Banks;
 use App\Models\DepositLog;
+use App\Models\ReferralDonasi;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use App\Helper;
 use Mail;
@@ -528,7 +529,7 @@ class DonationsController extends Controller
     }
     //<----------- ****** DEPOSIT ************** ----->
 
-        //<----------- ****** MIDTRANS ************** ----->
+    //<----------- ****** MIDTRANS ************** ----->
     elseif ($this->request->payment_gateway == 'Midtrans') {
       if (!isset($this->request->anonymous)) {
         $this->request->anonymous = '0';
@@ -877,6 +878,15 @@ class DonationsController extends Controller
     $data->payment_status = 'paid';
     $data->save();
 
+    $refferal = ReferralDonasi::where('id', $data->campaigns_id)->where('status', 'hold')->last();
+    $campaign = Campaigns::findOrFail($data->campaigns_id);
+
+    if(!isset($refferal)) {
+      $refferal->status = 'add';
+      $referralDonasi->bonus = $data->donation * $campaign->affiliator_bonus_percentage;
+      $refferal->save();
+    }
+
     return redirect('panel/admin/donation');
   }
 
@@ -885,6 +895,7 @@ class DonationsController extends Controller
     $data = Donations::findOrFail($id);
     $data->payment_status = 'denied';
     $data->save();
+    
     return redirect('panel/admin/donation');
   }
 

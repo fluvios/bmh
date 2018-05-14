@@ -36,7 +36,7 @@ class APIController extends Controller
     {
         $settings = AdminSettings::first();
         $campaigns = Campaigns::where('status', 'active')
-        ->orderBy('id', 'DESC')->paginate($settings->result_request);
+        ->orderBy('id', 'DESC')->take(10)->get();
         $campaigns->map(function ($campaign){
           $donations = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->get();
           $updates = Updates::where('campaigns_id', '=', $campaign->id)->orderBy('id','desc')->get();
@@ -77,7 +77,7 @@ class APIController extends Controller
     {
         $settings = AdminSettings::first();
         $campaigns = Campaigns::where('status', 'active')->where('categories_id', $id)
-        ->orderBy('id', 'DESC')->paginate($settings->result_request);
+        ->orderBy('id', 'DESC')->take(10)->get();
         $campaigns->map(function ($campaign){
           $donations = Donations::where('campaigns_id', '=', $campaign->id)->where('payment_status', '=', 'paid')->get();
           $updates = Updates::where('campaigns_id', '=', $campaign->id)->orderBy('id','desc')->get();

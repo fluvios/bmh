@@ -274,7 +274,9 @@ the .container */
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
+                                      @if(!isset($confirmation_code))
                                       <td> <a href="{{url('verify/account',$confirmation_code)}}">KONFIRMASI EMAIL ANDA</a></td>
+                                      @endif
                                     </tr>
                                   </tbody>
                                 </table>

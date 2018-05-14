@@ -31,12 +31,14 @@ class SendEmailDonationSuccessNotification
         $data = $this->getSMSFormat();
         $title_site    = $this->settings->title;
         $_email_noreply = $this->settings->email_no_reply;
+        $fullname = $event->donation->fullname;
         Mail::send(
-          'emails.plain-text',
-          compact('data', 'title_site'),
+          'emails.broadcast-message',
+          compact('data', 'title_site', 'fullname'),
           function ($message) use (
             $event,
             $title_site,
+            $fullname,
             $_email_noreply
           ) {
             $message->from($_email_noreply, $title_site);

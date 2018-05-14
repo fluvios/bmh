@@ -322,8 +322,8 @@ Route::group(['middleware' => 'role'], function () {
     // Donations
     Route::get('panel/admin/donations', 'AdminController@donations');
     Route::get('panel/admin/donations/{id}', 'AdminController@donationView');
-    Route::get('panel/admin/donations/status/accept/{id}', 'AdminController@donationAccept');
-    Route::get('panel/admin/donations/status/reject/{id}', 'AdminController@donationReject');
+    Route::get('panel/admin/donations/accept/{id}', 'AdminController@donationAccept');
+    Route::get('panel/admin/donations/reject/{id}', 'AdminController@donationReject');
 
     // Members
     Route::resource(

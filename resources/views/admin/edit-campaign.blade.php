@@ -152,7 +152,9 @@
                       <label class="col-sm-2 control-label">{{ trans('misc.from_cabang') }}</label>
                       <div class="col-sm-10">
                         <select class="form-control select2" id="cabang-id" name="cabang_id">
+                          @if($data->cabang_id != 0)
                           <option value="{{ $data->cabang_id }}" selected>{{ App\Models\Cabang::find($data->cabang_id)->nama }}</option>
+                          @endif
                         </select>
                       </div>
                     </div>

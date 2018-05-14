@@ -6,6 +6,7 @@
          $join->on('donations.campaigns_id', '=', 'campaigns.id');
      })
   ->where('donations.user_id', Auth::user()->id)
+  ->where('donations.payment_status', 'paid')
     ->select('donations.*')
     ->addSelect('campaigns.title')
     ->orderBy('donations.id', 'DESC')
@@ -29,9 +30,8 @@
 	 <h2 class="subtitle-color-7 text-uppercase">{{ trans('misc.donations') }}</h2>
 		<!-- Col MD -->
 		<div class=" login-form-2 col-md-8 margin-bottom-20">
-        <a href="{{ url('account/donations/send') }}" type="button" class="btn btn-default" >Send Data</a><br><br>
-<div class=" table-responsive">
-   <table id="donation" class="table table-striped">
+      <div class=" table-responsive">
+        <table id="donation" class="table table-hover">
 
    	@if( $data->total() !=  0 && $data->count() != 0 )
    	<thead>
@@ -53,9 +53,15 @@
                       <td>{{ $donation->fullname }}</td>
                       <td><a href="{{url('campaign',$donation->campaigns_id)}}" target="_blank">{{ str_limit($donation->title, 10, '...') }} <i class="fa fa-external-link-square"></i></a></td>
                       <td class="text-right">{{ $settings->currency_symbol.number_format($donation->donation) }}</td>
-                      <td>{{ $donation->payment_status }}</td>
+                      @if($donation->payment_status == 'paid')
+                      <td>Sudah Dibayarkan</td>
+                      @elseif($donation->payment_status == 'denied')
+                      <td>Donasi Ditolak</td>
+                      @else
+                      <td>Menunggu Konfirmasi</td>
+                      @endif
                       <td>{{ date('d M, y', strtotime($donation->payment_date)) }}</td>
-											<td>{{url('ref/donasi/'.Auth::user()->email.'/'.$donation->campaigns_id)}}</td>
+                      <td>{{url('ref/donasi/'.Auth::user()->email.'/'.$donation->campaigns_id)}}</td>
                     </tr><!-- /.TR -->
                     @endforeach
 
@@ -81,7 +87,43 @@
 @section('javascript')
 <!-- Datatables -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#donation').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        },
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
 @endsection

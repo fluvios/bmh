@@ -1,3 +1,6 @@
+<?php
+$cities = App\Models\Kabupaten::all();
+?>
 @extends('app')
 
 @section('title') {{ trans('users.account_settings') }} - @endsection
@@ -95,121 +98,43 @@
 			<div id="address" class="tab-pane fade">
 				<form action="{{ url('account/address/home') }}" method="post" name="form">
 
-						<H4>Alamat Pribadi</H4>
+						<H4>Alamat</H4>
 					
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						
 						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Alamat Rumah</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->alamat?:old('fullhomeaddress')}}" name="fullhomeaddress">
-						</div><!-- ***** Form Group ***** -->
+						<div class="row">
+							<div class="col-md-8">
+								<div class="form-group has-feedback">
+									<label>Kabupaten/Kota</label>
+									<input type="text" class="form-control custom-rounded" value="{{$user->rumah->kabupaten?:old('homestate')}}" name="homestate">
+									<!-- <select name="homestate" class="form-control input-lg select2" id="homestate">
+									@foreach($cities as $city)
+										<option @if( $user->rumah->kabupaten == $city->id_kab ) selected="selected" @endif value="{{ $city->id_kab }}">{{ $city->nama }}</option>
+									@endforeach
+									</select> -->
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group has-feedback">
+									<label class="font-default">Kode Pos</label>
+									<input type="text" class="form-control custom-rounded" value="{{$user->rumah->kodepos?:old('homepostalcode')}}" name="homepostalcode">
+								</div>
+							</div>
+						</div>
+						<!-- ***** Form Group ***** -->						
 						
 						<!-- ***** Form Group ***** -->
 						<div class="form-group has-feedback">
-							<label class="font-default">Telepon</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->telepon?:old('homephone')}}" name="homephone">
-						</div>
-						<!-- ***** Form Group ***** -->
+							<label class="font-default">Alamat</label>
+							<textarea name="fullhomeaddress" rows="4" id="description" class="form-control" placeholder="Alamat Pengguna">{{$user->rumah->alamat?:old('fullhomeaddress')}}</textarea>
+						</div><!-- ***** Form Group ***** -->
+						
+						<div id="map" style="width:100%;height:400px;"></div>
 
-						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Kode Pos</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kodepos?:old('homepostalcode')}}" name="homepostalcode">
-						</div>
-						<!-- ***** Form Group ***** -->
+						<input type="hidden" id="latitude" name="latitude" value="{{$user->rumah->latitude?:old('latitude')}}">
 
-						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Provinsi</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->provinsi?:old('homeprovince')}}" name="homeprovince">
-						</div>
-						<!-- ***** Form Group ***** -->
-
-						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Kabupaten</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kabupaten?:old('homestate')}}" name="homestate">
-						</div>
-						<!-- ***** Form Group ***** -->
-
-						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Kecamatan</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kecamatan?:old('homeregion')}}" name="homeregion">
-						</div>
-						<!-- ***** Form Group ***** -->
-
-						<!-- ***** Form Group ***** -->
-						<div class="form-group has-feedback">
-							<label class="font-default">Kelurahan</label>
-							<input type="text" class="form-control login-field custom-rounded" value="{{$user->rumah->kelurahan?:old('homevillage')}}" name="homevillage">
-						</div>
-						<!-- ***** Form Group ***** -->
-
-					<button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('misc.save_changes') }}</button>	
-				</form>
-
-				<form action="{{ url('account/address/company') }}" method="post" name="form">
-
-					<H4>Alamat Kantor</H4>
-
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Alamat</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->alamat?:old('fullcompanyaddress')}}" name="fullcompanyaddress">
-					</div><!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Telepon</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->telepon?:old('companyphone')}}" name="companyphone">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Ext.</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->ext?:old('companyext')}}" name="companyext">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Kode Pos</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kodepos?:old('companypostalcode')}}" name="companypostalcode">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Provinsi</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->provinsi?:old('companyprovince')}}" name="companyprovince">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Kabupaten</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kabupaten?:old('companystate')}}" name="companystate">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Kecamatan</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kecamatan?:old('companyregion')}}" name="companyregion">
-					</div>
-					<!-- ***** Form Group ***** -->
-
-					<!-- ***** Form Group ***** -->
-					<div class="form-group has-feedback">
-						<label class="font-default">Kelurahan</label>
-						<input type="text" class="form-control login-field custom-rounded" value="{{$user->kantor->kelurahan?:old('companyvillage')}}" name="companyvillage">
-					</div>
-					<!-- ***** Form Group ***** -->
+						<input type="hidden" id="longitude" name="longitude" value="{{$user->rumah->longitude?:old('longitude')}}">
 
 					<button type="submit" id="buttonSubmit" class="btn btn-block btn-lg btn-main custom-rounded">{{ trans('misc.save_changes') }}</button>	
 				</form>
@@ -230,6 +155,8 @@
 @endsection
 
 @section('javascript')
+
+<script src="{{ asset('public/js/select2.full.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
 
@@ -283,5 +210,49 @@
     })(); //<--- FUNCTION %
 });//<<<<<<<--- * ON * --->>>>>>>>>>>
 //<<<<<<<=================== * UPLOAD AVATAR  * ===============>>>>>>>//
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4t_KCTq6ifscS_YYrwScB9Ujk78_3luI"></script>
+<script>
+    function initialize() {
+		var temp =  document.getElementById('latitude').value +','+ document.getElementById('longitude').value;
+		if(temp === ','){
+			var bangalore = { lat: -6.2129857, lng: 106.7134968 };
+		} else {
+			var bangalore = new google.maps.LatLng(document.getElementById('latitude').value, document.getElementById('longitude').value);
+		}
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: bangalore
+        });
+
+        // This event listener calls addMarker() when the map is clicked.
+        google.maps.event.addListener(map, 'click', function(event) {
+          	placeMarker(event.latLng, map);
+		  	document.getElementById('latitude').value = event.latLng.lat();
+      	  	document.getElementById('longitude').value =  event.latLng.lng();
+        });
+
+		// Place Marker
+		if(temp !== ''){
+			placeMarker(bangalore, map);
+		}
+    }
+
+    // Adds a marker to the map.
+	var marker;
+
+	function placeMarker(location, map) {
+		if ( marker ) {
+			marker.setPosition(location, map);
+		} else {
+			marker = new google.maps.Marker({
+				position: location,
+				map: map
+			});
+		}
+	}
+    google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 @endsection

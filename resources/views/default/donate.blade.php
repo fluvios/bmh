@@ -105,7 +105,7 @@
            <label><input type="radio" name="donation_type" value="Routine">Routine</label>
          </div>
          <div class="radio">
-           <label><input type="radio" name="donation_type" value="Isidentil">insidentil</label>
+           <label><input type="radio" name="donation_type" value="Insidentil">Insidentil</label>
          </div>
        </div>
 

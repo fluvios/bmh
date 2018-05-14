@@ -673,15 +673,17 @@ class AdminController extends Controller
         $percentage = $campaign->affiliator_bonus_percentage;
 
         $request = new Request();
+
         $value = $request->cookie('refDonation');
         $refDonation = ReferralDonasi::find($value);
+
         if(isset($refDonation)) {
             $refDonation->status = 'add';
             $refDonation->bonus = ($percentage/100) * $data->donation;
             $refDonation->save();
         }
 
-        return redirect('panel/admin/donations/'.$id);
+        return redirect('panel/admin/donations');
     }
 
     public function donationReject($id)
@@ -690,7 +692,7 @@ class AdminController extends Controller
         $data->payment_status = 'denied';
         $data->save();
 
-        return redirect('panel/admin/donations/'.$id);
+        return redirect('panel/admin/donations');
     }
 
     public function payments()
