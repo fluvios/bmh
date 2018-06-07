@@ -15,7 +15,8 @@
         "gloudemans/shoppingcart": "^2.4",
         "gloudemans/notify": "^1.0",
         "laravel/socialite": "2.0.21",
-        "doctrine/inflector": "1.1.0"
+        "doctrine/inflector": "1.1.0",
+        "pusher/pusher-http-laravel": "2.3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -5,23 +5,21 @@ namespace App\Listeners;
 use App\Events\BalanceReduced;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Includes\apifunction;
+use Pusher\Laravel\PusherManager;
 use App\Models\AdminSettings;
 
-class SendSMSBalanceReducedNotification
+class SendPusherBalanceReducedNotification
 {
-    /**
-     * SMS Provider
-     */
-    public $smsProvider;
+    protected $pusher;
+
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(apifunction $smsProvider, AdminSettings $settings)
+    public function __construct(PusherManager $pusher, AdminSettings $settings)
     {
-        $this->smsProvider = $smsProvider;
+        $this->pusher = $pusher;
         $this->settings = $settings::first();
     }
 
@@ -33,7 +31,7 @@ class SendSMSBalanceReducedNotification
      */
     public function handle(BalanceReduced $event)
     {
-        $this->smsProvider->sendsms($event->user->getPhoneNumber(), $this->getSMSFormat($event->currentBalance, $event->prevBalance));
+        $this->pusher->trigger('berbagikebaikan', 'balance-reduced', ['message' => $this->getSMSFormat($event->currentBalance, $event->prevBalance)]);
     }
 
     public function getSMSFormat($currentBalance, $prevBalance)

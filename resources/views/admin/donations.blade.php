@@ -66,10 +66,8 @@
                         <a href="{{ url('panel/admin/donations',$donation->id) }}" class="btn btn-default btn-xs padding-btn">
                           {{ trans('admin.view') }}
                         </a>
-                        @if($donation->payment_status == 'unpaid')
                         <a href="{{ url('panel/admin/donations/reject').'/'.$donation->id }}" class="btn btn-danger btn-xs padding-btn">Tolak</a>
                         <a href="{{ url('panel/admin/donations/accept').'/'.$donation->id }}" class="btn btn-success btn-xs padding-btn">Terima</a>
-                        @endif
                     </td>
                     </tr><!-- /.TR -->
                   @php

@@ -169,6 +169,7 @@ return [
         Stevebauman\Purify\PurifyServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Vinkla\Pusher\PusherServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -187,6 +188,7 @@ return [
         App\Providers\ViewServiceProvider::class,
         App\Providers\SmsServiceProvider::class,
         App\Providers\VeritransServiceProvider::class,
+        
 
     ],
 
@@ -240,6 +242,7 @@ return [
         'Purify' => Stevebauman\Purify\Facades\Purify::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Pusher' => Pusher\Laravel\Facades\Pusher::class,
     ],
 
 ];

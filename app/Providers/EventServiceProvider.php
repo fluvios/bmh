@@ -19,22 +19,27 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\NewBankTransfer' => [
             'App\Listeners\SendSMSBankNotification',
             'App\Listeners\SendEmailBankNotification',
+            'App\Listeners\SendPusherBankNotification',
         ],
         'App\Events\NewBankTopupTransfer' => [
             'App\Listeners\SendSMSBankTopupNotification',
             'App\Listeners\SendEmailBankTopupNotification',
+            'App\Listeners\SendPusherBankTopupNotification',
         ],
         'App\Events\TopupSuccess' => [
             'App\Listeners\SendSMSTopupNotification',
             'App\Listeners\SendEmailTopupNotification',
+            'App\Listeners\SendPusherTopupNotification',
         ],
         'App\Events\BalanceReduced' => [
             'App\Listeners\SendSMSBalanceReducedNotification',
             'App\Listeners\SendEmailBalanceReducedNotification',
+            'App\Listeners\SendPusherBalanceReducedNotification',
         ],
         'App\Events\DonationSuccess' => [
             'App\Listeners\SendSMSDonationSuccessNotification',
             'App\Listeners\SendEmailDonationSuccessNotification',
+            'App\Listeners\SendPusherDonationSuccessNotification',
         ],
     ];
 
